@@ -1,2 +1,4 @@
 Test czy dziala ;)
 Nie ma polskich znakow wiec "³" na "l"
+
+Test Commit
