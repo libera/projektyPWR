@@ -25,11 +25,11 @@ public class DodatkowiProwadzacy {
 	    private Integer idDodatkowiProwadzacy;
 	    
 	 	@OneToMany(fetch = FetchType.EAGER) 
-	    @JoinColumn(name="IDPROWADZACY", nullable=false)
+	    @JoinColumn(name="ID_PROWADZACEGO", nullable=false)
 	    private Prowadzacy id_Prowadzacego;
 	 
 	 	@OneToMany(fetch = FetchType.EAGER) 
-	    @JoinColumn(name="IDGRUPY_ZAJECIOWE", nullable=false)
+	    @JoinColumn(name="ID_GRUPY", nullable=false)
 	    private GrupyZajeciowe idGrupy;
 	    
 	    @Column(name="KOMENTARZ")

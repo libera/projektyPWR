@@ -26,11 +26,11 @@ public class StudenciDoGrupProjektowych {
 	
 	
 	@OneToMany(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDSTUDENCI", nullable=false) 
+    @JoinColumn(name="ID_STUDENTA", nullable=false) 
     private Studenci idStudenta;
  	
  	@OneToMany(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDGRUPY_PROJEKTOWE", nullable=false) 
+    @JoinColumn(name="ID_GRUPY_PROJEKTOWEJ", nullable=false) 
     private GrupyProjektowe idGrupyProjektowej;
  	
 	@Column(name="STANOWISKO_W_GRUPIE")

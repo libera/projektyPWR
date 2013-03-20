@@ -22,11 +22,11 @@ public class PozwoleniaNaLaczenia {
     private Integer idPozwoleniaNaLaczenia;
  	
  	@OneToMany(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDPROWADZACY", nullable=false) 
+    @JoinColumn(name="ID_PROWADZACEGO", nullable=false) 
     private Prowadzacy idProwadzacego;
 
  	@OneToMany(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDKURSY", nullable=false) 
+    @JoinColumn(name="ID_KURSU", nullable=false) 
     private Kursy idKursu;
 
  	

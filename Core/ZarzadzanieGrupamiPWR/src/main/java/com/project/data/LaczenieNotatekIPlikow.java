@@ -24,11 +24,11 @@ public class LaczenieNotatekIPlikow {
     private Integer idLaczenieNoPl;
  	
  	@OneToMany(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDNOTATKI", nullable=false)
+    @JoinColumn(name="ID_NOTATKI", nullable=false)
     private Notatki idNotatki;
  	
  	@OneToOne(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDPLIKI", nullable=false)
+    @JoinColumn(name="ID_PLIKU", nullable=false)
     private Pliki idPliku;
  	
  	//*************************************************************************************************

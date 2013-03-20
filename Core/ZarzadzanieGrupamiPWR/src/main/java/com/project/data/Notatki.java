@@ -25,7 +25,7 @@ public class Notatki {
 	    private Integer idNotatki;
 	    
 	 	@OneToMany(fetch = FetchType.EAGER) 
-	    @JoinColumn(name="IDGRUPY_PROJEKTOWE", nullable=false)
+	    @JoinColumn(name="ID_GRUPY_PROJEKTOWEJ", nullable=false)
 	    private GrupyProjektowe idGrupyProjektowej;
 	    
 	    @Column(name="TRESC")

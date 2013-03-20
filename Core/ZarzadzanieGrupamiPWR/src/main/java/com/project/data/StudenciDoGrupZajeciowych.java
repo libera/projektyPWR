@@ -22,15 +22,15 @@ public class StudenciDoGrupZajeciowych {
  	
 	
 	@OneToMany(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDSTUDENCI", nullable=false) 
+    @JoinColumn(name="ID_STUDENTA", nullable=false) 
     private Studenci idStudenta;
  
 	@OneToMany(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDGRUPY_ZAJECIOWE", nullable=false) 
+    @JoinColumn(name="ID_GRUPY_ORYGINLNEJ", nullable=false) 
     private GrupyZajeciowe idGrupyOryginalnej;
  
 	@OneToMany(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDGRUPY_ZAJECIOWE", nullable=false) 
+    @JoinColumn(name="ID_GRUPY_CHODZACEJ", nullable=false) 
     private GrupyZajeciowe idGrupyChodzacej;
 	
  	//*************************************************************************************************
