@@ -41,13 +41,14 @@ public class Obecnosc {
     private Studenci idStudenta;
  	
  	@OneToMany(fetch = FetchType.EAGER) 	
-    @JoinColumn(name="ID_GRUPY_ZAJECIOWEJ", nullable=false)
-    private GrupyZajeciowe idGrupyZajeciowej;
-
- 	//*************************************************************************************************
+    @JoinColumn(name="IS_SPOTKANIA", nullable=false)
+    private Spotkania isSpotkania;
+ 	
+	//*************************************************************************************************
  	//***************************************Getters and Setters***************************************
  	//*************************************************************************************************
  		
+	
 	public Integer getIdObecnosc() {
 		return idObecnosc;
 	}
@@ -96,13 +97,15 @@ public class Obecnosc {
 		this.idStudenta = idStudenta;
 	}
 
-	public GrupyZajeciowe getIdGrupyZajeciowej() {
-		return idGrupyZajeciowej;
+	public Spotkania getIsSpotkania() {
+		return isSpotkania;
 	}
 
-	public void setIdGrupyZajeciowej(GrupyZajeciowe idGrupyZajeciowej) {
-		this.idGrupyZajeciowej = idGrupyZajeciowej;
+	public void setIsSpotkania(Spotkania isSpotkania) {
+		this.isSpotkania = isSpotkania;
 	}
+
+ 
  		
  	
 

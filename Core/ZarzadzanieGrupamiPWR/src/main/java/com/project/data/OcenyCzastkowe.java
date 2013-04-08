@@ -27,12 +27,6 @@ public class OcenyCzastkowe {
 	@Column(name="OCENA")
 	private String ocena;
 	
-	@Column(name="NAZWA")
-	private String nazwa;
-	
-	@Column(name="WAGA")
-	private Integer waga;
-	
 	@Column(name="DATA_DODANIA", columnDefinition="DATETIME")
     private Date dataDodania;
 	
@@ -44,8 +38,8 @@ public class OcenyCzastkowe {
     private Studenci idStudenta;
  	
  	@OneToMany(fetch = FetchType.EAGER) 
-    @JoinColumn(name="ID_GRUPY_ZAJECIOWEJ", nullable=false) 
-    private GrupyZajeciowe idGrupyZajeciowej;
+    @JoinColumn(name="IDSPOTKANIA", nullable=false) 
+    private Spotkania idSpotkania;
 	//*************************************************************************************************
 	//***************************************Getters and Setters***************************************
 	//*************************************************************************************************
@@ -64,22 +58,6 @@ public class OcenyCzastkowe {
 
 	public void setOcena(String ocena) {
 		this.ocena = ocena;
-	}
-
-	public String getNazwa() {
-		return nazwa;
-	}
-
-	public void setNazwa(String nazwa) {
-		this.nazwa = nazwa;
-	}
-
-	public Integer getWaga() {
-		return waga;
-	}
-
-	public void setWaga(Integer waga) {
-		this.waga = waga;
 	}
 
 	public Date getDataDodania() {
@@ -106,12 +84,13 @@ public class OcenyCzastkowe {
 		this.idStudenta = idStudenta;
 	}
 
-	public GrupyZajeciowe getIdGrupyZajeciowej() {
-		return idGrupyZajeciowej;
+	public Spotkania getIdSpotkania() {
+		return idSpotkania;
 	}
 
-	public void setIdGrupyZajeciowej(GrupyZajeciowe idGrupyZajeciowej) {
-		this.idGrupyZajeciowej = idGrupyZajeciowej;
+	public void setIdSpotkania(Spotkania idSpotkania) {
+		this.idSpotkania = idSpotkania;
 	}
-	 		
+
+	
 }
