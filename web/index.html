@@ -6,28 +6,64 @@
 		<meta charset="utf-8" />
 		
 		<script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="./js/courses.js"></script>
 		<script type="text/javascript" src="./js/loader.js"></script>
 	</head>
 	<body>
-		<div class="top-bar">
-			<header class="page-title">
-				Zarządzanie projektami studenckimi
+		<div id="lightbox">
+		</div>
+		<div id="login">
+			<div class="top-bar">
+				<header class="page-title">
+					Zarządzanie projektami studenckimi
+				</header>
+			</div>
+			<header class="section-title">
+				Logowanie
 			</header>
-			<div class="tools">
-				<div class="user">
+			<table cellspacing="0" cellpadding="0">
+				<tr>
+					<td colspan="2" style="text-align: center;">Aby uzyskać dostęp podaj nazwę użytkownika oraz hasło.</td>
+				</tr>
+				<tr>
+					<td class="param">Użytkownik:</td>
+					<td class="value"><input type="text" id="user" /></td>
+				</tr>
+				<tr>
+					<td class="param">Hasło:</td>
+					<td class="value"><input type="password" id="pass" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: right;"><input type="button" id="login-button" value="Zaloguj" /></td>
+				</tr>
+			</table>
+		</div>
+		<div id="content">
+			<div class="top-bar">
+				<header class="page-title">
+					Zarządzanie projektami studenckimi
+				</header>
+				<div class="tools">
+					<div class="user">
+					</div>
+					<div class="info">
+						rok akademicki: 2012/2013<br />
+						semestr: letni
+					</div>
 				</div>
-				<div class="info">
-					rok akademicki: 2012/2013<br />
-					semestr: letni
+				<div class="clear"></div>
+			</div>
+			<div class="left-col">
+				<header class="section-title">Kursy</header>
+				<ul id="courses">
+				</ul>
+				<div class="tools">
+					<a href="" id="import-csv-button">Import CSV</a>
 				</div>
 			</div>
-			<div class="clear"></div>
-		</div>
-		<div class="left-col">
-			lewa kolumna
-		</div>
-		<div class="right-col">
-			prawa kolumna
+			<div class="right-col">
+				<header class="section-title">Grupy projektowe</header>
+			</div>
 		</div>
 	</body>
 </html>
