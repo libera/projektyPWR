@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -31,11 +32,11 @@ public class GrupyZajeciowe{
 	    @Column(name="INFO_EDUKACJA")
 	    private String infoEdu;
 	    
-	    @OneToMany(fetch = FetchType.EAGER) 
+	    @ManyToOne(fetch = FetchType.EAGER) 
 	    @JoinColumn(name="ID_PROWADZACEGO", nullable=false)
 	    private Prowadzacy idProwadzacego;
 	    
-	    @OneToMany(fetch = FetchType.EAGER) 
+	    @ManyToOne(fetch = FetchType.EAGER) 
 	    @JoinColumn(name="ID_KURSU", nullable=false)
 	    private Kursy idKursu;
 	    

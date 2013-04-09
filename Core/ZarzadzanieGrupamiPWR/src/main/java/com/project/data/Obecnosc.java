@@ -8,7 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 	
@@ -36,11 +36,11 @@ public class Obecnosc {
  	@Column(name="DATA_MODYFIKACJI", columnDefinition="DATETIME")
     private Date dataModyfikacji;
  	
- 	@OneToMany(fetch = FetchType.EAGER) 
+ 	@ManyToOne(fetch = FetchType.EAGER) 
     @JoinColumn(name="ID_STUDENTA", nullable=false) 
     private Studenci idStudenta;
  	
- 	@OneToMany(fetch = FetchType.EAGER) 	
+ 	@ManyToOne(fetch = FetchType.EAGER) 	
     @JoinColumn(name="IS_SPOTKANIA", nullable=false)
     private Spotkania isSpotkania;
  	

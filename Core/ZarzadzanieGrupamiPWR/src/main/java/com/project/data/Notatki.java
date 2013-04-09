@@ -9,7 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +24,7 @@ public class Notatki {
 	    @GeneratedValue
 	    private Integer idNotatki;
 	    
-	 	@OneToMany(fetch = FetchType.EAGER) 
+	 	@ManyToOne(fetch = FetchType.EAGER) 
 	    @JoinColumn(name="ID_GRUPY_PROJEKTOWEJ", nullable=false)
 	    private GrupyProjektowe idGrupyProjektowej;
 	    
@@ -40,11 +40,14 @@ public class Notatki {
 	 	@Column(name="DATA_MODYFIKACJI", columnDefinition="DATETIME")
 	    private Date dataModyfikacji;
 	 	
-	    @Column(name="ID_PROWADZACEGO")
-	    private Integer idProwadzacego;
+	 	
+	 	@ManyToOne(fetch = FetchType.EAGER)
+	    @JoinColumn(name="ID_PROWADZACEGO", nullable=false)
+	    private Prowadzacy idProwadzacego;
 	    
-	    @Column(name="ID_STUDENTA")
-	    private Integer idStudenta;
+	 	@ManyToOne(fetch = FetchType.EAGER)
+	    @JoinColumn(name="ID_STUDENTA", nullable=false)
+	    private Studenci idStudenta;
 	    
 	    //*************************************************************************************************
 	 	//***************************************Getters and Setters***************************************
@@ -97,19 +100,19 @@ public class Notatki {
 			this.dataModyfikacji = dataModyfikacji;
 		}
 
-		public Integer getIdProwadzacego() {
+		public Prowadzacy getIdProwadzacego() {
 			return idProwadzacego;
 		}
 
-		public void setIdProwadzacego(Integer idProwadzacego) {
+		public void setIdProwadzacego(Prowadzacy idProwadzacego) {
 			this.idProwadzacego = idProwadzacego;
 		}
 
-		public Integer getIdStudenta() {
+		public Studenci getIdStudenta() {
 			return idStudenta;
 		}
 
-		public void setIdStudenta(Integer idStudenta) {
+		public void setIdStudenta(Studenci idStudenta) {
 			this.idStudenta = idStudenta;
 		}
 		

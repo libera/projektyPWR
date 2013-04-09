@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name="GRUPY_PROJEKTOWE")
@@ -23,7 +23,7 @@ public class GrupyProjektowe {
 		    @GeneratedValue
 		    private Integer idGrupyProjektowe;
 		    
-		 	@OneToMany(fetch = FetchType.EAGER) 
+		 	@ManyToOne(fetch = FetchType.EAGER) 
 		    @JoinColumn(name="ID_GRUPY_ZAJECIOWEJ", nullable=false)
 		    private GrupyZajeciowe idGrupyZajeciowe;
 		 

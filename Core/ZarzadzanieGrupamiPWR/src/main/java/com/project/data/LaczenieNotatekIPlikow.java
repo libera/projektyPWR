@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,7 +23,7 @@ public class LaczenieNotatekIPlikow {
     @GeneratedValue
     private Integer idLaczenieNoPl;
  	
- 	@OneToMany(fetch = FetchType.EAGER) 
+ 	@ManyToOne(fetch = FetchType.EAGER) 
     @JoinColumn(name="ID_NOTATKI", nullable=false)
     private Notatki idNotatki;
  	

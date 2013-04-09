@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -26,11 +26,11 @@ public class DodatkowiProwadzacy {
 	    @GeneratedValue
 	    private Integer idDodatkowiProwadzacy;
 	    
-	 	@OneToMany(fetch = FetchType.EAGER) 
+	 	@ManyToOne(fetch = FetchType.EAGER) 
 	    @JoinColumn(name="ID_PROWADZACEGO", nullable=false)
 	    private Prowadzacy id_Prowadzacego;
 	 
-	 	@OneToMany(fetch = FetchType.EAGER) 
+	 	@ManyToOne(fetch = FetchType.EAGER) 
 	    @JoinColumn(name="ID_GRUPY", nullable=false)
 	    private GrupyZajeciowe idGrupy;
 	    

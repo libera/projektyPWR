@@ -10,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name="GRUPY_PROJEKTOWE")
@@ -24,7 +24,7 @@ public class Spotkania {
 		    @GeneratedValue
 		    private Integer idSpotkania;
 		    
-		 	@OneToMany(fetch = FetchType.EAGER) 
+		 	@ManyToOne(fetch = FetchType.EAGER) 
 		    @JoinColumn(name="IDGRUPYZAJECIOWEJ", nullable=false)
 		    private GrupyZajeciowe idGrupyZajeciowe;
 		 
