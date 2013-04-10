@@ -13,7 +13,7 @@
 </style>
 </head>
 <body onload='document.f.j_username.focus();'>
-	<h3>Login with Username and Password (Authentication with Database)</h3>
+	<h3>USER_LOGIN</h3>
 
 	<c:if test="${not empty error}">
 		<div class="errorblock">
@@ -21,10 +21,13 @@
 			${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 		</div>
 	</c:if>
-
+	
+	
 	<form name='f' action="<c:url value='j_spring_security_check' />"
 		method='POST'>
-
+		
+		
+		
 		<table>
 			<tr>
 				<td>Nazwa_uzytkownika:</td>
@@ -37,6 +40,7 @@
 				</td>
 			</tr>
 			<tr>
+			<td>&nbsp;</td>
 				<td colspan='2'><input name="submit" type="submit"
 					value="submit" />
 				</td>
@@ -48,5 +52,6 @@
 		</table>
 
 	</form>
+
 </body>
 </html>

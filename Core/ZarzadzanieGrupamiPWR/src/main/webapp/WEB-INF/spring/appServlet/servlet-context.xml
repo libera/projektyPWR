@@ -23,9 +23,6 @@
 
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
-    <context:annotation-config />
-    <!-- Enables the Spring MVC @Controller programming model -->
-    <annotation-driven />
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
     <resources mapping="/resources/**" location="/resources/" />
@@ -62,12 +59,22 @@
                         <beans:property name="password" value="admin" />
                         <beans:property name="initialSize" value="3" />
                         <beans:property name="maxActive" value="10" />
-  </beans:bean>
+  		</beans:bean>
+    
+   
     
 
 <beans:bean id="propertyConfigurer"
         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
         p:location="/WEB-INF/jdbc.properties" />
+        
+ <beans:bean id="messageSource"
+
+	class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+
+	<beans:property name="basename" value="/WEB-INF/messages" />
+</beans:bean>
+		
         
 <beans:bean id="sessionFactory"
         class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -85,13 +92,26 @@
             </beans:props>
         </beans:property>
     </beans:bean>
-     <tx:annotation-driven />
+    
+
+<context:annotation-config />
+ <!-- Enables the Spring MVC @Controller programming model -->
+ <annotation-driven />
+ 
     <beans:bean id="transactionManager"
         class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <beans:property name="sessionFactory" ref="sessionFactory" />
     </beans:bean>
-    
+	<tx:annotation-driven />
+	<context:component-scan base-package="com.tut.pow"  use-default-filters="false"> 
+	   <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 
+ 	<tx:annotation-driven />
+ 	<context:component-scan base-package="com.project.service" />
+	
+	<tx:annotation-driven />
+ 	<context:component-scan base-package="com.project.dao" />
+ 	
 
-	<context:component-scan base-package="com.tut.pow" />
 </beans:beans>
