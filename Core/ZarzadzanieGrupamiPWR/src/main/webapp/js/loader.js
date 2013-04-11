@@ -1,3 +1,4 @@
+var serverURL = 'http://localhost:8080/pow/';
 
 function resizeWindow() {
 	//setting right-col width
@@ -26,7 +27,12 @@ function showLogin() {
 	$('#login').css('top', $(document).height()/2 - $('#login').height()/2-50);
 	
 	$('input#login-button').click(function() {
-		//TO DO: ajax login operation
+		$.ajax({
+			url: serverURL + "login",
+			type: 'GET',
+			data: {user:'bla', pass: 'bla'}
+		});
+		
 		hideLogin();
 		showContent();
 	});
