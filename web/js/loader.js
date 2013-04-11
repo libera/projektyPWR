@@ -1,11 +1,11 @@
 
 function resizeWindow() {
 	//setting right-col width
-	$('.right-col').width($(document).width() - $('.left-col').width() - 50);
+	$('.middle-col').width($(document).width() - $('.left-col').width() - $('.right-col').width() - 32);
 	
 	//setting cols height
 	$('.left-col').height($(document).height() - 100);
-	$('.right-col').height($(document).height() - 100);
+	$('.middle-col').height($(document).height() - 100);
 }
 
 function showContent() {

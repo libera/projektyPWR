@@ -38,6 +38,9 @@ function importCSV(e) {
 }
 
 function loadCourses() {
+	//clearing previous
+	$('#courses').html('');
+
 	//TO DO: get courses by http request
 	$.each(coursesSample.courses, function() {
 		currCourse = this;
@@ -58,24 +61,21 @@ function loadCourses() {
 	$('#courses li.course header').click(function() {
 		if(!$(this).parent().hasClass('active')) {
 			//hiding other courses
-			$('#courses li.course ul').hide(200, 'linear');
+			$('#courses li.course ul').hide('blind', {}, 200);
 			$('#courses li.course').removeClass('active');
 			
 			//removing all checks
 			$('input[name="checkedDates"]:checked').attr('checked', false);
 			
 			//showing clicked course
-			$(this).next().show(200, 'linear');
+			$(this).next().show('blind', {}, 200);
 			$(this).parent().addClass('active');
 		}
 	});
 	
 	//dates click events
 	$('#courses li.course ul li input').change(function() {
-		//TO DO: reload right column
-		$('input[name="checkedDates"]:checked').each(function() {
-			console.log(this.value);
-		});
+		loadGroups();
 	});
 	
 	//courses tools

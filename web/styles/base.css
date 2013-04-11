@@ -76,23 +76,38 @@ div.top-bar div.tools div.info {
 	padding: 5px 10px 0 10px;
 }
 
+/*Layout*/
+
 div.left-col {
 	margin: 30px 0 0 10px;
 	width: 260px;
 	float: left;
 	border-right: 1px solid #3b73f3;
 	position: relative;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+div.middle-col {
+	margin: 30px 0 0 0;
+	float: left;
+	/*overflow-x: hidden;*/
+	overflow-y: auto;
+	border-right: 1px solid #3b73f3;
+}
+
+div.right-col {
+	margin: 30px 0 0 20px;
+	width: 260px;
+	float: left;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 header.section-title {
 	font-size: 1.2em;
 	color: #1154cc;
 	margin-bottom: 10px;
-}
-
-div.right-col {
-	margin: 30px 0 0 20px;
-	float: right;
 }
 
 ul#courses header {
@@ -162,4 +177,43 @@ div#lightbox {
 	background: url('./../images/lightbox_background.png') repeat;
 	z-index: 100;
 }
+
+/*Grupy projektowe*/
+div.middle-col header.section-title {
+	margin-left: 20px;
+}
+
+div.group {
+	width: 100%;
+}
+
+div.group header {
+	border-top: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+	background-color: #f2f2f2;
+	padding: 7px 13px 7px 20px;
+	cursor: pointer;
+}
+
+div.group header div.tools {
+	float: right;
+	height: 100%;
+	width: 9px;
+	text-indent: 9px;
+	overflow: hidden;
+	white-space: nowrap;
+	background: url('./../images/list_closed.png') left center no-repeat;
+}
+
+div.group.active header div.tools {
+	background: url('./../images/list_opened.png') left center no-repeat;
+}
+
+div.group div.details {
+	background-color: #f2f2f2;
+	border-bottom: 1px solid #e0e0e0;
+	padding: 7px 20px;
+}
+
+
 
