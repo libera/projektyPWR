@@ -50,18 +50,75 @@ $(document).ready(function() {
 	
 	//register click event handlers
 	$('input#login-button').click(function() {
+		$('div#login td.info').hide();
+		$('div#login td.info').html('');
+		
+		var user = $.trim($('input#login-user'));
+		var pass = $.trim($('input#login-pass'));
+		
 		$.ajax({
 			url: serverURL + "login",
-			type: 'GET',
-			data: {user:'bla', pass: 'bla'}
+			type: 'POST',
+			data: {user: user, pass: pass},
+			success: function(data, textStatus, jqXHR ) {
+				if(data.logged == '1') {
+					hideLogin();
+					showContent();
+				} else {
+					$('div#login td.info').show();
+					$('div#login td.info').html('<span class="error">Nie można zalogować. Błędny login lub hasło.</span>');
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				$('div#login td.info').show();
+				$('div#login td.info').html('<span class="error">Nie można zalogować. Powód:<br />' + errorThrown + '</span>');
+			}
 		});
 		
-		hideLogin();
-		showContent();
+		
 	});
 	
 	$('input#register-button').click(function() {
-		alert('bla');
+		$('div#register td.info').hide();
+		$('div#register td.info').html('');
+		
+		var firstname = $.trim($('input#register-firstname').val());
+		var surname = $.trim($('input#register-surname').val());
+		var email = $.trim($('input#register-email').val());
+		var user = $.trim($('input#register-user').val());
+		var pass = $('input#register-pass').val();
+		var passRepeat = $('input#register-pass-repeat').val();
+		
+		//password & empty test
+		if(pass != passRepeat) {
+			$('div#register td.info').show();
+			$('div#register td.info').html('<span class="error">Podane hasła nie są identyczne!</span>');
+		} else if(firstname == "" || surname == "" || email == "" || user == "" || pass == "") {
+			$('div#register td.info').show();
+			$('div#register td.info').html('<span class="error">Wszystkie pola muszą być wypełnione!</span>');
+		} else {
+			$.ajax({
+				url: serverURL + "register",
+				type: 'POST',
+				data: {firstname: firstname, surname: surname, email: email, user: user, pass: pass},
+				success: function(data, textStatus, jqXHR ) {
+					if(data.registered == '1') {
+						hideRegister();
+						showContent();
+					} else {
+						$('div#login td.info').show();
+						$('div#login td.info').html('<span class="error">Nie można zarejestrować. Powód:<br />' + textStatus +  '</span>');
+					}
+					
+					$('div#register td.info').show();
+					$('div#register td.info').html('<span class="success">Zarejestrowano pomyślnie</span>');
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					$('div#register td.info').show();
+					$('div#register td.info').html('<span class="error">Nie można zarejestrować. Powód:<br />' + errorThrown + '</span>');
+				}
+			});
+		}
 	});
 	
 	$('a#register-link').click(function(e) {

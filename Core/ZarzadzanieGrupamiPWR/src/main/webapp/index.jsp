@@ -34,15 +34,15 @@
 			</header>
 			<table cellspacing="0" cellpadding="0">
 				<tr>
-					<td colspan="2" style="text-align: center;">Aby uzyskać dostęp podaj nazwę użytkownika oraz hasło.</td>
+					<td colspan="2" class="info">Aby uzyskać dostęp podaj nazwę użytkownika oraz hasło.</td>
 				</tr>
 				<tr>
 					<td class="param">Użytkownik:</td>
-					<td class="value"><input type="text" id="user" /></td>
+					<td class="value"><input type="text" id="login-user" /></td>
 				</tr>
 				<tr>
 					<td class="param">Hasło:</td>
-					<td class="value"><input type="password" id="pass" /></td>
+					<td class="value"><input type="password" id="login-pass" /></td>
 				</tr>
 				<tr>
 					<td style="text-align: left;"><a href="#" id="register-link">Zarejestruj</a></td>
@@ -61,28 +61,31 @@
 			</header>
 			<table cellspacing="0" cellpadding="0">
 				<tr>
+					<td colspan="2" class="info"></td>
+				</tr>
+				<tr>
 					<td class="param">Imię:</td>
-					<td class="value"><input type="text" id="firstname" /></td>
+					<td class="value"><input type="text" id="register-firstname" /></td>
 				</tr>
 				<tr>
 					<td class="param">Nazwisko:</td>
-					<td class="value"><input type="text" id="lastname" /></td>
+					<td class="value"><input type="text" id="register-surname" /></td>
 				</tr>
 				<tr>
 					<td class="param">Adres email:</td>
-					<td class="value"><input type="text" id="mail" /></td>
+					<td class="value"><input type="text" id="register-email" /></td>
 				</tr>
 				<tr>
 					<td class="param">Nazwa użytkownika:</td>
-					<td class="value"><input type="text" id="user" /></td>
+					<td class="value"><input type="text" id="register-user" /></td>
 				</tr>
 				<tr>
 					<td class="param">Hasło:</td>
-					<td class="value"><input type="password" id="pass" /></td>
+					<td class="value"><input type="password" id="register-pass" /></td>
 				</tr>
 				<tr>
 					<td class="param">Powtórz hasło:</td>
-					<td class="value"><input type="password" id="pass-repeat" /></td>
+					<td class="value"><input type="password" id="register-pass-repeat" /></td>
 				</tr>
 				<tr>
 					<td style="text-align: left;"></td>

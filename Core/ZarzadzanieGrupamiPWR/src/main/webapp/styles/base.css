@@ -47,6 +47,19 @@ div#login table td, div#register table td {
 	padding: 6px;
 }
 
+td.info {
+	text-align: center;
+	display: none;
+}
+
+.error {
+	color: #9e1715;;
+}
+
+.success {
+	color: green;
+}
+
 td.param {
 	width: 50%;
 	text-align: right;

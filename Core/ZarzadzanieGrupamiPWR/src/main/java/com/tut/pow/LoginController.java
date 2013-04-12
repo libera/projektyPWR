@@ -3,6 +3,7 @@ package com.tut.pow;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -18,7 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.servlet.ModelAndView;
 
 
 import com.project.Utils.Encryption;
@@ -33,6 +34,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/welcome", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
+		System.out.print("dupa");
  
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String name = user.getUsername();
@@ -43,10 +45,12 @@ public class LoginController {
  
 	}
  
-	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public String login(@RequestParam("user") String user, ModelMap model) {
-		return "login";
- 
+	@RequestMapping(value="/login", method = RequestMethod.POST)
+	public ModelMap login(@RequestParam(value="user", required=true) String user, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+          
+        
+          
+        return model; 
 	}
 	
 	
