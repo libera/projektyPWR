@@ -21,21 +21,20 @@ function hideContent() {
 	$('#content').hide();
 }
 
+function showRegister() {
+	$('#register').show();
+	$('#register').css('left', $(document).width()/2 - $('#register').width()/2);
+	$('#register').css('top', $(document).height()/2 - $('#register').height()/2-50);
+}
+
+function hideRegister() {
+	$('#register').hide();
+}
+
 function showLogin() {
 	$('#login').show();
 	$('#login').css('left', $(document).width()/2 - $('#login').width()/2);
 	$('#login').css('top', $(document).height()/2 - $('#login').height()/2-50);
-	
-	$('input#login-button').click(function() {
-		$.ajax({
-			url: serverURL + "login",
-			type: 'GET',
-			data: {user:'bla', pass: 'bla'}
-		});
-		
-		hideLogin();
-		showContent();
-	});
 }
 
 function hideLogin() {
@@ -46,7 +45,30 @@ $(document).ready(function() {
 	//when document is ready we display login window and hide content
 	hideLightbox();
 	hideContent();
+	hideRegister();
 	showLogin();
+	
+	//register click event handlers
+	$('input#login-button').click(function() {
+		$.ajax({
+			url: serverURL + "login",
+			type: 'GET',
+			data: {user:'bla', pass: 'bla'}
+		});
+		
+		hideLogin();
+		showContent();
+	});
+	
+	$('input#register-button').click(function() {
+		alert('bla');
+	});
+	
+	$('a#register-link').click(function(e) {
+		e.preventDefault();
+		hideLogin();
+		showRegister();
+	});
 });
 
 $(window).resize(function() {

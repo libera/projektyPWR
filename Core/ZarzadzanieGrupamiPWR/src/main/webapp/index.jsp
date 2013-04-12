@@ -45,7 +45,48 @@
 					<td class="value"><input type="password" id="pass" /></td>
 				</tr>
 				<tr>
-					<td colspan="2" style="text-align: right;"><input type="button" id="login-button" value="Zaloguj" /></td>
+					<td style="text-align: left;"><a href="#" id="register-link">Zarejestruj</a></td>
+					<td style="text-align: right;"><input type="button" id="login-button" value="Zaloguj" /></td>
+				</tr>
+			</table>
+		</div>
+		<div id="register">
+			<div class="top-bar">
+				<header class="page-title">
+					Zarządzanie projektami studenckimi
+				</header>
+			</div>
+			<header class="section-title">
+				Rejestracja
+			</header>
+			<table cellspacing="0" cellpadding="0">
+				<tr>
+					<td class="param">Imię:</td>
+					<td class="value"><input type="text" id="firstname" /></td>
+				</tr>
+				<tr>
+					<td class="param">Nazwisko:</td>
+					<td class="value"><input type="text" id="lastname" /></td>
+				</tr>
+				<tr>
+					<td class="param">Adres email:</td>
+					<td class="value"><input type="text" id="mail" /></td>
+				</tr>
+				<tr>
+					<td class="param">Nazwa użytkownika:</td>
+					<td class="value"><input type="text" id="user" /></td>
+				</tr>
+				<tr>
+					<td class="param">Hasło:</td>
+					<td class="value"><input type="password" id="pass" /></td>
+				</tr>
+				<tr>
+					<td class="param">Powtórz hasło:</td>
+					<td class="value"><input type="password" id="pass-repeat" /></td>
+				</tr>
+				<tr>
+					<td style="text-align: left;"></td>
+					<td style="text-align: right;"><input type="button" id="register-button" value="Zarejestruj" /></td>
 				</tr>
 			</table>
 		</div>

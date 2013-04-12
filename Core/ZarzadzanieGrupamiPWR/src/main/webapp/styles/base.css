@@ -13,25 +13,37 @@ div.clear {
 	clear: both;
 }
 
-div#login {
+a:link, a:visited {
+	color: #9e1715;
+	text-decoration: none;
+}
+
+a:hover, a:visited:hover {
+	text-decoration: underline;
+}
+
+input[type="text"], input[type="password"] {
+	width: 50%;
+}
+
+div#login, div#register {
 	width: 470px;
-	height: 200px;
 	border: 1px solid coral;
 	position: absolute;
 	background-color: #f2f2f2;
 	border: 1px solid #e0e0e0;
 }
 
-div#login header.section-title {
+div#login header.section-title, div#register header.section-title {
 	padding: 10px 0 10px 10px;
 }
 
-div#login table {
-	margin: 0 10px 10px 10px;
+div#login table, div#register table {
+	margin: 0 10px 5px 10px;
 	width: 450px;
 }
 
-div#login table td {
+div#login table td, div#register table td {
 	padding: 6px;
 }
 
@@ -111,8 +123,12 @@ header.section-title {
 }
 
 ul#courses header {
-	margin-bottom: 4px;
 	cursor: pointer;
+	display: inline;
+}
+
+ul#courses ul {
+	margin-top: 4px;
 }
 
 ul#courses li {
