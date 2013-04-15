@@ -1,20 +1,23 @@
 package com.project.data;
 
-import java.util.Date;
+import java.io.Serializable;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="STUDENCI")
-public class Studenci {
+public class Studenci implements Serializable{
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7089726535691657138L;
 
 	//****************************************************************************************
 	//***************************************Attributes***************************************

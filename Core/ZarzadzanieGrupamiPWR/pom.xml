@@ -2,14 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.tut</groupId>
-	<artifactId>pow</artifactId>
-	<name>ZarzadzaniePWR</name>
+	<groupId>com.project</groupId>
+	<artifactId>form</artifactId>
+	<name>First</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.6</java-version>
-		<org.springframework-version>3.0.5.RELEASE</org.springframework-version>
+		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
@@ -32,12 +32,6 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-dao</artifactId>
-			<version>2.0.3</version>
-		</dependency>
-            
 <!--
     Core utilities used by other modules.
     Define this if you use Spring Utility APIs 
@@ -48,24 +42,7 @@
   <artifactId>spring-core</artifactId>
   <version>${org.springframework-version}</version>
 </dependency>
-		<!-- Spring Security -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
 <!--
     Expression Language (depends on spring-core)
     Define this if you use Spring Expression APIs (org.springframework.expression.*)
@@ -128,7 +105,19 @@
   <artifactId>spring-tx</artifactId>
   <version>${org.springframework-version}</version>
 </dependency>
-
+<!--  Jackson repository -->
+<dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-mapper-asl</artifactId>
+	<version>1.9.12</version>
+</dependency>
+            <dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-core-asl</artifactId>
+	<version>1.9.12</version>
+</dependency>
+             	
+            
 <!--
     JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, spring-tx)
     Define this if you use Spring's JdbcTemplate API (org.springframework.jdbc.*)
@@ -149,12 +138,6 @@
   <artifactId>spring-orm</artifactId>
   <version>${org.springframework-version}</version>
 </dependency>
-      <dependency>
-        <groupId>springframework</groupId>
-        <artifactId>spring-hibernate</artifactId>
-        <version>1.2</version>
-      </dependency>
-    
 
 <!--
     Object-to-XML Mapping (OXM) abstraction and integration with JAXB, JiBX, Castor, XStream, 
@@ -173,52 +156,19 @@
     Define this if you use Spring MVC, or wish to use Struts, JSF, or another web framework 
       with Spring (org.springframework.web.*)
 -->
-	<dependency>
-	<groupId>commons-dbcp</groupId>
-	<artifactId>commons-dbcp</artifactId>
-	<version>1.2.2</version>
-	</dependency>
+<dependency>
+<groupId>commons-dbcp</groupId>
+<artifactId>commons-dbcp</artifactId>
+<version>1.2.2</version>
+</dependency>
 
 
 		<!-- Hibernate -->
-		<dependency>
+		        <dependency>
             <groupId>org.hibernate</groupId>
-            	<artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-core</artifactId>
             <version>3.6.10.Final</version>
         </dependency>
-        <dependency>
-			<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-validator</artifactId>
-			<version>4.2.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-search</artifactId>
-			<version>4.2.0.Final</version>
-		</dependency>
-		
-		<dependency>
-	<groupId>org.hibernate</groupId>
-	<artifactId>hibernate-entitymanager</artifactId>
-	<version>4.2.0.Final</version>
-</dependency>
-
-<dependency>
-	<groupId>dom4j</groupId>
-	<artifactId>dom4j</artifactId>
-	<version>1.6.1</version>
-</dependency>
-            
-            
-            
-
-	   <dependency>
-       <groupId>net.sf.ehcache</groupId>
-       <artifactId>ehcache-core</artifactId>
-       <version>2.2.0</version>
-   </dependency>
-		
-            	<!-- MySQL -->
 		      <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -314,12 +264,7 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<dependency>
-			<groupId>commons-pool</groupId>
-				<artifactId>commons-pool</artifactId>
-					<version>20030825.183949</version>
-		</dependency>
-            
+	
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>

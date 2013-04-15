@@ -1,5 +1,7 @@
 package com.project.data;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +13,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="POZWOLENIA_NA_LACZENIA")
-public class PozwoleniaNaLaczenia {
+public class PozwoleniaNaLaczenia implements Serializable {
+
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6916454480794048713L;
 
 	//****************************************************************************************
 	//***************************************Attributes***************************************

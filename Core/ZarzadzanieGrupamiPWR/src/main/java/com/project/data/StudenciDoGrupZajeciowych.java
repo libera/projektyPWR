@@ -1,4 +1,6 @@
 package com.project.data;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,8 +12,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="STUDENCI_DO_GRUP_ZAJECIOWYCH")
-public class StudenciDoGrupZajeciowych {
+public class StudenciDoGrupZajeciowych implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7742740472186425750L;
+
+
 	//****************************************************************************************
 	//***************************************Attributes***************************************
 	//****************************************************************************************

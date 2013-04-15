@@ -1,5 +1,7 @@
 package com.project.data;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,8 +14,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="LACZENIE_NOTATEK_I_PLIKOW")
-public class LaczenieNotatekIPlikow {
+public class LaczenieNotatekIPlikow implements Serializable {
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5139120564639562149L;
 
 	//****************************************************************************************
 	//***************************************Attributes***************************************

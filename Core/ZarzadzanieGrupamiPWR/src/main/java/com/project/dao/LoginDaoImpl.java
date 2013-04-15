@@ -4,29 +4,41 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.project.data.Prowadzacy;
 
+@Repository
+public class LoginDAOImpl implements LoginDAO {
 
-@Repository("loginDao")
-public class LoginDaoImpl implements LoginDao{
-	
-	@Autowired
-	private SessionFactory sessionFactory;
+	 @Autowired
+	    private SessionFactory sessionFactory;
+	 	
+	 
+	 public void addProwadzacy(Prowadzacy prowadzacy) {
+	        sessionFactory.getCurrentSession().save(prowadzacy);
+	   
+	    }
+	 
+	   public List<Prowadzacy> listProwadzacy() {
+		   
+	        return this.sessionFactory.getCurrentSession().createQuery("from Prowadzacy")
+	                .list();
+	    }
+	   
+		public List<Prowadzacy> validateLogin(String login, String haslo) {
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Prowadzacy> validateLogin(String user, String password) {
-	return sessionFactory.getCurrentSession().createQuery(
-	"from Prowadzacy where login=:user and haslo=:password")
-	.setString("user", user).setString("password",password).list();
-	}
-	
-	@Override
-	@Transactional
-	public void saveUser(Prowadzacy user) {
-	sessionFactory.getCurrentSession().save(user);
-	}
+	   return this.sessionFactory.getCurrentSession().createQuery("from Prowadzacy where login=:login and haslo=:haslo").setString("login", login).setString("haslo", haslo).list();
+	   
+		}
+		
+		public void aktywacja(String Login, boolean Aktywowany) {
+			 this.sessionFactory.getCurrentSession().createQuery("UPDATE Prowadzacy SET Aktywowany=:Aktywowany WHERE Login=Login").setBoolean("Aktywowany", Aktywowany).setString("Login", Login).executeUpdate();
+		}
+		
+		
+	    public List<Prowadzacy> validateRegister(String imiona, String nazwisko, String email, String login) {
+	    	return this.sessionFactory.getCurrentSession().createQuery("from Prowadzacy where imiona=:imiona and nazwisko=:nazwisko and email=:email and login=:login").setString("imiona", imiona).setString("nazwisko", nazwisko).setString("email", email).setString("login",login).list();
+	    }
+
 
 }

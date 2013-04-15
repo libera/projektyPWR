@@ -1,5 +1,6 @@
 package com.project.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,8 +14,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="OCENY_CZASTKOWE")
-public class OcenyCzastkowe {
+public class OcenyCzastkowe implements Serializable {
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8429902717274323822L;
 
 	//****************************************************************************************
 	//***************************************Attributes***************************************

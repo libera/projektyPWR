@@ -10,14 +10,19 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="KURSY")
-public class Kursy{
+public class Kursy implements Serializable {
 	
 	
 		//****************************************************************************************
 		//***************************************Attributes***************************************
 		//****************************************************************************************
 
-	 	@Id
+	 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2485914145322350750L;
+
+		@Id
 	    @Column(name="IDKURSY")
 	    @GeneratedValue
 	    private Integer idKursy;

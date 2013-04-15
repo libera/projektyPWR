@@ -16,10 +16,9 @@
         <mapping class="com.project.data.Pliki" />
         <mapping class="com.project.data.PozwoleniaNaLaczenia" />
         <mapping class="com.project.data.Prowadzacy" />
+        <mapping class="com.project.data.Spotkania" />
         <mapping class="com.project.data.Studenci" />
         <mapping class="com.project.data.StudenciDoGrupProjektowych" />
-        <mapping class="com.project.data.StudenciDoGrupZajeciowych" />
-        <mapping class="com.project.data.Spotkania" />
     </session-factory>
          
 </hibernate-configuration>

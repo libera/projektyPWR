@@ -1,5 +1,6 @@
 package com.project.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -14,8 +15,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="NOTATKI")
-public class Notatki {
+public class Notatki implements Serializable{
 	
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3948589674643072587L;
+
 		//****************************************************************************************
 		//***************************************Attributes***************************************
 		//****************************************************************************************

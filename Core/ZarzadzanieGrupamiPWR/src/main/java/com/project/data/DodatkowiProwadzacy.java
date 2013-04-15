@@ -15,13 +15,18 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name="DODATKOWI_PROWADZACY")
-public class DodatkowiProwadzacy {
+public class DodatkowiProwadzacy implements Serializable {
 	
 		//****************************************************************************************
 		//***************************************Attributes***************************************
 		//****************************************************************************************
 
-	 	@Id
+	 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8899988495420534651L;
+
+		@Id
 	    @Column(name="IDDODATKOWI_PROWADZACY")
 	    @GeneratedValue
 	    private Integer idDodatkowiProwadzacy;

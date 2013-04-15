@@ -14,7 +14,12 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name="GRUPY_PROJEKTOWE")
-public class Spotkania {
+public class Spotkania implements Serializable{
+
+			/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1766364851128075382L;
 
 			//****************************************************************************************
 			//***************************************Attributes***************************************

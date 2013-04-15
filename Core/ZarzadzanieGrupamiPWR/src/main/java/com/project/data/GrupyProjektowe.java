@@ -13,7 +13,12 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name="GRUPY_PROJEKTOWE")
-public class GrupyProjektowe {
+public class GrupyProjektowe implements Serializable {
+
+			/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3580949225448137379L;
 
 			//****************************************************************************************
 			//***************************************Attributes***************************************

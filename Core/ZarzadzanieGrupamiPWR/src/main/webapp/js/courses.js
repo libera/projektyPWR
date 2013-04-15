@@ -32,33 +32,9 @@ var coursesSample = {'courses':
 	]
 };
 
-function initCourses() {
-	//courses tools
-	$('a#import-csv-button').click(function(e) {
-		e.preventDefault();
-		$('div#lightbox').show();
-		
-		$('#upload-csv').show();
-		$('#upload-csv').css('left', $(document).width()/2 - $('#upload-csv').width()/2);
-		$('#upload-csv').css('top', $(document).height()/2 - $('#upload-csv').height()/2-50);
-		
-		$('#upload-csv input:button').click(function(e) {
-			e.preventDefault();
-			var fileContent = new FormData($('#upload-csv form')[0]);
-			
-			$.ajax({
-				url: serverURL + 'uploadCSV',
-				type: 'POST',
-				success: function(data, textStatus, jqXHR) {
-					alert(textStatus);
-				},
-				data: {filecontent: fileContent},
-				cache: false,
-				contentType: false,
-				processData: false
-			});
-		});
-	});
+function importCSV(e) {
+	e.preventDefault();
+	$('div#lightbox').show();
 }
 
 function loadCourses() {
@@ -101,4 +77,7 @@ function loadCourses() {
 	$('#courses li.course ul li input').change(function() {
 		loadGroups();
 	});
+	
+	//courses tools
+	$('a#import-csv-button').click(importCSV);
 }

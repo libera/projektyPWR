@@ -7,21 +7,25 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="GRUPY_ZAJECIOWE")
-public class GrupyZajeciowe{
+public class GrupyZajeciowe implements Serializable{
 
 		//****************************************************************************************
 		//***************************************Attributes***************************************
 		//****************************************************************************************
 
 	
-	 	@Id
+	 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9093136662149609705L;
+
+		@Id
 	    @Column(name="IDGRUPY_ZAJECIOWE")
 	    @GeneratedValue
 	    private Integer idGrupyZajeciowe;

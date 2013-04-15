@@ -1,6 +1,7 @@
 package com.project.data;
 
-import java.util.Date;
+import java.io.Serializable;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="STUDENCI_DO_GRUP_PROJEKTOWYCH")
-public class StudenciDoGrupProjektowych {
+public class StudenciDoGrupProjektowych implements Serializable{
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5904500508215173391L;
 
 
 	//****************************************************************************************

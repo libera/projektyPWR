@@ -9,6 +9,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:beans="http://www.springframework.org/schema/beans"
     xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
     xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
@@ -16,65 +17,41 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/security
-		http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     
 
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+
+    <context:annotation-config />
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <annotation-driven />
 
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
     <resources mapping="/resources/**" location="/resources/" />
     <resources mapping="/resources/gfx/**" location="/resources/gfx/" />
-
+	
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <beans:property name="prefix" value="/WEB-INF/views/" />
+      <!--    <beans:property name="prefix" value="/WEB-INF/views/" />-->
+       <beans:property name="prefix" value="/*" />
         <beans:property name="suffix" value=".jsp" />
-    </beans:bean>
-    
-    
-    <!--title beans -->
-
-<!--
-<beans:bean class="org.springframework.web.servlet.view.tiles2.TilesViewResolver"/>
-<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
-    <beans:property name="definitions">
-        <beans:list>
-            <beans:value>/WEB-INF/spring/appServlet/titles.xml</beans:value>
-        </beans:list>
-    </beans:property>
-</beans:bean> 
--->
-
-
-   
+    </beans:bean> 
     <!--hibernate beans -->
     
       <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
                         <beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
-                        <beans:property name="url" value="jdbc:mysql://localhost:3306/projektyPWR" />
-                        <beans:property name="username" value="root" />
-                        <beans:property name="password" value="liscdebu765" />
+                        <beans:property name="url" value="jdbc:mysql://localhost:3306/ProjektyPWR" />
+                        <beans:property name="username" value="abc" />
+                        <beans:property name="password" value="abc" />
                         <beans:property name="initialSize" value="3" />
                         <beans:property name="maxActive" value="10" />
-  		</beans:bean>
-    
-   
+  </beans:bean>
     
 
 <beans:bean id="propertyConfigurer"
         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
         p:location="/WEB-INF/jdbc.properties" />
-        
- <beans:bean id="messageSource"
-
-	class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-
-	<beans:property name="basename" value="/WEB-INF/messages" />
-</beans:bean>
-		
         
 <beans:bean id="sessionFactory"
         class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -92,23 +69,14 @@
             </beans:props>
         </beans:property>
     </beans:bean>
-    
-
-<context:annotation-config />
- <!-- Enables the Spring MVC @Controller programming model -->
- <annotation-driven />
- 
+     <tx:annotation-driven />
     <beans:bean id="transactionManager"
         class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <beans:property name="sessionFactory" ref="sessionFactory" />
     </beans:bean>
-	<tx:annotation-driven />
-	<context:component-scan base-package="com.tut.pow"  use-default-filters="false"> 
-	   <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-	</context:component-scan>
-
- 	<tx:annotation-driven />
- 	<context:component-scan base-package="com.project" />
- 	
-
+    
+	
+	<mvc:default-servlet-handler />
+	<mvc:annotation-driven/>
+	<context:component-scan base-package="com.project" />
 </beans:beans>

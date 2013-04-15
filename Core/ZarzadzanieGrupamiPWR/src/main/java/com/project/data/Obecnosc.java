@@ -1,5 +1,6 @@
 package com.project.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,12 @@ import javax.persistence.Table;
 	
 @Entity
 @Table(name="OBECNOSC")
-public class Obecnosc {
+public class Obecnosc implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3238099816394367608L;
 
 	//****************************************************************************************
 	//***************************************Attributes***************************************

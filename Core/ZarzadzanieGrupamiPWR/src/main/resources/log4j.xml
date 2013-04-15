@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.tut.pow">
+	<logger name="com.project.tut">
 		<level value="info" />
 	</logger>
 	
