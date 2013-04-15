@@ -16,12 +16,20 @@
 		
 		<script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="./js/jquery-ui-1.10.2.custom.min.js"></script>
+		<script type="text/javascript" src="./js/jquery.md5.js"></script>
 		<script type="text/javascript" src="./js/groups.js"></script>
 		<script type="text/javascript" src="./js/courses.js"></script>
 		<script type="text/javascript" src="./js/loader.js"></script>
 	</head>
 	<body>
 		<div id="lightbox">
+			<div id="upload-csv" class="dialog">
+				<header class="section-title">Upload CSV</header>
+				<form enctype="multipart/form-data">
+					<input name="csv-file" type="file" id="csv-file" />
+					<input type="button" value="Wyślij" />
+				</form>
+			</div>
 		</div>
 		<div id="login">
 			<div class="top-bar">
@@ -79,14 +87,14 @@
 					<td class="param">Nazwa użytkownika:</td>
 					<td class="value"><input type="text" id="register-user" /></td>
 				</tr>
-				<tr>
+				<!--<tr>
 					<td class="param">Hasło:</td>
 					<td class="value"><input type="password" id="register-pass" /></td>
 				</tr>
 				<tr>
 					<td class="param">Powtórz hasło:</td>
 					<td class="value"><input type="password" id="register-pass-repeat" /></td>
-				</tr>
+				</tr>-->
 				<tr>
 					<td style="text-align: left;"></td>
 					<td style="text-align: right;"><input type="button" id="register-button" value="Zarejestruj" /></td>

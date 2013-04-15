@@ -41,6 +41,12 @@ function hideLogin() {
 	$('#login').hide();
 }
 
+function initLightbox() {
+	$('#lightbox').click(function() {
+		$('#lightbox').hide();
+	});
+}
+
 $(document).ready(function() {
 	//when document is ready we display login window and hide content
 	hideLightbox();
@@ -53,13 +59,15 @@ $(document).ready(function() {
 		$('div#login td.info').hide();
 		$('div#login td.info').html('');
 		
-		var user = $.trim($('input#login-user'));
-		var pass = $.trim($('input#login-pass'));
+		var user = $.trim($('input#login-user').val());
+		var pass = $.trim($('input#login-pass').val());
+		
+		//console.log(pass + " " + $.md5(pass));
 		
 		$.ajax({
 			url: serverURL + "login",
 			type: 'POST',
-			data: {user: user, pass: pass},
+			data: {user: user, pass: $.md5(pass)},
 			success: function(data, textStatus, jqXHR ) {
 				if(data.logged == '1') {
 					hideLogin();
@@ -74,8 +82,8 @@ $(document).ready(function() {
 				$('div#login td.info').html('<span class="error">Nie można zalogować. Powód:<br />' + errorThrown + '</span>');
 			}
 		});
-		
-		
+		/*hideLogin();
+		showContent();*/
 	});
 	
 	$('input#register-button').click(function() {
@@ -86,13 +94,18 @@ $(document).ready(function() {
 		var surname = $.trim($('input#register-surname').val());
 		var email = $.trim($('input#register-email').val());
 		var user = $.trim($('input#register-user').val());
-		var pass = $('input#register-pass').val();
-		var passRepeat = $('input#register-pass-repeat').val();
+		/*var pass = $('input#register-pass').val();
+		var passRepeat = $('input#register-pass-repeat').val();*/
 		
 		//password & empty test
-		if(pass != passRepeat) {
+		/*if(pass != passRepeat) {
 			$('div#register td.info').show();
 			$('div#register td.info').html('<span class="error">Podane hasła nie są identyczne!</span>');
+		} else*/
+		
+		if(email.indexOf('pwr.wroc.pl') <= 0) {
+			$('div#register td.info').show();
+			$('div#register td.info').html('<span class="error">Adres email musi być w domenie pwr.wroc.pl!</span>');
 		} else if(firstname == "" || surname == "" || email == "" || user == "" || pass == "") {
 			$('div#register td.info').show();
 			$('div#register td.info').html('<span class="error">Wszystkie pola muszą być wypełnione!</span>');
@@ -100,7 +113,7 @@ $(document).ready(function() {
 			$.ajax({
 				url: serverURL + "register",
 				type: 'POST',
-				data: {firstname: firstname, surname: surname, email: email, user: user, pass: pass},
+				data: {firstname: firstname, surname: surname, email: email, user: user},
 				success: function(data, textStatus, jqXHR ) {
 					if(data.registered == '1') {
 						hideRegister();
@@ -126,6 +139,10 @@ $(document).ready(function() {
 		hideLogin();
 		showRegister();
 	});
+	
+	//init functions for static elements - called only once!
+	initLightbox();
+	initCourses();
 });
 
 $(window).resize(function() {
