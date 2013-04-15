@@ -68,7 +68,7 @@ public class LoginController {
 
     
 	@RequestMapping(value= "/login",  method = RequestMethod.POST)
-    public Integer LoginAuthentication(HttpServletRequest req, @RequestParam(value="user", required=true)String login,
+    public @ResponseBody Integer LoginAuthentication(HttpServletRequest req, @RequestParam(value="user", required=true)String login,
     		@RequestParam(value="pass", required=true)String haslo, Model model){
 		
     		List<Prowadzacy> loginlist=loginService.validateLogin(login, haslo);
