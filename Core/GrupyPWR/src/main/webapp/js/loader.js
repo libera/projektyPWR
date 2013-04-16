@@ -59,12 +59,13 @@ $(document).ready(function() {
 		$.ajax({
 			url: serverURL + "login",
 			type: 'POST',
+			dataType: 'json',
 			data: {user: user, pass: $.md5(pass)},
-			success: function(data, textStatus, jqXHR ) {
-				if(data.logged == '1') {
+			success: function(data, textStatus, jqXHR) {
+				console.log(data);
+				if(data == '1') {
 					hideLogin();
 					showContent();
-					alert("bla");
 				} else {
 					$('div#login td.info').show();
 					$('div#login td.info').html('<span class="error">Nie można zalogować. Błędny login lub hasło.</span>');
@@ -103,8 +104,10 @@ $(document).ready(function() {
 				url: serverURL + "register",
 				type: 'POST',
 				data: {firstname: firstname, surname: surname, email: email, user: user/*, pass: pass*/},
+				dataType: 'json',
 				success: function(data, textStatus, jqXHR ) {
-					if(data.registered == '1') {
+					console.log(data);
+					if(data == '1') {
 						hideRegister();
 						showContent();
 					} else {

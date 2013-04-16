@@ -75,17 +75,17 @@ public class LoginController extends SendMail {
     		@RequestParam(value="pass", required=true)String haslo, Model model){
 			
     		List<Prowadzacy> loginlist=loginService.validateLogin(login, haslo);
-    		boolean czyAktywowany=loginlist.get(0).isAktywowany();
-			
-    		//System.out.println("Has³o: " +haslo+" Login: "+ login);
+    		/*boolean czyAktywowany=loginlist.get(0).isAktywowany();
+			*/
+    		System.out.println("Has³o: " +haslo+" Login: "+ login);
     		//System.out.println("\nCzy aktywowany: "+czyAktywowany);
-			//System.out.println("\nRozmiar loginlist: "+loginlist.size());
+			System.out.println("\nRozmiar loginlist: "+loginlist.size());
 
         		if(loginlist.size()>0 )
         		{
-        			if(czyAktywowany ==false) {
+        			/*if(czyAktywowany ==false) {
         				loginService.aktywacja(login, true);
-        			}
+        			}*/
         			return 1;
         		}
         		else {
