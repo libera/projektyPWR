@@ -59,7 +59,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: serverURL + "login",
 			type: 'POST',
-			data: {user: user, pass: pass},
+			data: {user: user, pass: $.md5(pass)},
 			success: function(data, textStatus, jqXHR ) {
 				if(data.logged == '1') {
 					hideLogin();
