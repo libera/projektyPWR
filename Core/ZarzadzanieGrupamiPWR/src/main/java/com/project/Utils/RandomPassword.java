@@ -6,14 +6,12 @@ public class RandomPassword {
 	
 	public static String Random() {
 		String haslo;
-		 Random rand = new Random(); 
-		 
-		  
-		   rand.nextLong();
-		   haslo = rand.toString();
-		   
-		   return haslo;
 		
+		Random rand = new Random();
+		long numNoRange = rand.nextLong();
+		numNoRange = (numNoRange + 100000) & 0xff;
+		haslo = Long.toString(numNoRange);
+		return haslo;
 	}
 
 }

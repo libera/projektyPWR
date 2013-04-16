@@ -21,9 +21,9 @@ import com.project.data.Prowadzacy;
 import com.project.service.LoginService;
 import com.project.Utils.Encryption;
 import com.project.Utils.RandomPassword;
-
+import com.project.Utils.SendMail;
 @Controller
-public class LoginController {
+public class LoginController extends SendMail {
 
 	@Autowired
 	private LoginService loginService;
@@ -40,7 +40,8 @@ public class LoginController {
     @RequestParam(value="surname", required=true)String nazwisko, 
     @RequestParam(value="email", required=true)String mail,
     @RequestParam(value="user", required=true)String login, Model model) {
-    	
+    	String from = "grupy.pwr.wroc@gmail.com";
+    	String subject = "Przes³anie has³a do logowania!";
     	Date data = new Date();
     	Prowadzacy prowadzacy = new Prowadzacy();
     	prowadzacy.setImiona(imie);
@@ -53,10 +54,12 @@ public class LoginController {
     	String haslo=RandomPassword.Random();
     	prowadzacy.setHaslo(Encryption.encrypt(haslo));
     	loginService.addProwadzacy(prowadzacy);
-    	
+    	//SendMail sendMail = new SendMail();
+    	Wyslij_maila(mail, subject, haslo, from);
     	List<Prowadzacy> registerlist = loginService.validateRegister(imie, nazwisko, mail, login);
     			if(registerlist.size()>0)
         		{
+    		    	
         			return 1;
         		}
         		else {
@@ -72,24 +75,26 @@ public class LoginController {
     		@RequestParam(value="pass", required=true)String haslo, Model model){
 		
     		List<Prowadzacy> loginlist=loginService.validateLogin(login, haslo);
-    
-    		if(loginlist.size()>0)
-    		{
-        		boolean czyAktywowany=loginlist.get(0).isAktywowany();
+    		//boolean czyAktywowany=loginlist.get(0).isAktywowany();
 
-    			if(czyAktywowany == false){
-        			loginService.aktywacja(login, true);
-    			}
-    			else{
-    				//nic nie rob
-    			}
-    			
-    			return 1;
-    		}
-    		else {
-    			
-    			return 0;
-    		}
+			/*if(czyAktywowany == false){
+    			loginService.aktywacja(login, true);*/
+        		if(loginlist.size()>0)
+        		{
+        			/*if(czyAktywowany == false){
+            			loginService.aktywacja(login, true);
+        			}*/
+
+        			return 1;
+        		}
+        		else {
+        			
+        			return 0;
+        		}
+		//	}
+	
+			
+
     }
     
 	/*@RequestMapping("/logout.html")
