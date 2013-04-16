@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+ 
+<hibernate-configuration>
+    <session-factory>
+        <mapping class="com.project.data.DodatkowiProwadzacy" />
+        <mapping class="com.project.data.GrupyProjektowe" />
+        <mapping class="com.project.data.GrupyZajeciowe" />
+        <mapping class="com.project.data.Kursy" />
+        <mapping class="com.project.data.LaczenieNotatekIPlikow" />
+        <mapping class="com.project.data.Notatki" />
+        <mapping class="com.project.data.Obecnosc" />
+        <mapping class="com.project.data.OcenyCzastkowe" />
+        <mapping class="com.project.data.Pliki" />
+        <mapping class="com.project.data.PozwoleniaNaLaczenia" />
+        <mapping class="com.project.data.Prowadzacy" />
+        <mapping class="com.project.data.Spotkania" />
+        <mapping class="com.project.data.Studenci" />
+        <mapping class="com.project.data.StudenciDoGrupProjektowych" />
+    </session-factory>
+         
+</hibernate-configuration>
