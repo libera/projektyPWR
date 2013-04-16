@@ -53,8 +53,8 @@ $(document).ready(function() {
 		$('div#login td.info').hide();
 		$('div#login td.info').html('');
 		
-		var user = $.trim($('input#login-user'));
-		var pass = $.trim($('input#login-pass'));
+		var user = $.trim($('input#login-user').val());
+		var pass = $.trim($('input#login-pass').val());
 		
 		$.ajax({
 			url: serverURL + "login",
