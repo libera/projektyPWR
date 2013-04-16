@@ -207,6 +207,20 @@ div#lightbox {
 	z-index: 100;
 }
 
+/*Import CSV*/
+div#upload-csv {
+	width: 300px;
+}
+
+.dialog {
+	z-index: 101;
+	display: none;
+	position: absolute;
+	background-color: #f2f2f2;
+	border: 1px solid #e0e0e0;
+	padding: 10px;
+}
+
 /*Grupy projektowe*/
 div.middle-col header.section-title {
 	margin-left: 20px;

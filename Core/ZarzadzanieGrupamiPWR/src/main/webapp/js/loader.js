@@ -64,6 +64,7 @@ $(document).ready(function() {
 				if(data.logged == '1') {
 					hideLogin();
 					showContent();
+					alert("bla");
 				} else {
 					$('div#login td.info').show();
 					$('div#login td.info').html('<span class="error">Nie można zalogować. Błędny login lub hasło.</span>');
