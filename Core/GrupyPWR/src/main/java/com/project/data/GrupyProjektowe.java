@@ -12,99 +12,99 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-@Table(name="GRUPY_PROJEKTOWE")
+@Table(name = "grupy_projektowe")
 public class GrupyProjektowe implements Serializable {
 
-			/**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3580949225448137379L;
 
-			//****************************************************************************************
-			//***************************************Attributes***************************************
-			//****************************************************************************************
-		 	@Id
-		    @Column(name="IDGRUPY_PROJEKTOWE")
-		    @GeneratedValue
-		    private Integer idGrupyProjektowe;
-		    
-		 	@ManyToOne(fetch = FetchType.EAGER) 
-		    @JoinColumn(name="ID_GRUPY_ZAJECIOWEJ", nullable=false)
-		    private GrupyZajeciowe idGrupyZajeciowe;
-		 
-		 	 
-		    @Column(name="NAZWA")
-		    private String nazwa;
-		    
-		    @Column(name="TEMAT")
-		    private String temat;
-		    
-		    @Column(name="RESOSITORY_LINK")
-		    private String resositoryLink;
-		    
-		    @Column(name="KOMENTARZ")
-		    private String komentarz;
-		    
-		    @Column(name="OCENA")
-		    private String ocena;
-		    
-		 	//*************************************************************************************************
-		 	//***************************************Getters and Setters***************************************
-		 	//*************************************************************************************************
-			public Integer getIdGrupyProjektowe() {
-				return idGrupyProjektowe;
-			}
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
+	@Id
+	@Column(name = "idgrupy_projektowe")
+	@GeneratedValue
+	private Integer idGrupyProjektowe;
 
-			public void setIdGrupyProjektowe(Integer idGrupyProjektowe) {
-				this.idGrupyProjektowe = idGrupyProjektowe;
-			}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_grupy_zajeciowej", nullable = false)
+	private GrupyZajeciowe idGrupyZajeciowe;
 
-			public GrupyZajeciowe getIdGrupyZajeciowe() {
-				return idGrupyZajeciowe;
-			}
+	@Column(name = "nazwa")
+	private String nazwa;
 
-			public void setIdGrupyZajeciowe(GrupyZajeciowe idGrupyZajeciowe) {
-				this.idGrupyZajeciowe = idGrupyZajeciowe;
-			}
+	@Column(name = "temat")
+	private String temat;
 
-			public String getNazwa() {
-				return nazwa;
-			}
+	@Column(name = "resository_link")
+	private String resositoryLink;
 
-			public void setNazwa(String nazwa) {
-				this.nazwa = nazwa;
-			}
+	@Column(name = "komentarz")
+	private String komentarz;
 
-			public String getTemat() {
-				return temat;
-			}
+	@Column(name = "ocena")
+	private String ocena;
 
-			public void setTemat(String temat) {
-				this.temat = temat;
-			}
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
+	public Integer getIdGrupyProjektowe() {
+		return idGrupyProjektowe;
+	}
 
-			public String getResositoryLink() {
-				return resositoryLink;
-			}
+	public void setIdGrupyProjektowe(Integer idGrupyProjektowe) {
+		this.idGrupyProjektowe = idGrupyProjektowe;
+	}
 
-			public void setResositoryLink(String resositoryLink) {
-				this.resositoryLink = resositoryLink;
-			}
+	public GrupyZajeciowe getIdGrupyZajeciowe() {
+		return idGrupyZajeciowe;
+	}
 
-			public String getKomentarz() {
-				return komentarz;
-			}
+	public void setIdGrupyZajeciowe(GrupyZajeciowe idGrupyZajeciowe) {
+		this.idGrupyZajeciowe = idGrupyZajeciowe;
+	}
 
-			public void setKomentarz(String komentarz) {
-				this.komentarz = komentarz;
-			}
+	public String getNazwa() {
+		return nazwa;
+	}
 
-			public String getOcena() {
-				return ocena;
-			}
+	public void setNazwa(String nazwa) {
+		this.nazwa = nazwa;
+	}
 
-			public void setOcena(String ocena) {
-				this.ocena = ocena;
-			}
+	public String getTemat() {
+		return temat;
+	}
+
+	public void setTemat(String temat) {
+		this.temat = temat;
+	}
+
+	public String getResositoryLink() {
+		return resositoryLink;
+	}
+
+	public void setResositoryLink(String resositoryLink) {
+		this.resositoryLink = resositoryLink;
+	}
+
+	public String getKomentarz() {
+		return komentarz;
+	}
+
+	public void setKomentarz(String komentarz) {
+		this.komentarz = komentarz;
+	}
+
+	public String getOcena() {
+		return ocena;
+	}
+
+	public void setOcena(String ocena) {
+		this.ocena = ocena;
+	}
 
 }

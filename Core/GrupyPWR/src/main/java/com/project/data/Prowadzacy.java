@@ -1,9 +1,7 @@
 package com.project.data;
 
-
 import java.io.Serializable;
 import java.util.Date;
-
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,139 +10,130 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
-
 @Entity
-@Table(name="PROWADZACY")
-public class Prowadzacy implements Serializable{
-		/**
+@Table(name = "prowadzacy")
+public class Prowadzacy implements Serializable {
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-		//****************************************************************************************
- 		//***************************************Attributes***************************************
- 		//****************************************************************************************
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
 
-	 	@Id
-	    @Column(name="IDPROWADZACY")
-	    @GeneratedValue
-	    private Integer idProwadzacy;
-	 	
-	 	@Column(name="IMIONA")
-	    private String imiona;
-	 	
+	@Id
+	@Column(name = "idprowadzacy")
+	@GeneratedValue
+	private Integer idProwadzacy;
 
-	 	@Column(name="NAZWISKO")
-	    private String nazwisko;
-	 	
+	@Column(name = "imiona")
+	private String imiona;
 
-	 	@Column(name="EMAIL")
-	    private String email;
-	 	
+	@Column(name = "nazwisko")
+	private String nazwisko;
 
-	 	@Column(name="LOGIN")
-	    private String login;
-	 	
+	@Column(name = "email")
+	private String email;
 
-	 	@Column(name="HASLO")
-	    private String haslo;
+	@Column(name = "login")
+	private String login;
 
-	 	
-	 	@Column(name="WAZNOSC")
-	    private boolean waznosc;
-	 	
-	 	@Column(name="DATA_DODANIA", columnDefinition="DATETIME")
-	    private Date dataDodania;
-	 	
-	 	@Column(name="AKTYWOWANY")
-	    private boolean aktywowany;
+	@Column(name = "haslo")
+	private String haslo;
 
-	 	
-	 	//*************************************************************************************************
-	 	//***************************************Getters and Setters***************************************
-	 	//*************************************************************************************************
+	@Column(name = "waznosc")
+	private boolean waznosc;
 
-	 	public Prowadzacy() {
-	 		
-	 	}
-		public Integer getIdProwadzacy() {
-			return idProwadzacy;
-		}
+	@Column(name = "data_dodania", columnDefinition = "DATETIME")
+	private Date dataDodania;
 
-		public void setIdProwadzacy(Integer idProwadzacy) {
-			this.idProwadzacy = idProwadzacy;
-		}
+	@Column(name = "aktywowany")
+	private boolean aktywowany;
 
-		public String getImiona() {
-			return imiona;
-		}
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
 
-		public void setImiona(String imiona) {
-			this.imiona = imiona;
-		}
+	public Prowadzacy() {
 
-		public String getNazwisko() {
-			return nazwisko;
-		}
+	}
 
-		public void setNazwisko(String nazwisko) {
-			this.nazwisko = nazwisko;
-		}
+	public Integer getIdProwadzacy() {
+		return idProwadzacy;
+	}
 
-		public String getEmail() {
-			return email;
-		}
+	public void setIdProwadzacy(Integer idProwadzacy) {
+		this.idProwadzacy = idProwadzacy;
+	}
 
-		public void setEmail(String email) {
-			this.email = email;
-		}
+	public String getImiona() {
+		return imiona;
+	}
 
-		public String getLogin() {
-			return login;
-		}
+	public void setImiona(String imiona) {
+		this.imiona = imiona;
+	}
 
-		public void setLogin(String login) {
-			this.login = login;
-		}
-		//--------------------------------------
-		//Trzeba zaszyfrowac MD5 - najlepiej :)
-		//complete :):)
-		public String getHaslo() {
-			return haslo;
-		}
+	public String getNazwisko() {
+		return nazwisko;
+	}
 
-		public void setHaslo(String haslo) {
-			this.haslo = haslo;
-		}
-		
-		//--------------------------------------
-		public boolean isWaznosc() {
-			return waznosc;
-		}
+	public void setNazwisko(String nazwisko) {
+		this.nazwisko = nazwisko;
+	}
 
-		public void setWaznosc(boolean waznosc) {
-			this.waznosc = waznosc;
-		}
+	public String getEmail() {
+		return email;
+	}
 
-		public Date getDataDodania() {
-			return dataDodania;
-		}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-		public void setDataDodania(Date dataDodania) {
-			this.dataDodania = dataDodania;
-		}
+	public String getLogin() {
+		return login;
+	}
 
-		public boolean isAktywowany() {
-			return aktywowany;
-		}
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-		public void setAktywowany(boolean aktywowany) {
-			this.aktywowany = aktywowany;
-		}
-	 	
-	 	
+	// --------------------------------------
+	// Trzeba zaszyfrowac MD5 - najlepiej :)
+	// complete :):)
+	public String getHaslo() {
+		return haslo;
+	}
+
+	public void setHaslo(String haslo) {
+		this.haslo = haslo;
+	}
+
+	// --------------------------------------
+	public boolean isWaznosc() {
+		return waznosc;
+	}
+
+	public void setWaznosc(boolean waznosc) {
+		this.waznosc = waznosc;
+	}
+
+	public Date getDataDodania() {
+		return dataDodania;
+	}
+
+	public void setDataDodania(Date dataDodania) {
+		this.dataDodania = dataDodania;
+	}
+
+	public boolean isAktywowany() {
+		return aktywowany;
+	}
+
+	public void setAktywowany(boolean aktywowany) {
+		this.aktywowany = aktywowany;
+	}
+
 }
-	    
-

@@ -12,78 +12,67 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="POZWOLENIA_NA_LACZENIA")
+@Table(name = "pozwolenia_na_laczenia")
 public class PozwoleniaNaLaczenia implements Serializable {
-
-
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6916454480794048713L;
 
-	//****************************************************************************************
-	//***************************************Attributes***************************************
-	//****************************************************************************************
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
 	@Id
-    @Column(name="IDPOZWOLENIA_NA_LACZENIA")
-    @GeneratedValue
-    private Integer idPozwoleniaNaLaczenia;
- 	
- 	@ManyToOne(fetch = FetchType.EAGER) 
-    @JoinColumn(name="ID_PROWADZACEGO", nullable=false) 
-    private Prowadzacy idProwadzacego;
+	@Column(name = "idpozwolenia_na_laczenia")
+	@GeneratedValue
+	private Integer idPozwoleniaNaLaczenia;
 
- 	@ManyToOne(fetch = FetchType.EAGER) 
-    @JoinColumn(name="ID_KURSU", nullable=false) 
-    private Kursy idKursu;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_prowadzacego", nullable = false)
+	private Prowadzacy idProwadzacego;
 
- 	
- 	@Column(name="DECYZJA")
-    private boolean decyzja;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_kursu", nullable = false)
+	private Kursy idKursu;
 
-	//*************************************************************************************************
-	//***************************************Getters and Setters***************************************
-	//*************************************************************************************************
+	@Column(name = "decyzja")
+	private boolean decyzja;
+
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
 	public Integer getIdPozwoleniaNaLaczenia() {
 		return idPozwoleniaNaLaczenia;
 	}
-
 
 	public void setIdPozwoleniaNaLaczenia(Integer idPozwoleniaNaLaczenia) {
 		this.idPozwoleniaNaLaczenia = idPozwoleniaNaLaczenia;
 	}
 
-
 	public Prowadzacy getIdProwadzacego() {
 		return idProwadzacego;
 	}
-
 
 	public void setIdProwadzacego(Prowadzacy idProwadzacego) {
 		this.idProwadzacego = idProwadzacego;
 	}
 
-
 	public Kursy getIdKursu() {
 		return idKursu;
 	}
-
 
 	public void setIdKursu(Kursy idKursu) {
 		this.idKursu = idKursu;
 	}
 
-
 	public boolean isDecyzja() {
 		return decyzja;
 	}
 
-
 	public void setDecyzja(boolean decyzja) {
 		this.decyzja = decyzja;
 	}
- 	
 
- 	
 }

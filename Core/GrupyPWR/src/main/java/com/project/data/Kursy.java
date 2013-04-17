@@ -7,62 +7,57 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="KURSY")
+@Table(name = "kursy")
 public class Kursy implements Serializable {
-	
-	
-		//****************************************************************************************
-		//***************************************Attributes***************************************
-		//****************************************************************************************
 
-	 	/**
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2485914145322350750L;
 
-		@Id
-	    @Column(name="IDKURSY")
-	    @GeneratedValue
-	    private Integer idKursy;
-	 	
-	 	@Column(name="KOD_KURSU")
-	    private String kodKursu;
-	 	
-	 	@Column(name="NAZWA_KURSU")
-	    private String nazwaKursu;
-		
-	 	//*************************************************************************************************
-	 	//***************************************Getters and Setters***************************************
-	 	//*************************************************************************************************
+	@Id
+	@Column(name = "idkursy")
+	@GeneratedValue
+	private Integer idKursy;
 
-	
-		public Integer getIdKursy() {
-			return idKursy;
-		}
+	@Column(name = "kod_kursu")
+	private String kodKursu;
 
-		public void setIdKursy(Integer idKursy) {
-			this.idKursy = idKursy;
-		}
+	@Column(name = "nazwa_kursu")
+	private String nazwaKursu;
 
-		public String getKodKursu() {
-			return kodKursu;
-		}
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
 
-		public void setKodKursu(String kodKursu) {
-			this.kodKursu = kodKursu;
-		}
+	public Integer getIdKursy() {
+		return idKursy;
+	}
 
-		public String getNazwaKursu() {
-			return nazwaKursu;
-		}
+	public void setIdKursy(Integer idKursy) {
+		this.idKursy = idKursy;
+	}
 
-		public void setNazwaKursu(String nazwaKursu) {
-			this.nazwaKursu = nazwaKursu;
-		}
-	 
-	 
-	 	
-	 	
+	public String getKodKursu() {
+		return kodKursu;
+	}
+
+	public void setKodKursu(String kodKursu) {
+		this.kodKursu = kodKursu;
+	}
+
+	public String getNazwaKursu() {
+		return nazwaKursu;
+	}
+
+	public void setNazwaKursu(String nazwaKursu) {
+		this.nazwaKursu = nazwaKursu;
+	}
+
 }

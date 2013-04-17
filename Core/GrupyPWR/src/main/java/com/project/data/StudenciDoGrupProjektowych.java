@@ -2,7 +2,6 @@ package com.project.data;
 
 import java.io.Serializable;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,45 +12,43 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="STUDENCI_DO_GRUP_PROJEKTOWYCH")
-public class StudenciDoGrupProjektowych implements Serializable{
-
+@Table(name = "studenci_do_grup_projektowych")
+public class StudenciDoGrupProjektowych implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5904500508215173391L;
 
-
-	//****************************************************************************************
-	//***************************************Attributes***************************************
-	//****************************************************************************************
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
 	@Id
-    @Column(name="IDSTUDENCI_DO_GRUP_PROJEKTOWYCH")
-    @GeneratedValue
-    private Integer idStudenciDoProjektu;
-	
-	
-	@ManyToOne(fetch = FetchType.EAGER) 
-    @JoinColumn(name="ID_STUDENTA", nullable=false) 
-    private Studenci idStudenta;
- 	
- 	@ManyToOne(fetch = FetchType.EAGER) 
-    @JoinColumn(name="ID_GRUPY_PROJEKTOWEJ", nullable=false) 
-    private GrupyProjektowe idGrupyProjektowej;
- 	
-	@Column(name="STANOWISKO_W_GRUPIE")
+	@Column(name = "idstudenci_do_grup_projektowych")
+	@GeneratedValue
+	private Integer idStudenciDoProjektu;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_studenta", nullable = false)
+	private Studenci idStudenta;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_grupy_projektowej", nullable = false)
+	private GrupyProjektowe idGrupyProjektowej;
+
+	@Column(name = "stanowisko_w_grupie")
 	private String stanowiskoW_Grupie;
-	
-	@Column(name="Ocena")
+
+	@Column(name = "ocena")
 	private String ocena;
-	
-	@Column(name="KOMENTARZ")
+
+	@Column(name = "komentarz")
 	private String komentarz;
-	
-	//*************************************************************************************************
-	//***************************************Getters and Setters***************************************
-	//*************************************************************************************************
+
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
 	public Integer getIdStudenciDoProjektu() {
 		return idStudenciDoProjektu;
 	}

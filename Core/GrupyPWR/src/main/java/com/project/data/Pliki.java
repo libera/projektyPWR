@@ -10,41 +10,41 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="PLIKI")
-public class Pliki implements Serializable{
-
+@Table(name = "pliki")
+public class Pliki implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8211021558785463402L;
 
-	//****************************************************************************************
-	//***************************************Attributes***************************************
-	//****************************************************************************************
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
 	@Id
-    @Column(name="IDPLIKI")
-    @GeneratedValue
-    private Integer idPliku;
-	
-	@Column(name="NAZWA")
-	private String nazwa;
-	
-	@Column(name="DATA")
-	private Blob data;
-	
-	@Column(name="OPIS")
-	private String opis;
-	
-	@Column(name="DATA_DODANIA", columnDefinition="DATETIME")
-    private Date dataDodania;
-	
-	@Column(name="DATA_MODYFIKACJI", columnDefinition="DATETIME")
-    private Date dataModyfikacji;
+	@Column(name = "idpliki")
+	@GeneratedValue
+	private Integer idPliku;
 
-	//*************************************************************************************************
-	//***************************************Getters and Setters***************************************
-	//*************************************************************************************************
+	@Column(name = "nazwa")
+	private String nazwa;
+
+	@Column(name = "data")
+	private Blob data;
+
+	@Column(name = "opis")
+	private String opis;
+
+	@Column(name = "data_dodania", columnDefinition = "DATETIME")
+	private Date dataDodania;
+
+	@Column(name = "data_modyfikacji", columnDefinition = "DATETIME")
+	private Date dataModyfikacji;
+
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
 	public Integer getIdPliku() {
 		return idPliku;
 	}

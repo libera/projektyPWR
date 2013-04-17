@@ -10,114 +10,113 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="GRUPY_ZAJECIOWE")
-public class GrupyZajeciowe implements Serializable{
+@Table(name = "grupy_zajeciowe")
+public class GrupyZajeciowe implements Serializable {
 
-		//****************************************************************************************
-		//***************************************Attributes***************************************
-		//****************************************************************************************
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
 
-	
-	 	/**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -9093136662149609705L;
 
-		@Id
-	    @Column(name="IDGRUPY_ZAJECIOWE")
-	    @GeneratedValue
-	    private Integer idGrupyZajeciowe;
-	     
-	    @Column(name="KOD_GRUPY")
-	    private String kodGrupy;
-	 
-	    @Column(name="INFO_EDUKACJA")
-	    private String infoEdu;
-	    
-	    @ManyToOne(fetch = FetchType.EAGER) 
-	    @JoinColumn(name="ID_PROWADZACEGO", nullable=false)
-	    private Prowadzacy idProwadzacego;
-	    
-	    @ManyToOne(fetch = FetchType.EAGER) 
-	    @JoinColumn(name="ID_KURSU", nullable=false)
-	    private Kursy idKursu;
-	    
-	    @Column(name="NAZWA")
-	    private String nazwa;
-	    
-	    @Column(name="TERMIN")
-	    private Integer termin;
-	    
-	    @Column(name="KOMENTARZ")
-	    private Integer komentarz;
-	    
-	 	//*************************************************************************************************
-	 	//***************************************Getters and Setters***************************************
-	 	//*************************************************************************************************
+	@Id
+	@Column(name = "idgrupy_zajeciowe")
+	@GeneratedValue
+	private Integer idGrupyZajeciowe;
 
-		public Integer getIdGrupyZajeciowe() {
-			return idGrupyZajeciowe;
-		}
+	@Column(name = "kod_grupy")
+	private String kodGrupy;
 
-		public void setIdGrupyZajeciowe(Integer idGrupyZajeciowe) {
-			this.idGrupyZajeciowe = idGrupyZajeciowe;
-		}
+	@Column(name = "info_edukacja")
+	private String infoEdu;
 
-		public String getKodGrupy() {
-			return kodGrupy;
-		}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_prowadzacego", nullable = false)
+	private Prowadzacy idProwadzacego;
 
-		public void setKodGrupy(String kodGrupy) {
-			this.kodGrupy = kodGrupy;
-		}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_kursu", nullable = false)
+	private Kursy idKursu;
 
-		public String getInfoEdu() {
-			return infoEdu;
-		}
+	@Column(name = "nazwa")
+	private String nazwa;
 
-		public void setInfoEdu(String infoEdu) {
-			this.infoEdu = infoEdu;
-		}
+	@Column(name = "termin")
+	private Integer termin;
 
-		public Prowadzacy getIdProwadzacego() {
-			return idProwadzacego;
-		}
+	@Column(name = "komentarz")
+	private Integer komentarz;
 
-		public void setIdProwadzacego(Prowadzacy idProwadzacego) {
-			this.idProwadzacego = idProwadzacego;
-		}
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
 
-		public Kursy getIdKursu() {
-			return idKursu;
-		}
+	public Integer getIdGrupyZajeciowe() {
+		return idGrupyZajeciowe;
+	}
 
-		public void setIdKursu(Kursy idKursu) {
-			this.idKursu = idKursu;
-		}
+	public void setIdGrupyZajeciowe(Integer idGrupyZajeciowe) {
+		this.idGrupyZajeciowe = idGrupyZajeciowe;
+	}
 
-		public String getNazwa() {
-			return nazwa;
-		}
+	public String getKodGrupy() {
+		return kodGrupy;
+	}
 
-		public void setNazwa(String nazwa) {
-			this.nazwa = nazwa;
-		}
+	public void setKodGrupy(String kodGrupy) {
+		this.kodGrupy = kodGrupy;
+	}
 
-		public Integer getTermin() {
-			return termin;
-		}
+	public String getInfoEdu() {
+		return infoEdu;
+	}
 
-		public void setTermin(Integer termin) {
-			this.termin = termin;
-		}
+	public void setInfoEdu(String infoEdu) {
+		this.infoEdu = infoEdu;
+	}
 
-		public Integer getKomentarz() {
-			return komentarz;
-		}
+	public Prowadzacy getIdProwadzacego() {
+		return idProwadzacego;
+	}
 
-		public void setKomentarz(Integer komentarz) {
-			this.komentarz = komentarz;
-		}
-}	
+	public void setIdProwadzacego(Prowadzacy idProwadzacego) {
+		this.idProwadzacego = idProwadzacego;
+	}
+
+	public Kursy getIdKursu() {
+		return idKursu;
+	}
+
+	public void setIdKursu(Kursy idKursu) {
+		this.idKursu = idKursu;
+	}
+
+	public String getNazwa() {
+		return nazwa;
+	}
+
+	public void setNazwa(String nazwa) {
+		this.nazwa = nazwa;
+	}
+
+	public Integer getTermin() {
+		return termin;
+	}
+
+	public void setTermin(Integer termin) {
+		this.termin = termin;
+	}
+
+	public Integer getKomentarz() {
+		return komentarz;
+	}
+
+	public void setKomentarz(Integer komentarz) {
+		this.komentarz = komentarz;
+	}
+}

@@ -13,42 +13,43 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="OCENY_CZASTKOWE")
+@Table(name = "oceny_czastkowe")
 public class OcenyCzastkowe implements Serializable {
-
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8429902717274323822L;
 
-	//****************************************************************************************
-	//***************************************Attributes***************************************
-	//****************************************************************************************
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
 	@Id
-    @Column(name="IDOCENY_CZASTKOWE")
-    @GeneratedValue
-    private Integer idOcenyCzastkowe;
-	
-	@Column(name="OCENA")
+	@Column(name = "idoceny_czastkowe")
+	@GeneratedValue
+	private Integer idOcenyCzastkowe;
+
+	@Column(name = "ocena")
 	private String ocena;
-	
-	@Column(name="DATA_DODANIA", columnDefinition="DATETIME")
-    private Date dataDodania;
-	
-	@Column(name="DATA_MODYFIKACJI", columnDefinition="DATETIME")
-    private Date dataModyfikacji;
-	
- 	@ManyToOne(fetch = FetchType.EAGER) 
-    @JoinColumn(name="ID_STUDENTA", nullable=false) 
-    private Studenci idStudenta;
- 	
- 	@ManyToOne(fetch = FetchType.EAGER) 
-    @JoinColumn(name="IDSPOTKANIA", nullable=false) 
-    private Spotkania idSpotkania;
-	//*************************************************************************************************
-	//***************************************Getters and Setters***************************************
-	//*************************************************************************************************
+
+	@Column(name = "data_dodania", columnDefinition = "DATETIME")
+	private Date dataDodania;
+
+	@Column(name = "data_modyfikacji", columnDefinition = "DATETIME")
+	private Date dataModyfikacji;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_studenta", nullable = false)
+	private Studenci idStudenta;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idspotkania", nullable = false)
+	private Spotkania idSpotkania;
+
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
 
 	public Integer getIdOcenyCzastkowe() {
 		return idOcenyCzastkowe;
@@ -98,5 +99,4 @@ public class OcenyCzastkowe implements Serializable {
 		this.idSpotkania = idSpotkania;
 	}
 
-	
 }

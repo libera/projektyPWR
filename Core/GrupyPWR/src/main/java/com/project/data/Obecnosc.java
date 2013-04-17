@@ -12,9 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-	
 @Entity
-@Table(name="OBECNOSC")
+@Table(name = "obecnosc")
 public class Obecnosc implements Serializable {
 
 	/**
@@ -22,39 +21,39 @@ public class Obecnosc implements Serializable {
 	 */
 	private static final long serialVersionUID = -3238099816394367608L;
 
-	//****************************************************************************************
-	//***************************************Attributes***************************************
-	//****************************************************************************************
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
 	@Id
-    @Column(name="IDOBECNOSC")
-    @GeneratedValue
-    private Integer idObecnosc;
- 	
- 	@Column(name="STAN")
-    private boolean stan;
- 	
- 	@Column(name="NAZWA")
-    private String nazwa;
- 	
- 	@Column(name="DATA_WPROWADZENIA", columnDefinition="DATETIME")
-    private Date dataWprowadzenia;
- 	
- 	@Column(name="DATA_MODYFIKACJI", columnDefinition="DATETIME")
-    private Date dataModyfikacji;
- 	
- 	@ManyToOne(fetch = FetchType.EAGER) 
-    @JoinColumn(name="ID_STUDENTA", nullable=false) 
-    private Studenci idStudenta;
- 	
- 	@ManyToOne(fetch = FetchType.EAGER) 	
-    @JoinColumn(name="IS_SPOTKANIA", nullable=false)
-    private Spotkania isSpotkania;
- 	
-	//*************************************************************************************************
- 	//***************************************Getters and Setters***************************************
- 	//*************************************************************************************************
- 		
-	
+	@Column(name = "idobecnosc")
+	@GeneratedValue
+	private Integer idObecnosc;
+
+	@Column(name = "stan")
+	private boolean stan;
+
+	@Column(name = "nazwa")
+	private String nazwa;
+
+	@Column(name = "data_wprowadzenia", columnDefinition = "DATETIME")
+	private Date dataWprowadzenia;
+
+	@Column(name = "data_modyfikacji", columnDefinition = "DATETIME")
+	private Date dataModyfikacji;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_studenta", nullable = false)
+	private Studenci idStudenta;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "is_spotkania", nullable = false)
+	private Spotkania isSpotkania;
+
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
+
 	public Integer getIdObecnosc() {
 		return idObecnosc;
 	}
@@ -110,9 +109,5 @@ public class Obecnosc implements Serializable {
 	public void setIsSpotkania(Spotkania isSpotkania) {
 		this.isSpotkania = isSpotkania;
 	}
-
- 
- 		
- 	
 
 }

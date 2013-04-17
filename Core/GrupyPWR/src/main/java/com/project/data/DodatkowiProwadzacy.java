@@ -1,7 +1,5 @@
 package com.project.data;
 
-
-
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,74 +10,70 @@ import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-
 @Entity
-@Table(name="DODATKOWI_PROWADZACY")
+@Table(name = "dodatkowi_prowadzacy")
 public class DodatkowiProwadzacy implements Serializable {
-	
-		//****************************************************************************************
-		//***************************************Attributes***************************************
-		//****************************************************************************************
 
-	 	/**
+	// ****************************************************************************************
+	// ***************************************Attributes***************************************
+	// ****************************************************************************************
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8899988495420534651L;
 
-		@Id
-	    @Column(name="IDDODATKOWI_PROWADZACY")
-	    @GeneratedValue
-	    private Integer idDodatkowiProwadzacy;
-	    
-	 	@ManyToOne(fetch = FetchType.EAGER) 
-	    @JoinColumn(name="ID_PROWADZACEGO", nullable=false)
-	    private Prowadzacy id_Prowadzacego;
-	 
-	 	@ManyToOne(fetch = FetchType.EAGER) 
-	    @JoinColumn(name="ID_GRUPY", nullable=false)
-	    private GrupyZajeciowe idGrupy;
-	    
-	    @Column(name="KOMENTARZ")
-	    private String komentarz;
+	@Id
+	@Column(name = "iddodatkowi_prowadzacy")
+	@GeneratedValue
+	private Integer idDodatkowiProwadzacy;
 
-		
-	 	//*************************************************************************************************
-	 	//***************************************Getters and Setters***************************************
-	 	//*************************************************************************************************
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_prowadzacego", nullable = false)
+	private Prowadzacy id_Prowadzacego;
 
-		public Integer getIdDodatkowiProwadzacy() {
-			return idDodatkowiProwadzacy;
-		}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_grupy", nullable = false)
+	private GrupyZajeciowe idGrupy;
 
-		public void setIdDodatkowiProwadzacy(Integer idDodatkowiProwadzacy) {
-			this.idDodatkowiProwadzacy = idDodatkowiProwadzacy;
-		}
+	@Column(name = "komentarz")
+	private String komentarz;
 
-		public Prowadzacy getId_Prowadzacego() {
-			return id_Prowadzacego;
-		}
+	// *************************************************************************************************
+	// ***************************************Getters and
+	// Setters***************************************
+	// *************************************************************************************************
 
-		public void setId_Prowadzacego(Prowadzacy id_Prowadzacego) {
-			this.id_Prowadzacego = id_Prowadzacego;
-		}
+	public Integer getIdDodatkowiProwadzacy() {
+		return idDodatkowiProwadzacy;
+	}
 
-		public GrupyZajeciowe getIdGrupy() {
-			return idGrupy;
-		}
+	public void setIdDodatkowiProwadzacy(Integer idDodatkowiProwadzacy) {
+		this.idDodatkowiProwadzacy = idDodatkowiProwadzacy;
+	}
 
-		public void setIdGrupy(GrupyZajeciowe idGrupy) {
-			this.idGrupy = idGrupy;
-		}
+	public Prowadzacy getId_Prowadzacego() {
+		return id_Prowadzacego;
+	}
 
-		public String getKomentarz() {
-			return komentarz;
-		}
+	public void setId_Prowadzacego(Prowadzacy id_Prowadzacego) {
+		this.id_Prowadzacego = id_Prowadzacego;
+	}
 
-		public void setKomentarz(String komentarz) {
-			this.komentarz = komentarz;
-		}
+	public GrupyZajeciowe getIdGrupy() {
+		return idGrupy;
+	}
 
-		
-	    
-	   
-}	
+	public void setIdGrupy(GrupyZajeciowe idGrupy) {
+		this.idGrupy = idGrupy;
+	}
+
+	public String getKomentarz() {
+		return komentarz;
+	}
+
+	public void setKomentarz(String komentarz) {
+		this.komentarz = komentarz;
+	}
+
+}

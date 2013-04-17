@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="STUDENCI")
+@Table(name="studenci")
 public class Studenci implements Serializable{
 
 
@@ -23,35 +23,35 @@ public class Studenci implements Serializable{
 	//***************************************Attributes***************************************
 	//****************************************************************************************
 	@Id
-    @Column(name="IDSTUDENCI")
+    @Column(name="idstudenci")
     @GeneratedValue
     private Integer idStudenci;
 	
-	@Column(name="IMIONA")
+	@Column(name="imiona")
 	private String imie;
 	
-	@Column(name="NAZWISKO")
+	@Column(name="nazwisko")
 	private String nazwisko;
 	
-	@Column(name="NR_INDEKSU")
+	@Column(name="nr_indeksu")
 	private String nrIndeksu;
 	
-	@Column(name="EMAIL")
+	@Column(name="email")
 	private String email;
 	
-	@Column(name="ROK")
+	@Column(name="rok")
 	private Integer rok;
 	
-	@Column(name="SEMESTR")
+	@Column(name="semestr")
 	private Integer semestr;
 
-	@Column(name="PRZEDMIOT_KSZTALCENIA")
+	@Column(name="przedmiot_ksztalcenia")
 	private String przedmiot_ksztalcenia;
 	
-	@Column(name="LOGIN")
+	@Column(name="login")
 	private String login;
 	
-	@Column(name="HASLO")
+	@Column(name="haslo")
 	private String haslo;
 	//*************************************************************************************************
 	//***************************************Getters and Setters***************************************
