@@ -101,7 +101,7 @@ public class LoginController extends SendMail {
 
 	@RequestMapping(value = "/importcsv", method = RequestMethod.POST)
 	public @ResponseBody
-	String upload(@RequestParam(value = "file", required = true) File file,
+	String upload(@RequestParam(value = "filecontent", required = true) File file,
 			Model model) throws IOException {
 		
 		ImportCSV importcsv = new ImportCSV();
