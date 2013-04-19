@@ -17,7 +17,7 @@ var datesSample = {'dates':
 			[
 				{'id':'4', 'name':'Nie wiem po co to', 'subject':'System zarządzania projektami studenckimi', 'repo':'GitHub...'}
 			]
-		},
+		}
 	]
 };
 

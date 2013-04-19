@@ -9,6 +9,15 @@ html, body {
 	color: #212121;
 }
 
+/*Success and error*/
+.error {
+	color: #9e1715;
+}
+
+.success {
+	color: green;
+}
+
 div.clear {
 	clear: both;
 }
@@ -50,14 +59,6 @@ div#login table td, div#register table td {
 td.info {
 	text-align: center;
 	display: none;
-}
-
-.error {
-	color: #9e1715;;
-}
-
-.success {
-	color: green;
 }
 
 td.param {
@@ -135,6 +136,14 @@ header.section-title {
 	margin-bottom: 10px;
 }
 
+header.section-title.success {
+	color: green;
+}
+
+header.section-title.error {
+	color: #9e1715;
+}
+
 ul#courses header {
 	cursor: pointer;
 	display: inline;
@@ -200,6 +209,13 @@ a#import-csv-button {
 }
 
 div#lightbox {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 100;
+}
+
+div#lightbox div.bg {
 	width: 100%;
 	height: 100%;
 	position: absolute;

@@ -32,9 +32,42 @@ var coursesSample = {'courses':
 	]
 };
 
-function importCSV(e) {
-	e.preventDefault();
-	$('div#lightbox').show();
+function initCourses() {
+	//courses tools
+	$('a#import-csv-button').click(function(e) {
+		e.preventDefault();
+		$('div#lightbox').show();
+		
+		$('#upload-csv').show();
+		$('#upload-csv').css('left', $(document).width()/2 - $('#upload-csv').width()/2);
+		$('#upload-csv').css('top', $(document).height()/2 - $('#upload-csv').height()/2-50);
+	});
+	
+	$('#upload-csv input:button').click(function(e) {
+		e.preventDefault();
+		var fileContent = new FormData($('#upload-csv form')[0]);
+		
+		$.ajax({
+			url: serverURL + 'importcsv',
+			type: 'POST',
+			success: function(data, textStatus, jqXHR) {
+				alert(data + " " + textStatus);
+				
+				//showing imported dialog
+				/*$('div#lightbox').show();
+				$('#importcsv-success').show();
+				$('#importcsv-success').css('left', $(document).width()/2 - $('#importcsv-success').width()/2);
+				$('#importcsv-success').css('top', $(document).height()/2 - $('#importcsv-success').height()/2-50);*/
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert(textStatus + " " + errorThrown);
+			},
+			data: {filecontent: fileContent},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	});
 }
 
 function loadCourses() {
@@ -77,7 +110,4 @@ function loadCourses() {
 	$('#courses li.course ul li input').change(function() {
 		loadGroups();
 	});
-	
-	//courses tools
-	$('a#import-csv-button').click(importCSV);
 }

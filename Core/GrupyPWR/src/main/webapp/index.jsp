@@ -23,12 +23,22 @@
 	</head>
 	<body>
 		<div id="lightbox">
+			<div class="bg">
+			</div>
 			<div id="upload-csv" class="dialog">
 				<header class="section-title">Upload CSV</header>
 				<form enctype="multipart/form-data">
 					<input name="csv-file" type="file" id="csv-file" />
 					<input type="button" value="Wyślij" />
 				</form>
+			</div>
+			<div id="register-success" class="dialog">
+				<header class="section-title success">Zarejestrowano pomyślnie!</header>
+				<span class="success">Twoje hasło zostało wysłane na adres email podany przy rejestracji.</span>
+			</div>
+			<div id="importcsv-success" class="dialog">
+				<header class="section-title success">Zaimportowano!</header>
+				<span class="success">Import pliku CSV przebiegł pomyślnie, zaimportowane kursy są widoczne w drzewie kursów.</span>
 			</div>
 		</div>
 		<div id="login">

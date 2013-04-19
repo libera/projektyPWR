@@ -41,6 +41,13 @@ function hideLogin() {
 	$('#login').hide();
 }
 
+function initLightbox() {
+	$('#lightbox .bg').click(function() {
+		$('.dialog').hide();
+		$('#lightbox').hide();
+	});
+}
+
 $(document).ready(function() {
 	//when document is ready we display login window and hide content
 	hideLightbox();
@@ -49,7 +56,7 @@ $(document).ready(function() {
 	showLogin();
 	
 	//register click event handlers
-	$('input#login-button').click(function() {
+	$('input#login-button').click(function(e) {
 		$('div#login td.info').hide();
 		$('div#login td.info').html('');
 		
@@ -62,7 +69,7 @@ $(document).ready(function() {
 			dataType: 'json',
 			data: {user: user, pass: $.md5(pass)},
 			success: function(data, textStatus, jqXHR) {
-				console.log(data);
+				console.log("Logowanie: " + data);
 				if(data == '1') {
 					hideLogin();
 					showContent();
@@ -76,8 +83,6 @@ $(document).ready(function() {
 				$('div#login td.info').html('<span class="error">Nie można zalogować. Powód:<br />' + errorThrown + '</span>');
 			}
 		});
-		
-		
 	});
 	
 	$('input#register-button').click(function() {
@@ -96,27 +101,32 @@ $(document).ready(function() {
 			$('div#register td.info').show();
 			$('div#register td.info').html('<span class="error">Podane hasła nie są identyczne!</span>');
 		} */
-		 if(firstname == "" || surname == "" || email == "" || user == "" ) {
+		if(email.indexOf('pwr.wroc.pl') <= 0) {
+			$('div#register td.info').show();
+			$('div#register td.info').html('<span class="error">Adres email musi być w domenie pwr.wroc.pl!</span>');
+		} else if(firstname == "" || surname == "" || email == "" || user == "" ) {
 			$('div#register td.info').show();
 			$('div#register td.info').html('<span class="error">Wszystkie pola muszą być wypełnione!</span>');
 		} else {
 			$.ajax({
 				url: serverURL + "register",
 				type: 'POST',
-				data: {firstname: firstname, surname: surname, email: email, user: user/*, pass: pass*/},
+				data: {firstname: firstname, surname: surname, email: email, user: user},
 				dataType: 'json',
 				success: function(data, textStatus, jqXHR ) {
-					console.log(data);
 					if(data == '1') {
 						hideRegister();
 						showContent();
+						
+						//showing registered dialog
+						$('div#lightbox').show();
+						$('#register-success').show();
+						$('#register-success').css('left', $(document).width()/2 - $('#register-success').width()/2);
+						$('#register-success').css('top', $(document).height()/2 - $('#register-success').height()/2-50);
 					} else {
 						$('div#login td.info').show();
 						$('div#login td.info').html('<span class="error">Nie można zarejestrować. Powód:<br />' + textStatus +  '</span>');
 					}
-					
-					$('div#register td.info').show();
-					$('div#register td.info').html('<span class="success">Zarejestrowano pomyślnie</span>');
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
 					$('div#register td.info').show();
@@ -131,6 +141,10 @@ $(document).ready(function() {
 		hideLogin();
 		showRegister();
 	});
+	
+	//init functions for static elements - called only once!
+	initLightbox();
+	initCourses();
 });
 
 $(window).resize(function() {
