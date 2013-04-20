@@ -75,7 +75,7 @@ public class LoginController extends SendMail {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody
-	Integer loginAuthentication(
+	String loginAuthentication(
 			@RequestParam(value = "user", required = true) String login,
 			@RequestParam(value = "pass", required = true) String haslo,
 			Model model) {
@@ -84,6 +84,8 @@ public class LoginController extends SendMail {
 		/*
 		 * boolean czyAktywowany=loginlist.get(0).isAktywowany();
 		 */
+		Integer idUser = loginlist.get(0).getIdProwadzacy();
+		String id_User = idUser.toString();
 		System.out.println("Has³o: " + haslo + " Login: " + login);
 		// System.out.println("\nCzy aktywowany: "+czyAktywowany);
 		System.out.println("\nRozmiar loginlist: " + loginlist.size());
@@ -93,23 +95,25 @@ public class LoginController extends SendMail {
 			 * if(czyAktywowany ==false) { loginService.aktywacja(login, true);
 			 * }
 			 */
-			return 1;
+			return id_User;
+
 		} else {
-			return 0;
+			return null;
 		}
 	}
 
 	@RequestMapping(value = "/importcsv", method = RequestMethod.POST)
 	public @ResponseBody
-	String upload(@RequestParam(value = "filecontent", required = true) File file,
+	String upload(
+			@RequestParam(value = "filecontent", required = true) File file,
+			@RequestParam(value = "loginid", required = true) int login,
 			Model model) throws IOException {
-		
+
 		ImportCSV importcsv = new ImportCSV();
 		if (file.isFile() == true) {
 			importcsv.do_import(file);
 			return "Success";
-		}
-		else{
+		} else {
 			return "Error";
 		}
 	}
