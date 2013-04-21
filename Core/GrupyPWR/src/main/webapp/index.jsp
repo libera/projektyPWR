@@ -46,10 +46,6 @@
 				<header class="section-title success">Zarejestrowano pomyślnie!</header>
 				<span class="success">Twoje hasło zostało wysłane na adres email podany przy rejestracji.</span>
 			</div>
-			<div id="importcsv-success" class="dialog">
-				<header class="section-title success">Zaimportowano!</header>
-				<span class="success">Import pliku CSV przebiegł pomyślnie, zaimportowane kursy są widoczne w drzewie kursów.</span>
-			</div>
 		</div>
 		<div id="login">
 			<div class="top-bar">

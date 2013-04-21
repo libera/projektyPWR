@@ -35,11 +35,11 @@ var coursesSample = {'courses':
 function initCourses() {
 	//courses tools
 	$('a#import-csv-button').click(function(e) {
-		$('div#upload-csv td.info').html('');
-    	$('div#upload-csv td.info').hide();
-		
 		e.preventDefault();
 		$('div#lightbox').show();
+		
+		$('div#upload-csv td.info').html('');
+    	$('div#upload-csv td.info').hide();
 		
 		$('#upload-csv').show();
 		$('#upload-csv').css('left', $(document).width()/2 - $('#upload-csv').width()/2);
@@ -61,20 +61,21 @@ function initCourses() {
 		e.preventDefault();
 		var fileContent = new FormData($('#upload-csv form')[0]);
 		
+		$('div#upload-csv td.info').html('');
+    	$('div#upload-csv td.info').hide();
+		
 		$.ajax({
 			url: serverURL + 'importcsv',
 			type: 'POST',
 			success: function(data, textStatus, jqXHR) {
 				alert(data + " " + textStatus);
 				
-				//showing imported dialog
-				/*$('div#lightbox').show();
-				$('#importcsv-success').show();
-				$('#importcsv-success').css('left', $(document).width()/2 - $('#importcsv-success').width()/2);
-				$('#importcsv-success').css('top', $(document).height()/2 - $('#importcsv-success').height()/2-50);*/
+				$('div#upload-csv td.info').show();
+				$('div#upload-csv td.info').html('<span class="success">Plik został zaimportowany!</span>');
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert(textStatus + " " + errorThrown);
+				$('div#upload-csv td.info').show();
+				$('div#upload-csv td.info').html('<span class="error">Błąd podczas importu pliku! Powód:<br />' + errorThrown + '</span>');
 			},
 			data: {filecontent: fileContent, userid: userID},
 			cache: false,
