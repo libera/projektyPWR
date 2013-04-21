@@ -35,12 +35,26 @@ var coursesSample = {'courses':
 function initCourses() {
 	//courses tools
 	$('a#import-csv-button').click(function(e) {
+		$('div#upload-csv td.info').html('');
+    	$('div#upload-csv td.info').hide();
+		
 		e.preventDefault();
 		$('div#lightbox').show();
 		
 		$('#upload-csv').show();
 		$('#upload-csv').css('left', $(document).width()/2 - $('#upload-csv').width()/2);
 		$('#upload-csv').css('top', $(document).height()/2 - $('#upload-csv').height()/2-50);
+	});
+	
+	$('#upload-csv :file').change(function(){
+	    var file = this.files[0];
+	    if(file.type != "text/csv") {
+	    	$('div#upload-csv td.info').show();
+			$('div#upload-csv td.info').html('<span class="error">Podany plik ma błędne rozszerzenie!</span>');
+	    } else {
+	    	$('div#upload-csv td.info').html('');
+	    	$('div#upload-csv td.info').hide();
+	    }
 	});
 	
 	$('#upload-csv input:button').click(function(e) {
@@ -62,7 +76,7 @@ function initCourses() {
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert(textStatus + " " + errorThrown);
 			},
-			data: {filecontent: fileContent},
+			data: {filecontent: fileContent, userid: userID},
 			cache: false,
 			contentType: false,
 			processData: false

@@ -27,10 +27,20 @@
 			</div>
 			<div id="upload-csv" class="dialog">
 				<header class="section-title">Upload CSV</header>
-				<form enctype="multipart/form-data">
-					<input name="csv-file" type="file" id="csv-file" />
-					<input type="button" value="Wyślij" />
-				</form>
+				<table cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="info"></td>
+					</tr>
+					<tr>
+						<td>
+							<form enctype="multipart/form-data">
+								<input name="csv-file" type="file" id="csv-file" />
+								<input type="button" value="Wyślij" />
+							</form>
+						</td>
+					</tr>
+				</table>
+				
 			</div>
 			<div id="register-success" class="dialog">
 				<header class="section-title success">Zarejestrowano pomyślnie!</header>
@@ -52,7 +62,7 @@
 			</header>
 			<table cellspacing="0" cellpadding="0">
 				<tr>
-					<td colspan="2" class="info">Aby uzyskać dostęp podaj nazwę użytkownika oraz hasło.</td>
+					<td colspan="2" class="info"></td>
 				</tr>
 				<tr>
 					<td class="param">Użytkownik:</td>

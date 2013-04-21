@@ -52,7 +52,7 @@ div#login table, div#register table {
 	width: 450px;
 }
 
-div#login table td, div#register table td {
+div#login table td, div#register table td, div#upload-csv table td {
 	padding: 6px;
 }
 
