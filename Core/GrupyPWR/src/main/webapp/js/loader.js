@@ -116,7 +116,7 @@ $(document).ready(function() {
 				success: function(data, textStatus, jqXHR ) {
 					if(data == '1') {
 						hideRegister();
-						showContent();
+						showLogin();
 						
 						//showing registered dialog
 						$('div#lightbox').show();
