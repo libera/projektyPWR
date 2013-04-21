@@ -84,8 +84,8 @@ public class LoginController extends SendMail {
 		/*
 		 * boolean czyAktywowany=loginlist.get(0).isAktywowany();
 		 */
-		Integer idUser = loginlist.get(0).getIdProwadzacy();
-		String id_User = idUser.toString();
+		//Integer idUser = loginlist.get(0).getIdProwadzacy();
+		//String id_User = idUser.toString();
 		System.out.println("Has³o: " + haslo + " Login: " + login);
 		// System.out.println("\nCzy aktywowany: "+czyAktywowany);
 		System.out.println("\nRozmiar loginlist: " + loginlist.size());
@@ -95,10 +95,10 @@ public class LoginController extends SendMail {
 			 * if(czyAktywowany ==false) { loginService.aktywacja(login, true);
 			 * }
 			 */
-			return id_User;
+			return loginlist.get(0).getIdProwadzacy().toString();
 
 		} else {
-			return null;
+			return "-1";
 		}
 	}
 

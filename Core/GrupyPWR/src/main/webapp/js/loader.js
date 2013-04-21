@@ -1,4 +1,5 @@
 var serverURL = 'http://localhost:8080/tut/';
+var userID = -1;
 
 function resizeWindow() {
 	//setting right-col width
@@ -69,8 +70,9 @@ $(document).ready(function() {
 			dataType: 'json',
 			data: {user: user, pass: $.md5(pass)},
 			success: function(data, textStatus, jqXHR) {
-				console.log("Logowanie: " + data);
-				if(data == '1') {
+				if(data >= 0) {
+					userID = parseInt(data);
+					
 					hideLogin();
 					showContent();
 				} else {
