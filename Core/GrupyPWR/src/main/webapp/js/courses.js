@@ -121,8 +121,11 @@ function loadCourses() {
 		}
 	});
 	
-	//dates click events
-	$('#courses li.course ul li input').change(function() {
-		loadGroups();
+	$('input[name="checkedDates"]').click(function() {
+		if($(this).is(':checked')) {
+			loadGroup($(this).val());
+		} else {
+			unloadGroup($(this).val());
+		}
 	});
 }

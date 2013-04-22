@@ -17,6 +17,7 @@
 		<script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="./js/jquery-ui-1.10.2.custom.min.js"></script>
 		<script type="text/javascript" src="./js/jquery.md5.js"></script>
+		<script type="text/javascript" src="./js/jquery.jqGrid.min.js"></script>
 		<script type="text/javascript" src="./js/groups.js"></script>
 		<script type="text/javascript" src="./js/courses.js"></script>
 		<script type="text/javascript" src="./js/loader.js"></script>
@@ -45,6 +46,33 @@
 			<div id="register-success" class="dialog">
 				<header class="section-title success">Zarejestrowano pomyślnie!</header>
 				<span class="success">Twoje hasło zostało wysłane na adres email podany przy rejestracji.</span>
+			</div>
+			<div id="logout-success" class="dialog">
+				<header class="section-title success">Wylogowano!</header>
+				<span class="success">Użytkownik został wylogowany.</span>
+			</div>
+			<div id="change-pass" class="dialog">
+				<header class="section-title">Zmiana hasła</header>
+				<table cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="info" colspan="2"></td>
+					</tr>
+					<tr>
+						<td class="param">Stare hasło:</td>
+						<td class="value"><input type="password" id="change-pass-old" /></td>
+					</tr>
+					<tr>
+						<td class="param">Nowe hasło:</td>
+						<td class="value"><input type="password" id="change-pass-new" /></td>
+					</tr>
+					<tr>
+						<td class="param">Powtórz hasło:</td>
+						<td class="value"><input type="password" id="change-pass-repeat" /></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;" colspan="2"><input type="button" id="change-pass-button" value="Zmień hasło" /></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 		<div id="login">
@@ -127,8 +155,8 @@
 					<div class="user">
 					</div>
 					<div class="info">
-						rok akademicki: 2012/2013<br />
-						semestr: letni
+						Użytkownik: <span id="user-logged-name"></span><br />
+						<a href="#" id="user-change-pass">zmień hasło</a> - <a href="#" id="user-logout">wyloguj</a>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -150,7 +178,8 @@
 							<div class="tools"><a href="" class="more">Więcej</a></div>
 						</header>
 						<div class="details">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ligula nulla, viverra eget dictum nec, eleifend eget elit. Phasellus lectus erat, ultrices ac sollicitudin id, vestibulum non magna. Donec sollicitudin venenatis ipsum, eget pretium dolor volutpat quis. Proin vitae dolor odio. Sed luctus arcu ut tellus vehicula pretium. Praesent diam massa, rhoncus ac accumsan vitae, luctus at risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ligula vel nulla adipiscing mollis. Mauris vel tincidunt nisi. Maecenas ac sapien dui. Nullam justo neque, varius vitae placerat ut, adipiscing vel turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Curabitur malesuada commodo magna, nec bibendum est bibendum at. Ut nisi ligula, vestibulum quis laoreet in, convallis at arcu. Sed lorem arcu, placerat ut euismod tincidunt, eleifend sed arcu.
+							<table id="students-grid">
+							</table>
 						</div>
 					</div>
 				</div>

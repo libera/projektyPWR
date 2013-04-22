@@ -1,5 +1,6 @@
 var serverURL = 'http://localhost:8080/tut/';
 var userID = -1;
+var userName = "";
 
 function resizeWindow() {
 	//setting right-col width
@@ -49,6 +50,84 @@ function initLightbox() {
 	});
 }
 
+function initUser() {
+	$('#user-change-pass').click(function(e) {
+		e.preventDefault();
+		
+		$('div#change-pass td.info').html('');
+    	$('div#change-pass td.info').hide();
+		
+		$('div#lightbox').show();
+		
+		$('div#change-pass td.info').html('');
+    	$('div#change-pass td.info').hide();
+		
+		$('#change-pass').show();
+		$('#change-pass').css('left', $(document).width()/2 - $('#change-pass').width()/2);
+		$('#change-pass').css('top', $(document).height()/2 - $('#change-pass').height()/2-50);
+	});
+	
+	$('#change-pass-button').click(function() {
+		var oldPass = $('#change-pass-old').val();
+		var newPass = $('#change-pass-new').val();
+		var newPassRepeat = $('#change-pass-repeat').val();
+		
+		if(newPass != newPassRepeat) {
+			$('div#change-pass td.info').show();
+			$('div#change-pass td.info').html('<span class="error">Podane hasła nie są identyczne!</span>');
+		} else if(oldPass == "" || newPass == "" || newPassRepeat == "") {
+			$('div#change-pass td.info').show();
+			$('div#change-pass td.info').html('<span class="error">Nie wszystkie pola zostały wypełnione!</span>');
+		} else {
+			$.ajax({
+				url: serverURL + "changepass",
+				type: 'POST',
+				data: {userid: userID, oldpass: $.md5(oldPass), newpass: $.md5(newPass)},
+				dataType: 'json',
+				success: function(data, textStatus, jqXHR ) {
+					if(data == '1') {
+						$('div#change-pass td.info').show();
+						$('div#change-pass td.info').html('<span class="success">Hasło zostało zmienione!</span>');
+					} else {
+						$('div#change-pass td.info').show();
+						$('div#change-pass td.info').html('<span class="error">Hasło nie zostało zmienione!</span>');
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					$('div#change-pass td.info').show();
+					$('div#change-pass td.info').html('<span class="error">Nie można zmienić hasła. Powód:<br />' + errorThrown + '</span>');
+				}
+			});
+		}
+	});
+	
+	$('#user-logout').click(function(e) {
+		e.preventDefault();
+		
+		$.ajax({
+			url: serverURL + "logout",
+			type: 'POST',
+			data: {userid: userID}
+		});
+		
+		userID = 0;
+		userName = "";
+		
+		hideContent();
+		showLogin();
+		
+		//showing registered dialog
+		$('div#lightbox').show();
+		$('#logout-success').show();
+		$('#logout-success').css('left', $(document).width()/2 - $('#logout-success').width()/2);
+		$('#logout-success').css('top', $(document).height()/2 - $('#logout-success').height()/2-50);
+		
+		//clearing login form
+		$('#login-user').val('');
+		$('#login-pass').val('');
+	});
+}
+
 $(document).ready(function() {
 	//when document is ready we display login window and hide content
 	hideLightbox();
@@ -64,6 +143,8 @@ $(document).ready(function() {
 		var user = $.trim($('input#login-user').val());
 		var pass = $.trim($('input#login-pass').val());
 		
+		userName = user;
+		
 		$.ajax({
 			url: serverURL + "login",
 			type: 'POST',
@@ -75,6 +156,8 @@ $(document).ready(function() {
 					
 					hideLogin();
 					showContent();
+					
+					$("#user-logged-name").html(userName);
 				} else {
 					$('div#login td.info').show();
 					$('div#login td.info').html('<span class="error">Nie można zalogować. Błędny login lub hasło.</span>');
@@ -147,6 +230,7 @@ $(document).ready(function() {
 	//init functions for static elements - called only once!
 	initLightbox();
 	initCourses();
+	initUser();
 });
 
 $(window).resize(function() {
