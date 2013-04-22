@@ -28,20 +28,17 @@
 			</div>
 			<div id="upload-csv" class="dialog">
 				<header class="section-title">Upload CSV</header>
-				<table cellspacing="0" cellpadding="0">
-					<tr>
-						<td class="info"></td>
-					</tr>
-					<tr>
-						<td>
-							<form enctype="multipart/form-data">
-								<input name="csv-file" type="file" id="csv-file" />
-								<input type="button" value="Wyślij" />
-							</form>
-						</td>
-					</tr>
-				</table>
-				
+				<form enctype="multipart/form-data">
+					<table>
+						<tr>
+							<td class="info" colspan="2"></td>
+						</tr>
+						<tr>
+							<td><input name="csv-file" type="file" id="csv-file" /></td>
+							<td><input type="button" value="Wyślij" /></td>
+						</tr>
+					</table>
+				</form>
 			</div>
 			<div id="register-success" class="dialog">
 				<header class="section-title success">Zarejestrowano pomyślnie!</header>
@@ -53,7 +50,7 @@
 			</div>
 			<div id="change-pass" class="dialog">
 				<header class="section-title">Zmiana hasła</header>
-				<table cellspacing="0" cellpadding="0">
+				<table>
 					<tr>
 						<td class="info" colspan="2"></td>
 					</tr>
@@ -84,7 +81,7 @@
 			<header class="section-title">
 				Logowanie
 			</header>
-			<table cellspacing="0" cellpadding="0">
+			<table>
 				<tr>
 					<td colspan="2" class="info"></td>
 				</tr>
@@ -111,7 +108,7 @@
 			<header class="section-title">
 				Rejestracja
 			</header>
-			<table cellspacing="0" cellpadding="0">
+			<table>
 				<tr>
 					<td colspan="2" class="info"></td>
 				</tr>

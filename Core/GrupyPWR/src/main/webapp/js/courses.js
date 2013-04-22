@@ -48,6 +48,7 @@ function initCourses() {
 	
 	$('#upload-csv :file').change(function(){
 	    var file = this.files[0];
+	    
 	    if(file.type != "text/csv") {
 	    	$('div#upload-csv td.info').show();
 			$('div#upload-csv td.info').html('<span class="error">Podany plik ma błędne rozszerzenie!</span>');
@@ -61,36 +62,60 @@ function initCourses() {
 		e.preventDefault();
 		var fileContent = new FormData($('#upload-csv form')[0]);
 		
-		$('div#upload-csv td.info').html('');
-    	$('div#upload-csv td.info').hide();
-		
-		$.ajax({
-			url: serverURL + 'importcsv',
-			type: 'POST',
-			success: function(data, textStatus, jqXHR) {
-				alert(data + " " + textStatus);
-				
-				$('div#upload-csv td.info').show();
-				$('div#upload-csv td.info').html('<span class="success">Plik został zaimportowany!</span>');
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				$('div#upload-csv td.info').show();
-				$('div#upload-csv td.info').html('<span class="error">Błąd podczas importu pliku! Powód:<br />' + errorThrown + '</span>');
-			},
-			data: {filecontent: fileContent, userid: userID},
-			cache: false,
-			contentType: false,
-			processData: false
-		});
+		if($('#upload-csv :file')[0].files.length == 0) {
+			$('div#upload-csv td.info').show();
+			$('div#upload-csv td.info').html('<span class="error">Nie wybrano żadnego pliku!</span>');
+		} else {
+			$('div#upload-csv td.info').html('');
+	    	$('div#upload-csv td.info').hide();
+			
+			$.ajax({
+				url: serverURL + 'importcsv',
+				type: 'POST',
+				success: function(data, textStatus, jqXHR) {
+					console.log(data + " " + textStatus);
+					if(data == '1') {
+						$('div#upload-csv td.info').show();
+						$('div#upload-csv td.info').html('<span class="success">Plik został zaimportowany!</span>');
+					} else {
+						$('div#upload-csv td.info').show();
+						$('div#upload-csv td.info').html('<span class="error">Błąd podczas importu pliku!</span>');
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					$('div#upload-csv td.info').show();
+					$('div#upload-csv td.info').html('<span class="error">Błąd podczas importu pliku! Powód:<br />' + errorThrown + '</span>');
+				},
+				data: {filecontent: fileContent, userid: userID},
+				cache: false,
+				contentType: false,
+				processData: false
+			});
+		}
 	});
 }
 
 function loadCourses() {
 	//clearing previous
 	$('#courses').html('');
+	
+	var coursesData = coursesSample;
 
-	//TO DO: get courses by http request
-	$.each(coursesSample.courses, function() {
+	$.ajax({
+		url: serverURL + 'getcourses',
+		type: 'POST',
+		dataType: 'json',
+		data: {userid: userID},
+		success: function(data, textStatus, jqXHR) {
+			console.log(data + " " + textStatus);
+			coursesData = data;
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log(textStatus + " " + errorThrown);
+		}
+	});
+	
+	$.each(coursesData.courses, function() {
 		currCourse = this;
 	
 		$('#courses').append(
@@ -123,9 +148,9 @@ function loadCourses() {
 	
 	$('input[name="checkedDates"]').click(function() {
 		if($(this).is(':checked')) {
-			loadGroup($(this).val());
+			loadDate($(this).val());
 		} else {
-			unloadGroup($(this).val());
+			unloadDate($(this).val());
 		}
 	});
 }

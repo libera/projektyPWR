@@ -15,10 +15,10 @@ var datesSample = {'dates':
 						},
 						{'id':'2', 'firstname':'Przemysław', 'surname':'Wąsala', 'Index':'181031', 'finalmark':'5', 'position':'szefu', 'mail':'181031@student.pwr.wroc.pl',
 							'marksandpresence':
-								[
-								 	{'meetingid':'1', 'presenceid':'3', 'present':'1', 'markid':'3', 'mark':'5'},
-								 	{'meetingid':'2', 'presenceid':'4', 'present':'1', 'markid':'4', 'mark':'5'},
-								]
+							[
+							 	{'meetingid':'1', 'presenceid':'3', 'present':'1', 'markid':'3', 'mark':'5'},
+							 	{'meetingid':'2', 'presenceid':'4', 'present':'1', 'markid':'4', 'mark':'5'},
+							]
 						}
 					],
 					//columns definition
@@ -35,18 +35,22 @@ var datesSample = {'dates':
 				},
 				{'id':'2', 'name':'Nie wiem po co to', 'subject':'Internetowy system zarządzania przychodnią', 'repo':'GitHub...'},
 				{'id':'3', 'name':'Nie wiem po co to', 'subject':'Inny smieszny projekt', 'repo':'GitHub...'}
+			],
+			'notingroup':
+			[
+			 	{'id':'3', 'firstname':'Michał', 'surname':'Glenc', 'Index':'181031', 'mail':'181031@student.pwr.wroc.pl'}
 			]
 		}
 	]
 };
 
-function loadGroup(id) {
+function loadDate(id) {
 	console.log("load " + id);
 	
 	//TO DO: AJAX
 }
 
-function unloadGroup(id) {
+function unloadDate(id) {
 	console.log("unload " + id);
 }
 

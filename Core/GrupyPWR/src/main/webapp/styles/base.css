@@ -228,9 +228,9 @@ div#lightbox div.bg {
 }
 
 /*Import CSV*/
-div#upload-csv {
-	width: 300px;
-}
+/*div#upload-csv {
+	width: 330px;
+}*/
 
 div#upload-csv table {
 	width: 100%;

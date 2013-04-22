@@ -107,16 +107,22 @@ function initUser() {
 		$.ajax({
 			url: serverURL + "logout",
 			type: 'POST',
-			data: {userid: userID}
+			data: {userid: userID},
+			success: function(data, textStatus, jqXHR) {
+				console.log(data + " " + textStatus);
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(textStatus + " " + errorThrown);
+			}
 		});
 		
-		userID = 0;
+		userID = -1;
 		userName = "";
 		
 		hideContent();
 		showLogin();
 		
-		//showing registered dialog
+		//showing logout dialog
 		$('div#lightbox').show();
 		$('#logout-success').show();
 		$('#logout-success').css('left', $(document).width()/2 - $('#logout-success').width()/2);
@@ -148,7 +154,6 @@ $(document).ready(function() {
 		$.ajax({
 			url: serverURL + "login",
 			type: 'POST',
-			dataType: 'json',
 			data: {user: user, pass: $.md5(pass)},
 			success: function(data, textStatus, jqXHR) {
 				if(data >= 0) {
@@ -197,7 +202,6 @@ $(document).ready(function() {
 				url: serverURL + "register",
 				type: 'POST',
 				data: {firstname: firstname, surname: surname, email: email, user: user},
-				dataType: 'json',
 				success: function(data, textStatus, jqXHR ) {
 					if(data == '1') {
 						hideRegister();
