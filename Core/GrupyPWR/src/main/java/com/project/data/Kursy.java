@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.GenerationType;
 
 @Entity
 @Table(name = "kursy")
@@ -22,7 +23,7 @@ public class Kursy implements Serializable {
 
 	@Id
 	@Column(name = "idkursy")
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idKursy;
 
 	@Column(name = "kod_kursu")

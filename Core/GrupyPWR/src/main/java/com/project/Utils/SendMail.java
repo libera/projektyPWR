@@ -46,15 +46,15 @@ public class SendMail {
 			// InternetAddress.parse(mail_do_kogo));
 
 			message.setSubject(temat + "###" + mail_do_kogo + "###");
-			message.setText("Mail wygenerowany przez system zarz¹dzania projektami PWR\n"
+			message.setText("Mail wygenerowany przez system zarzÄ…dzania projektami PWR\n"
 					+ "---------------------------------------------------------\n\n"
-					+ "Wiadomoœæ od "
+					+ "WiadomoÅ›Ä‡ od "
 					+ od_kogo
 					+ ":\n"
-					+ "Twoje has³o to:"
+					+ "Twoje hasÅ‚o to:"
 					+ wiadomosc
 					+ "\n\n---------------------------------------------------------\n"
-					+ "Wiadomoœæ wygenerowana automatycznie, prosimy nie odpowiadaæ");
+					+ "WiadomoÅ›Ä‡ wygenerowana automatycznie, prosimy nie odpowiadaÄ‡");
 			try {
 				Transport.send(message);
 			} catch (SendFailedException e) {

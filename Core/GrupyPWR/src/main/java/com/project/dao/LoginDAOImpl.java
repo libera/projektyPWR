@@ -1,9 +1,17 @@
 package com.project.dao;
 
 import java.util.List;
+
+import org.apache.maven.artifact.versioning.Restriction;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.TransactionException;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.data.GrupyZajeciowe;
 import com.project.data.Kursy;
@@ -15,37 +23,36 @@ public class LoginDAOImpl implements LoginDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	@Transactional
 	public void addProwadzacy(Prowadzacy prowadzacy) {
 		sessionFactory.getCurrentSession().save(prowadzacy);
 
 	}
-
+	@Transactional
 	public List<Kursy> listKursy() {
 
-		return sessionFactory.getCurrentSession().createQuery("from kursy")
-				.list();
+		return sessionFactory.getCurrentSession().createQuery("from Kursy") .list();
 
 	}
-
+	@Transactional
 	public List<GrupyZajeciowe> listGrupyZajeciowe() {
 		return sessionFactory.getCurrentSession()
-				.createQuery("from grupy_zajeciowe").list();
+				.createQuery("from GrupyZajeciowe").list();
 
 	}
-
+	@Transactional
 	public List<Studenci> listStudenci() {
-		return sessionFactory.getCurrentSession().createQuery("from studenci")
+		return sessionFactory.getCurrentSession().createQuery("from Studenci")
 				.list();
 
 	}
-
+	@Transactional
 	public List<Prowadzacy> listProwadzacy() {
 
 		return sessionFactory.getCurrentSession()
 				.createQuery("from Prowadzacy").list();
 	}
-
+	@Transactional
 	public List<Prowadzacy> validateLogin(String login, String haslo) {
 
 		return sessionFactory
@@ -55,45 +62,51 @@ public class LoginDAOImpl implements LoginDAO {
 				.setString("login", login).setString("haslo", haslo).list();
 
 	}
-
-	public List<Kursy> validateKursy(String kod_kursu, String nazwa_kursu) {
+	@Transactional
+	public List<Kursy> validateKursy(String kodKursu, String nazwaKursu) {
 
 		return sessionFactory
 				.getCurrentSession()
 				.createQuery(
-						"from kursy where kod_kursu=:kod_kursu and nazwa_kursu=:nazwa_kursu")
-				.setString("kod_kursu", kod_kursu)
-				.setString("nazwa_kursu", nazwa_kursu).list();
+						"from Kursy where kodKursu=:kodKursu and nazwaKursu=:nazwaKursu")
+				.setString("kodKursu", kodKursu)
+				.setString("nazwaKursu", nazwaKursu).list();
 
 	}
-
+	@Transactional
 	public List<Prowadzacy> validatePname(String imiona, String nazwisko) {
 
+		// sessionFactory.getCurrentSession().createCriteria(Prowadzacy.class)
+		// .add(Restrictions.and(Restrictions.eq("imiona", imiona),
+		// Restrictions.eq("nazwisko", nazwisko))).list();
 		return sessionFactory
 				.getCurrentSession()
 				.createQuery(
-						"from prowadzacy where imiona=:imiona and nazwisko=:nazwisko")
+						"from Prowadzacy where imiona=:imiona and nazwisko=:nazwisko")
 				.setString("imiona", imiona).setString("nazwisko", nazwisko)
 				.list();
 
 	}
+	@Transactional
+	public List<GrupyZajeciowe> validateGrupyza(String kod_grupy, String termin) {
 
-	public List<GrupyZajeciowe> validateGrupyza(String kod_grupy) {
-
-		return sessionFactory.getCurrentSession()
-				.createQuery("from grupy_zajeciowe where kod_grupy=:kod_grupy")
-				.setString("kod_grupy", kod_grupy).list();
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"from GrupyZajeciowe where kodGrupy=:kod_grupy and termin=:termin")
+				.setString("kod_grupy", kod_grupy).setString("termin", termin)
+				.list();
 
 	}
-
+	@Transactional
 	public List<Studenci> validateSname(String nr_indeksu) {
 
 		return sessionFactory.getCurrentSession()
-				.createQuery("from studenci where nr_indeksu=:nr_indeksu")
+				.createQuery("from Studenci where nrIndeksu=:nr_indeksu")
 				.setString("nr_indeksu", nr_indeksu).list();
 
 	}
-
+	@Transactional
 	public void aktywacja(String Login, boolean Aktywowany) {
 		sessionFactory
 				.getCurrentSession()
@@ -102,7 +115,7 @@ public class LoginDAOImpl implements LoginDAO {
 				.setString("Login", Login).setBoolean("Aktywowany", Aktywowany)
 				.executeUpdate();
 	}
-
+	@Transactional
 	public List<Prowadzacy> validateRegister(String imiona, String nazwisko,
 			String email, String login) {
 		return sessionFactory
@@ -113,50 +126,73 @@ public class LoginDAOImpl implements LoginDAO {
 				.setString("email", email).setString("login", login).list();
 	}
 
+	@Transactional
 	public void addKursy(String kodkursu, String nazwakursu) {
 
-		String query = "insert into kursy(kodkursu,nazwakursu) values(:kodkursu,:nazwakursu)";
-
-		sessionFactory.getCurrentSession().createSQLQuery(query)
-				.setParameter("kodkursu", kodkursu)
-				.setParameter("nazwakursu", nazwakursu).executeUpdate();
+		/*
+		 * String query =
+		 * "insert into Kursy(kodKursu,nazwaKursu) values(:kodkursu,:nazwakursu)"
+		 * ;
+		 * 
+		 * sessionFactory.getCurrentSession().createQuery(query)
+		 * .setParameter("kodkursu", kodkursu) .setParameter("nazwakursu",
+		 * nazwakursu).executeUpdate();
+		 */
+		Kursy kursy = new Kursy();
+		kursy.setKodKursu(kodkursu);
+		kursy.setNazwaKursu(nazwakursu);
+		try {
+			sessionFactory.getCurrentSession().saveOrUpdate(kursy);
+		} catch (HibernateException e) {
+		}
 
 	}
-
+	@Transactional
 	public void addGrupyZajeciowe(String kodGrupy, String infoEdu,
 			Integer idProwadzacego, Integer idKursu, String nazwa,
 			String termin, String komentarz) {
 
-		String query = "insert ignore into grupy_zajeciowe(kodGrupy,infoEdu,idProwadzacego, idKursu, nazwa, termin, komentarz) values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
+		//String query = "insert ignore into GrupyZajeciowe(kodGrupy,infoEdu,idProwadzacego, idKursu, nazwa, termin, komentarz) values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
+		String query = "insert ignore into grupy_zajeciowe(" +
+				"Kod_grupy, " +
+				"Info_Edukacja, " +
+				"id_Prowadzacego, " +
+				"id_Kursu, " +
+				"Nazwa, " +
+				"Termin, " +
+				"Komentarz)" +
+				" values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
 
 		sessionFactory.getCurrentSession().createSQLQuery(query)
-				.setParameter("kodGrupy", kodGrupy)
-				.setParameter("infoEdu", infoEdu)
-				.setParameter("idProwadzacego", idProwadzacego)
-				.setParameter("idKursu", idKursu).setParameter("nazwa", nazwa)
-				.setParameter("termin", termin)
-				.setParameter("komentarz", komentarz).executeUpdate();
+				.setString("kodGrupy", kodGrupy)
+				.setString("infoEdu", infoEdu)
+				.setInteger("idProwadzacego", idProwadzacego)
+				.setInteger("idKursu", idKursu)
+				.setString("nazwa", nazwa)
+				.setString("termin", termin)
+				.setString("komentarz", komentarz).executeUpdate();
 
 	}
-
+	@Transactional
 	public void addStudenciDoGrupZajeciowych(Integer idStudenta,
 			Integer idGrupyOryginalnej, Integer idGrupyChodzacej) {
 
-		String query = "insert ignore into kursy(idStudenta,idGrupyOryginalnej,idGrupyChodzacej) values(:idStudenta,:idGrupyOryginalnej,:idGrupyChodzacej)";
+		//String query = "insert ignore into kursy(idStudenta,idGrupyOryginalnej,idGrupyChodzacej) values(:idStudenta,:idGrupyOryginalnej,:idGrupyChodzacej)";
+		String query = "insert into studenci_do_grup_zajeciowych(id_studenta,id_grupy_oryginalnej,id_grupy_chodzacej) values(:idStudenta,:idGrupyOryginalnej,:idGrupyChodzacej)";
 
 		sessionFactory.getCurrentSession().createSQLQuery(query)
 				.setParameter("idStudenta", idStudenta)
 				.setParameter("idGrupyOryginalnej", idGrupyOryginalnej)
-				.setParameter("idGrupyChodzacej", idGrupyOryginalnej)
+				.setParameter("idGrupyChodzacej", idGrupyChodzacej)
 				.executeUpdate();
 
 	}
-
+	@Transactional
 	public void addStudenci(String imie, String nazwisko, String nrIndeksu,
 			String email, Integer rok, Integer semestr, String przedmiot,
 			String login, String haslo) {
 
-		String query = "insert into studenci(imie,nazwisko,nrIndeksu, email, rok, semestr, przedmiot, login, haslo) values(:imie,:nazwisko,:nrIndeksu,:email,:rok,:semestr,:przedmiot,:login,:haslo)";
+		String query = "insert into studenci(imiona,nazwisko,nr_indeksu, email, rok, semestr, przedmiot_krztalcenia, login, haslo) values(:imie,:nazwisko,:nrIndeksu,:email,:rok,:semestr,:przedmiot,:login,:haslo)";
 
 		sessionFactory.getCurrentSession().createSQLQuery(query)
 				.setParameter("imie", imie).setParameter("nazwisko", nazwisko)

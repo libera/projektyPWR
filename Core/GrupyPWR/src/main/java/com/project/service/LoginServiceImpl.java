@@ -58,16 +58,16 @@ public class LoginServiceImpl implements LoginService {
 		return loginDAO.validateSname(nr_indeksu);
 	}
 	@Transactional
-	public List<GrupyZajeciowe> validateGrupyza(String kod_grupy) {
-		return loginDAO.validateGrupyza(kod_grupy);
+	public List<GrupyZajeciowe> validateGrupyza(String kod_grupy, String termin) {
+		return loginDAO.validateGrupyza(kod_grupy, termin);
 	}
 	@Transactional
 	public List<Prowadzacy> validatePname(String imiona, String nazwisko){
 		return loginDAO.validatePname(imiona, nazwisko);
 	}
 	@Transactional
-	public List<Kursy> validateKursy(String kod_kursu, String nazwa_kursu){
-		return loginDAO.validateKursy(kod_kursu, nazwa_kursu);
+	public List<Kursy> validateKursy(String  kodKursu, String nazwaKursu){
+		return loginDAO.validateKursy(kodKursu, nazwaKursu);
 	}
 
 	@Transactional

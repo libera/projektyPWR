@@ -37,6 +37,14 @@
        <beans:property name="prefix" value="/*" />
         <beans:property name="suffix" value=".jsp" />
     </beans:bean> 
+    
+    <!-- ========================= Resolver DEFINITIONS ========================= -->
+	<beans:bean id="multipartResolver"
+	        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	
+	    <!-- one of the properties available; the maximum file size in bytes -->
+	    <beans:property name="maxUploadSize" value="50000000"/>
+	</beans:bean>
     <!--hibernate beans -->
     
       <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -73,6 +81,13 @@
     <beans:bean id="transactionManager"
         class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <beans:property name="sessionFactory" ref="sessionFactory" />
+    </beans:bean>
+    
+    <beans:bean id="loginService" class="com.project.service.LoginServiceImpl">
+    </beans:bean>
+    
+    <beans:bean id="importCSV" class="com.project.Utils.ImportCSV">
+    	<beans:property name="loginService" ref="loginService"/>
     </beans:bean>
     
 	

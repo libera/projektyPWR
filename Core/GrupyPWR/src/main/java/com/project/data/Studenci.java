@@ -45,7 +45,7 @@ public class Studenci implements Serializable{
 	@Column(name="semestr")
 	private Integer semestr;
 
-	@Column(name="przedmiot_ksztalcenia")
+	@Column(name="przedmiot_krztalcenia")
 	private String przedmiot_ksztalcenia;
 	
 	@Column(name="login")

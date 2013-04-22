@@ -1,7 +1,11 @@
 package com.project.form;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.project.data.Prowadzacy;
 import com.project.service.LoginService;
@@ -32,6 +38,12 @@ public class LoginController extends SendMail {
 	@Autowired
 	private LoginService loginService;
 
+	@Autowired
+	private HttpServletRequest context;
+
+	@Autowired
+	private ImportCSV importcsv;
+	
 	@RequestMapping("/")
 	public String przelacz() {
 		return "*/index";
@@ -46,7 +58,7 @@ public class LoginController extends SendMail {
 			@RequestParam(value = "user", required = true) String login,
 			Model model) {
 		String from = "grupy.pwr.wroc@gmail.com";
-		String subject = "Przes≥anie has≥a do logowania!";
+		String subject = "Przes≈Çanie has≈Ça do logowania!";
 		Date data = new Date();
 		Prowadzacy prowadzacy = new Prowadzacy();
 		prowadzacy.setImiona(imie);
@@ -84,9 +96,9 @@ public class LoginController extends SendMail {
 		/*
 		 * boolean czyAktywowany=loginlist.get(0).isAktywowany();
 		 */
-		//Integer idUser = loginlist.get(0).getIdProwadzacy();
-		//String id_User = idUser.toString();
-		System.out.println("Has≥o: " + haslo + " Login: " + login);
+		// Integer idUser = loginlist.get(0).getIdProwadzacy();
+		// String id_User = idUser.toString();
+		System.out.println("Has≈Ço: " + haslo + " Login: " + login);
 		// System.out.println("\nCzy aktywowany: "+czyAktywowany);
 		System.out.println("\nRozmiar loginlist: " + loginlist.size());
 
@@ -105,17 +117,36 @@ public class LoginController extends SendMail {
 	@RequestMapping(value = "/importcsv", method = RequestMethod.POST)
 	public @ResponseBody
 	String upload(
-			@RequestParam(value = "filecontent", required = true) File file,
-			@RequestParam(value = "loginid", required = true) int login,
-			Model model) throws IOException {
+			@RequestParam(value = "filecontent", required = false) CommonsMultipartFile file,
+			@RequestParam(value = "userid", required = true) int login,
+			Model model) /* throws IOException */{
 
-		ImportCSV importcsv = new ImportCSV();
-		if (file.isFile() == true) {
-			importcsv.do_import(file);
-			return "Success";
-		} else {
+		InputStream is = null;
+		StringBuilder sb = new StringBuilder();
+		try {
+			is =file.getFileItem().getInputStream();
+			Reader reader = new InputStreamReader(is);
+			int data = reader.read();
+			while(data != -1){
+			    char theChar = (char) data;
+			    sb.append(theChar);
+			    data = reader.read();
+			}
+			reader.close();  
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		System.out.println(file.getFileItem().getFieldName());
+		
+		if(file.isEmpty()){
 			return "Error";
 		}
+		else{
+			importcsv.do_import(sb.toString(), login);
+			return "Success";
+		}
+
+
 	}
 
 	// public void do_import(File plik) {}

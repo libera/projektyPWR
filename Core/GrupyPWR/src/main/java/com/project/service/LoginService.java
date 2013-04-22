@@ -25,11 +25,11 @@ public interface LoginService {
 
 	public List<Studenci> validateSname(String nr_indeksu);
 
-	public List<GrupyZajeciowe> validateGrupyza(String kod_grupy);
+	public List<GrupyZajeciowe> validateGrupyza(String kod_grupy, String termin);
 
 	public List<Prowadzacy> validatePname(String imiona, String nazwisko);
 
-	public List<Kursy> validateKursy(String kod_kursu, String nazwa_kursu);
+	public List<Kursy> validateKursy(String  kodKursu, String nazwaKursu);
 
 	public List<Prowadzacy> listProwadzacy();
 

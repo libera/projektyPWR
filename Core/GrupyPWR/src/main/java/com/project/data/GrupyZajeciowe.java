@@ -46,7 +46,7 @@ public class GrupyZajeciowe implements Serializable {
 	private String nazwa;
 
 	@Column(name = "termin")
-	private Integer termin;
+	private String termin;
 
 	@Column(name = "komentarz")
 	private Integer komentarz;
@@ -104,11 +104,11 @@ public class GrupyZajeciowe implements Serializable {
 		this.nazwa = nazwa;
 	}
 
-	public Integer getTermin() {
+	public String getTermin() {
 		return termin;
 	}
 
-	public void setTermin(Integer termin) {
+	public void setTermin(String termin) {
 		this.termin = termin;
 	}
 
