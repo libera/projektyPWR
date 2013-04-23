@@ -61,9 +61,9 @@ function initCourses() {
 	$('#upload-csv input:button').click(function(e) {
 		e.preventDefault();
 		
-		var fileContent = new FormData($('#upload-csv-form')[0]);
+		$('div#upload-csv input#csv-userid').val(userID);
 		
-		console.log(fileContent);
+		var fileUserData = new FormData($('#upload-csv-form')[0]);
 		
 		if($('#upload-csv :file')[0].files.length == 0) {
 			$('div#upload-csv td.info').show();
@@ -71,7 +71,7 @@ function initCourses() {
 		} else {
 			$('div#upload-csv td.info').html('');
 	    	$('div#upload-csv td.info').hide();
-			
+	    	
 			$.ajax({
 				url: serverURL + 'importcsv',
 				type: 'POST',
@@ -89,7 +89,7 @@ function initCourses() {
 					$('div#upload-csv td.info').show();
 					$('div#upload-csv td.info').html('<span class="error">Błąd podczas importu pliku! Powód:<br />' + errorThrown + '</span>');
 				},
-				data: {filecontent: fileContent, userid: userID},
+				data: fileUserData,
 				cache: false,
 				contentType: false,
 				processData: false

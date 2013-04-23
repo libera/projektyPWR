@@ -34,10 +34,11 @@
 							<td class="info" colspan="2"></td>
 						</tr>
 						<tr>
-							<td><input name="csv-file" type="file" id="csv-file" /></td>
+							<td><input name="filecontent" type="file" id="csv-file" /></td>
 							<td><input type="button" value="Wyślij" /></td>
 						</tr>
 					</table>
+					<input type="hidden" name="userid" id="csv-userid" value="" />
 				</form>
 			</div>
 			<div id="register-success" class="dialog">

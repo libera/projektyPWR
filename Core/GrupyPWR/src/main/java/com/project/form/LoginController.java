@@ -119,8 +119,8 @@ public class LoginController extends SendMail {
 	String upload(
 			@RequestParam(value = "filecontent", required = false) CommonsMultipartFile file,
 			@RequestParam(value = "userid", required = true) int login,
-			Model model) /* throws IOException */{
-
+			Model model) /* throws Exception*/ {
+		
 		InputStream is = null;
 		StringBuilder sb = new StringBuilder();
 		try {
@@ -139,14 +139,12 @@ public class LoginController extends SendMail {
 		System.out.println(file.getFileItem().getFieldName());
 		
 		if(file.isEmpty()){
-			return "Error";
+			return "0";
 		}
 		else{
 			importcsv.do_import(sb.toString(), login);
-			return "Success";
+			return "1";
 		}
-
-
 	}
 
 	// public void do_import(File plik) {}
