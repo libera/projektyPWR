@@ -60,7 +60,7 @@ function initCourses() {
 	
 	$('#upload-csv input:button').click(function(e) {
 		e.preventDefault();
-		var fileContent = new FormData($('#upload-csv form')[0]);
+		var fileContent = new FormData($('#upload-csv-form')[0]);
 		
 		if($('#upload-csv :file')[0].files.length == 0) {
 			$('div#upload-csv td.info').show();

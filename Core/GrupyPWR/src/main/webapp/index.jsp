@@ -28,7 +28,7 @@
 			</div>
 			<div id="upload-csv" class="dialog">
 				<header class="section-title">Upload CSV</header>
-				<form enctype="multipart/form-data">
+				<form enctype="multipart/form-data" id="upload-csv-form">
 					<table>
 						<tr>
 							<td class="info" colspan="2"></td>
