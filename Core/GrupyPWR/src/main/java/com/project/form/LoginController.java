@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,8 @@ import com.project.Utils.ImportCSV;
 import com.project.Utils.RandomPassword;
 import com.project.Utils.SendMail;
 
+import com.project.Json.*;
+
 @Controller
 public class LoginController extends SendMail {
 
@@ -43,7 +46,7 @@ public class LoginController extends SendMail {
 
 	@Autowired
 	private ImportCSV importcsv;
-	
+
 	@RequestMapping("/")
 	public String przelacz() {
 		return "*/index";
@@ -58,7 +61,7 @@ public class LoginController extends SendMail {
 			@RequestParam(value = "user", required = true) String login,
 			Model model) {
 		String from = "grupy.pwr.wroc@gmail.com";
-		String subject = "PrzesÅ‚anie hasÅ‚a do logowania!";
+		String subject = "Przes³anie has³a do logowania!";
 		Date data = new Date();
 		Prowadzacy prowadzacy = new Prowadzacy();
 		prowadzacy.setImiona(imie);
@@ -114,34 +117,129 @@ public class LoginController extends SendMail {
 		}
 	}
 
+	@RequestMapping(value = "/getcurses", method = RequestMethod.POST)
+	public @ResponseBody
+	JsonKursy wyslijKursy(
+			@RequestParam(value = "userid", required = true) int login,
+			Model model) {
+
+		JsonKursy jsonkursy = new JsonKursy();
+		JsonGrupy jsongrupy = new JsonGrupy();
+		JsonGrupyZajeciowe jsonzjecia = new JsonGrupyZajeciowe();
+		List<JsonGrupy> courses = new ArrayList<JsonGrupy>();
+		/*
+		for (KursVOIF kurs : kursy) {
+			List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
+			List<GrupaVOIF> grupy = service.getGrupy();
+
+			for (GrupaVOIF grupa : grupy) {
+				// set dla JsonGrupyZajeciowe
+				jsonzjecia.setCode(code);
+				jsonzjecia.setId(id);
+				jsonzjecia.setName(name);
+			}
+			// jsongrupy.s
+			// jsonGrupy.setList(name);
+			// set dla JsonGrupy
+			jsongrupy.setId(id);
+			jsongrupy.setName(name);
+			jsongrupy.setDates(dates);
+
+		}
+		jsonkursy.setCourses(courses);
+		*/
+		return jsonkursy;
+		// courses.add();
+		// curses.ad
+		/*
+		 * for(Object o : courses) { String element = (String) o; for(Object p :
+		 * name) { String pelement = (String) p; } }
+		 */
+		// jsonkursy.setCourses(courses);
+
+		// taki ma byc generwany response do klienta
+		// Jeszcze nalezy dodac, ¿e sprawdzamy w tabeli grupy_zajeciowe czy
+		// przeslany postem
+		// id_ usera jest taki jaki chcemy wyœwietliæ przyporz¹dkowane do niego
+		// grupy(przesylane POSTEM)
+		/*
+		 * Czyli tutaj korzystamy z encji Kursy która wyswietla nam(teraz
+		 * wypisuje wszystkie pola z kursów): - nazwa_kursu - kod_kursu
+		 * Nastêpnie w danych kursach mamy wiêcej grup i teraz robi¹ siê checa(
+		 * czyli w tym momencie wyswietlamy zawartoœæ encji grupy_zjeciowe,
+		 * odpowiednio: - idGrupy_zajeciowej - Kod_grupy - Termin
+		 */
+
+		/*
+		 * "{'courses': [ {'name':'Informatyka w gospodarce', 'id':'1', 'dates':
+		 * [ {'id':'1', 'code':'bla1', 'name':'PN 13.15'}, {'id':'2',
+		 * 'code':'bla2', 'name':'WT 11.15'}, {'id':'3', 'code':'bla3',
+		 * 'name':'PT 19.55'}, ] }, {'name':'In¿ynieria oprogramowania',
+		 * 'id':'2', 'dates': [ {'id':'4', 'code':'bla4', 'name':'PN 13.15'},
+		 * {'id':'5', 'code':'bla5', 'name':'WT 11.15'}, {'id':'6',
+		 * 'code':'bla6', 'name':'PT 19.55'}, ] } ] }"
+		 */
+
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public @ResponseBody
+	int logout(@RequestParam(value = "userid", required = true) int login,
+			Model model) {
+		List<Prowadzacy> loglist = loginService.logout(login);
+		if (loglist.size() > 0) {
+			return 1;
+		}
+		return 0;
+	}
+
+	@RequestMapping(value = "/changepass", method = RequestMethod.POST)
+	public @ResponseBody
+	int zmien_haslo(
+			@RequestParam(value = "userid", required = true) int login,
+			@RequestParam(value = "oldpass", required = true) String stareHaslo,
+			@RequestParam(value = "newpass", required = true) String noweHaslo,
+			Model model) {
+		List<Prowadzacy> passlist = loginService
+				.validatePass(login, stareHaslo);
+		String zmienHaslo;
+		if (passlist.size() > 0) {
+			zmienHaslo = passlist.get(0).getHaslo();
+			if (zmienHaslo == stareHaslo) {
+				loginService.zmienPass(login, noweHaslo);
+				return 1;
+			}
+		}
+		return 0;
+	}
+
 	@RequestMapping(value = "/importcsv", method = RequestMethod.POST)
 	public @ResponseBody
 	String upload(
 			@RequestParam(value = "filecontent", required = false) CommonsMultipartFile file,
 			@RequestParam(value = "userid", required = true) int login,
-			Model model) /* throws Exception*/ {
-		
+			Model model) /* throws Exception */{
+
 		InputStream is = null;
 		StringBuilder sb = new StringBuilder();
 		try {
-			is =file.getFileItem().getInputStream();
+			is = file.getFileItem().getInputStream();
 			Reader reader = new InputStreamReader(is);
 			int data = reader.read();
-			while(data != -1){
-			    char theChar = (char) data;
-			    sb.append(theChar);
-			    data = reader.read();
+			while (data != -1) {
+				char theChar = (char) data;
+				sb.append(theChar);
+				data = reader.read();
 			}
-			reader.close();  
+			reader.close();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		System.out.println(file.getFileItem().getFieldName());
-		
-		if(file.isEmpty()){
+
+		if (file.isEmpty()) {
 			return "0";
-		}
-		else{
+		} else {
 			importcsv.do_import(sb.toString(), login);
 			return "1";
 		}

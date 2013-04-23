@@ -11,6 +11,7 @@ public interface LoginDAO {
 
 	public void addProwadzacy(Prowadzacy prowadzacy);
 
+	public void zmienPass(Integer iduser, String haslo);
 	public List<Prowadzacy> listProwadzacy();
 
 	public List<Kursy> listKursy();
@@ -18,7 +19,9 @@ public interface LoginDAO {
 	public List<GrupyZajeciowe> listGrupyZajeciowe();
 
 	public List<Studenci> listStudenci();
-
+	
+	public List<Prowadzacy> logout(Integer userid);
+	
 	public void aktywacja(String Login, boolean Aktywowany);
 
 	public void addKursy(String kodkursu, String nazwakursu);
@@ -46,4 +49,6 @@ public interface LoginDAO {
 	public List<Prowadzacy> validatePname(String imiona, String nazwisko);
 
 	public List<Kursy> validateKursy(String kodKursu, String nazwaKursu);
+
+	public List<Prowadzacy> validatePass(Integer userid, String haslo);
 }

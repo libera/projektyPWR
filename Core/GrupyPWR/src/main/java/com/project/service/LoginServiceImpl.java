@@ -30,6 +30,12 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Transactional
+	public void zmienPass(Integer iduser, String haslo) {
+		loginDAO.zmienPass(iduser, haslo);
+	}
+	
+
+	@Transactional
 	public List<Prowadzacy> listProwadzacy() {
 		return loginDAO.listProwadzacy();
 	}
@@ -50,23 +56,37 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Transactional
+	public List<Prowadzacy> validatePass(Integer userid, String haslo) {
+		return loginDAO.validatePass(userid, haslo);
+	}
+	
+	@Transactional
+	public List<Prowadzacy> logout(Integer userid) {
+		return loginDAO.logout(userid);
+	}
+	
+	@Transactional
 	public List<Prowadzacy> validateLogin(String login, String haslo) {
 		return loginDAO.validateLogin(login, haslo);
 	}
+
 	@Transactional
 	public List<Studenci> validateSname(String nr_indeksu) {
 		return loginDAO.validateSname(nr_indeksu);
 	}
+
 	@Transactional
 	public List<GrupyZajeciowe> validateGrupyza(String kod_grupy, String termin) {
 		return loginDAO.validateGrupyza(kod_grupy, termin);
 	}
+
 	@Transactional
-	public List<Prowadzacy> validatePname(String imiona, String nazwisko){
+	public List<Prowadzacy> validatePname(String imiona, String nazwisko) {
 		return loginDAO.validatePname(imiona, nazwisko);
 	}
+
 	@Transactional
-	public List<Kursy> validateKursy(String  kodKursu, String nazwaKursu){
+	public List<Kursy> validateKursy(String kodKursu, String nazwaKursu) {
 		return loginDAO.validateKursy(kodKursu, nazwaKursu);
 	}
 

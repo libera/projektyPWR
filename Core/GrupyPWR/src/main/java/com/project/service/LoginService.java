@@ -29,7 +29,7 @@ public interface LoginService {
 
 	public List<Prowadzacy> validatePname(String imiona, String nazwisko);
 
-	public List<Kursy> validateKursy(String  kodKursu, String nazwaKursu);
+	public List<Kursy> validateKursy(String kodKursu, String nazwaKursu);
 
 	public List<Prowadzacy> listProwadzacy();
 
@@ -41,9 +41,15 @@ public interface LoginService {
 
 	public List<Prowadzacy> validateLogin(String login, String haslo);
 
+	public List<Prowadzacy> validatePass(Integer userid, String haslo);
+
+	public List<Prowadzacy> logout(Integer userid);
+
 	public List<Prowadzacy> validateRegister(String imiona, String nazwisko,
 			String email, String login);
 
 	public void aktywacja(String login, boolean aktywowany);
+
+	public void zmienPass(Integer iduser, String haslo);
 
 }

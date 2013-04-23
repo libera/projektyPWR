@@ -23,35 +23,42 @@ public class LoginDAOImpl implements LoginDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+
 	@Transactional
 	public void addProwadzacy(Prowadzacy prowadzacy) {
 		sessionFactory.getCurrentSession().save(prowadzacy);
 
 	}
+
 	@Transactional
 	public List<Kursy> listKursy() {
 
-		return sessionFactory.getCurrentSession().createQuery("from Kursy") .list();
+		return sessionFactory.getCurrentSession().createQuery("from Kursy")
+				.list();
 
 	}
+
 	@Transactional
 	public List<GrupyZajeciowe> listGrupyZajeciowe() {
 		return sessionFactory.getCurrentSession()
 				.createQuery("from GrupyZajeciowe").list();
 
 	}
+
 	@Transactional
 	public List<Studenci> listStudenci() {
 		return sessionFactory.getCurrentSession().createQuery("from Studenci")
 				.list();
 
 	}
+
 	@Transactional
 	public List<Prowadzacy> listProwadzacy() {
 
 		return sessionFactory.getCurrentSession()
 				.createQuery("from Prowadzacy").list();
 	}
+
 	@Transactional
 	public List<Prowadzacy> validateLogin(String login, String haslo) {
 
@@ -62,6 +69,29 @@ public class LoginDAOImpl implements LoginDAO {
 				.setString("login", login).setString("haslo", haslo).list();
 
 	}
+
+	@Transactional
+	public List<Prowadzacy> validatePass(Integer userid, String haslo) {
+
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"from Prowadzacy where idProwadzacy=:userid and haslo=:haslo")
+				.setInteger("userid", userid).setString("haslo", haslo).list();
+
+	}
+	
+	@Transactional
+	public List<Prowadzacy> logout(Integer userid) {
+
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"from Prowadzacy where idProwadzacy=:userid")
+				.setInteger("userid", userid).list();
+
+	}
+
 	@Transactional
 	public List<Kursy> validateKursy(String kodKursu, String nazwaKursu) {
 
@@ -73,6 +103,7 @@ public class LoginDAOImpl implements LoginDAO {
 				.setString("nazwaKursu", nazwaKursu).list();
 
 	}
+
 	@Transactional
 	public List<Prowadzacy> validatePname(String imiona, String nazwisko) {
 
@@ -87,6 +118,7 @@ public class LoginDAOImpl implements LoginDAO {
 				.list();
 
 	}
+
 	@Transactional
 	public List<GrupyZajeciowe> validateGrupyza(String kod_grupy, String termin) {
 
@@ -98,6 +130,7 @@ public class LoginDAOImpl implements LoginDAO {
 				.list();
 
 	}
+
 	@Transactional
 	public List<Studenci> validateSname(String nr_indeksu) {
 
@@ -106,6 +139,7 @@ public class LoginDAOImpl implements LoginDAO {
 				.setString("nr_indeksu", nr_indeksu).list();
 
 	}
+
 	@Transactional
 	public void aktywacja(String Login, boolean Aktywowany) {
 		sessionFactory
@@ -115,6 +149,17 @@ public class LoginDAOImpl implements LoginDAO {
 				.setString("Login", Login).setBoolean("Aktywowany", Aktywowany)
 				.executeUpdate();
 	}
+
+	@Transactional
+	public void zmienPass(Integer iduser, String haslo) {
+		sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"UPDATE Prowadzacy SET haslo=:haslo WHERE idProwadzacy=:iduser")
+				.setInteger("iduser", iduser).setString("haslo", haslo)
+				.executeUpdate();
+	}
+
 	@Transactional
 	public List<Prowadzacy> validateRegister(String imiona, String nazwisko,
 			String email, String login) {
@@ -147,37 +192,39 @@ public class LoginDAOImpl implements LoginDAO {
 		}
 
 	}
+
 	@Transactional
 	public void addGrupyZajeciowe(String kodGrupy, String infoEdu,
 			Integer idProwadzacego, Integer idKursu, String nazwa,
 			String termin, String komentarz) {
 
-		//String query = "insert ignore into GrupyZajeciowe(kodGrupy,infoEdu,idProwadzacego, idKursu, nazwa, termin, komentarz) values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
-		String query = "insert ignore into grupy_zajeciowe(" +
-				"Kod_grupy, " +
-				"Info_Edukacja, " +
-				"id_Prowadzacego, " +
-				"id_Kursu, " +
-				"Nazwa, " +
-				"Termin, " +
-				"Komentarz)" +
-				" values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
+		// String query =
+		// "insert ignore into GrupyZajeciowe(kodGrupy,infoEdu,idProwadzacego, idKursu, nazwa, termin, komentarz) values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
+		String query = "insert ignore into grupy_zajeciowe("
+				+ "Kod_grupy, "
+				+ "Info_Edukacja, "
+				+ "id_Prowadzacego, "
+				+ "id_Kursu, "
+				+ "Nazwa, "
+				+ "Termin, "
+				+ "Komentarz)"
+				+ " values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
 
 		sessionFactory.getCurrentSession().createSQLQuery(query)
-				.setString("kodGrupy", kodGrupy)
-				.setString("infoEdu", infoEdu)
+				.setString("kodGrupy", kodGrupy).setString("infoEdu", infoEdu)
 				.setInteger("idProwadzacego", idProwadzacego)
-				.setInteger("idKursu", idKursu)
-				.setString("nazwa", nazwa)
-				.setString("termin", termin)
-				.setString("komentarz", komentarz).executeUpdate();
+				.setInteger("idKursu", idKursu).setString("nazwa", nazwa)
+				.setString("termin", termin).setString("komentarz", komentarz)
+				.executeUpdate();
 
 	}
+
 	@Transactional
 	public void addStudenciDoGrupZajeciowych(Integer idStudenta,
 			Integer idGrupyOryginalnej, Integer idGrupyChodzacej) {
 
-		//String query = "insert ignore into kursy(idStudenta,idGrupyOryginalnej,idGrupyChodzacej) values(:idStudenta,:idGrupyOryginalnej,:idGrupyChodzacej)";
+		// String query =
+		// "insert ignore into kursy(idStudenta,idGrupyOryginalnej,idGrupyChodzacej) values(:idStudenta,:idGrupyOryginalnej,:idGrupyChodzacej)";
 		String query = "insert into studenci_do_grup_zajeciowych(id_studenta,id_grupy_oryginalnej,id_grupy_chodzacej) values(:idStudenta,:idGrupyOryginalnej,:idGrupyChodzacej)";
 
 		sessionFactory.getCurrentSession().createSQLQuery(query)
@@ -187,6 +234,7 @@ public class LoginDAOImpl implements LoginDAO {
 				.executeUpdate();
 
 	}
+
 	@Transactional
 	public void addStudenci(String imie, String nazwisko, String nrIndeksu,
 			String email, Integer rok, Integer semestr, String przedmiot,
