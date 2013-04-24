@@ -170,16 +170,6 @@
 			<div class="middle-col">
 				<header class="section-title">Grupy projektowe</header>
 				<div id="groups">
-					<div class="group">
-						<header>
-							System zarządzania projektami studenckimi
-							<div class="tools"><a href="" class="more">Więcej</a></div>
-						</header>
-						<div class="details">
-							<table id="students-grid">
-							</table>
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="right-col">

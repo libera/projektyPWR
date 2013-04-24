@@ -134,13 +134,7 @@ function initUser() {
 	});
 }
 
-$(document).ready(function() {
-	//when document is ready we display login window and hide content
-	hideLightbox();
-	hideContent();
-	hideRegister();
-	showLogin();
-	
+function initLogin() {
 	//register click event handlers
 	$('input#login-button').click(function(e) {
 		$('div#login td.info').hide();
@@ -175,6 +169,15 @@ $(document).ready(function() {
 		});
 	});
 	
+	//enter key event
+	$('input#login-pass').keydown(function(e) {
+		if(e.keyCode == '13') {
+			$('#login-button').click();
+		}
+	});
+}
+
+function initRegister() {
 	$('input#register-button').click(function() {
 		$('div#register td.info').hide();
 		$('div#register td.info').html('');
@@ -230,8 +233,19 @@ $(document).ready(function() {
 		hideLogin();
 		showRegister();
 	});
+}
+
+$(document).ready(function() {
+	//when document is ready we display login window and hide content
+	hideLightbox();
+	hideContent();
+	hideRegister();
+	showLogin();
 	
 	//init functions for static elements - called only once!
+	initLogin();
+	initRegister();
+	
 	initLightbox();
 	initCourses();
 	initUser();
