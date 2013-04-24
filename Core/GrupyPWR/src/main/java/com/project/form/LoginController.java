@@ -26,8 +26,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.project.dao.PobierzGrupyDAO;
+import com.project.data.GrupyZajeciowe;
+import com.project.data.Kursy;
 import com.project.data.Prowadzacy;
 import com.project.service.LoginService;
+import com.project.service.PobierzGrupyService;
 import com.project.Utils.Encryption;
 import com.project.Utils.ImportCSV;
 import com.project.Utils.RandomPassword;
@@ -40,6 +44,9 @@ public class LoginController extends SendMail {
 
 	@Autowired
 	private LoginService loginService;
+
+	@Autowired
+	private PobierzGrupyService pobierzGrupyService;
 
 	@Autowired
 	private HttpServletRequest context;
@@ -96,20 +103,11 @@ public class LoginController extends SendMail {
 			Model model) {
 
 		List<Prowadzacy> loginlist = loginService.validateLogin(login, haslo);
-		/*
-		 * boolean czyAktywowany=loginlist.get(0).isAktywowany();
-		 */
-		// Integer idUser = loginlist.get(0).getIdProwadzacy();
-		// String id_User = idUser.toString();
+		
 		System.out.println("HasÅ‚o: " + haslo + " Login: " + login);
-		// System.out.println("\nCzy aktywowany: "+czyAktywowany);
 		System.out.println("\nRozmiar loginlist: " + loginlist.size());
 
 		if (loginlist.size() > 0) {
-			/*
-			 * if(czyAktywowany ==false) { loginService.aktywacja(login, true);
-			 * }
-			 */
 			return loginlist.get(0).getIdProwadzacy().toString();
 
 		} else {
@@ -117,45 +115,65 @@ public class LoginController extends SendMail {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@RequestMapping(value = "/getcurses", method = RequestMethod.POST)
 	public @ResponseBody
 	JsonKursy wyslijKursy(
 			@RequestParam(value = "userid", required = true) int login,
 			Model model) {
 
-		JsonKursy jsonkursy = new JsonKursy();
-		JsonGrupy jsongrupy = new JsonGrupy();
-		JsonGrupyZajeciowe jsonzjecia = new JsonGrupyZajeciowe();
+
+		int []idKursu = null;
+		int i;
+		List<GrupyZajeciowe> grupyzajeciowe = pobierzGrupyService
+				.pobierzGrupyZajeciowe(login);
+		JsonKursy jsonKursy = new JsonKursy();
+		//grupyzajeciowe.get(0).getIdKursu().getIdKursy();
+		JsonGrupy jsonGrupy = new JsonGrupy();
+		JsonGrupyZajeciowe jsonGrupyZajeciowe = new JsonGrupyZajeciowe();
 		List<JsonGrupy> courses = new ArrayList<JsonGrupy>();
-		/*
-		for (KursVOIF kurs : kursy) {
+		for( i = 0; i<= grupyzajeciowe.size()-1; i++){
+			idKursu[i] = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
+			//List<KursVOIF> kursy = service.getKursy();
+			List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu[i]);
+
+			for(Kursy kurs : kurslist) {
+				List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
+				// List<GrupaVOIF> grupy = service.getGrupy();
+				for(GrupyZajeciowe grupa : grupyzajeciowe) {
+					//  set dla JsonGrupyZajeciowe
+					jsonGrupyZajeciowe.setId(grupa.getIdKursu().getIdKursy());
+					jsonGrupyZajeciowe.setCode(grupa.getKodGrupy());
+					jsonGrupyZajeciowe.setName(grupa.getNazwa());
+				}
+			//jsonGrupy.setList(name);
+			jsonGrupy.setName(kurs.getNazwaKursu());
+			jsonGrupy.setId(kurs.getIdKursy());
+			jsonGrupy.setDates(name);
+			//set dla JsonGrupy
+			}
+			jsonKursy.setCourses(courses);
+		}
+		
+		return jsonKursy;
+		
+		/*for (KursVOIF kurs : kursy) {
 			List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
 			List<GrupaVOIF> grupy = service.getGrupy();
 
-			for (GrupaVOIF grupa : grupy) {
-				// set dla JsonGrupyZajeciowe
+			for (GrupaVOIF grupa : grupy) { // set dla JsonGrupyZajeciowe
 				jsonzjecia.setCode(code);
 				jsonzjecia.setId(id);
 				jsonzjecia.setName(name);
-			}
-			// jsongrupy.s
-			// jsonGrupy.setList(name);
-			// set dla JsonGrupy
-			jsongrupy.setId(id);
+			} // jsongrupy.s //
+			jsonGrupy.setList(name); // set dla JsonGrupy jsongrupy.setId(id);
 			jsongrupy.setName(name);
 			jsongrupy.setDates(dates);
 
 		}
-		jsonkursy.setCourses(courses);
-		*/
-		return jsonkursy;
-		// courses.add();
-		// curses.ad
-		/*
-		 * for(Object o : courses) { String element = (String) o; for(Object p :
-		 * name) { String pelement = (String) p; } }
-		 */
-		// jsonkursy.setCourses(courses);
+		jsonkursy.setCourses(courses);*/
+
+		
 
 		// taki ma byc generwany response do klienta
 		// Jeszcze nalezy dodac, ¿e sprawdzamy w tabeli grupy_zajeciowe czy
@@ -245,5 +263,4 @@ public class LoginController extends SendMail {
 		}
 	}
 
-	// public void do_import(File plik) {}
 }
