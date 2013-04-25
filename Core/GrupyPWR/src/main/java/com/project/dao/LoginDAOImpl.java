@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.maven.artifact.versioning.Restriction;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -26,8 +27,12 @@ public class LoginDAOImpl implements LoginDAO {
 
 	@Transactional
 	public void addProwadzacy(Prowadzacy prowadzacy) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		sessionFactory.getCurrentSession().save(prowadzacy);
-
+		tx.commit();
+		session.close();
 	}
 
 	@Transactional
@@ -80,14 +85,12 @@ public class LoginDAOImpl implements LoginDAO {
 				.setInteger("userid", userid).setString("haslo", haslo).list();
 
 	}
-	
+
 	@Transactional
 	public List<Prowadzacy> logout(Integer userid) {
 
-		return sessionFactory
-				.getCurrentSession()
-				.createQuery(
-						"from Prowadzacy where idProwadzacy=:userid")
+		return sessionFactory.getCurrentSession()
+				.createQuery("from Prowadzacy where idProwadzacy=:userid")
 				.setInteger("userid", userid).list();
 
 	}
@@ -142,22 +145,32 @@ public class LoginDAOImpl implements LoginDAO {
 
 	@Transactional
 	public void aktywacja(String Login, boolean Aktywowany) {
+
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		sessionFactory
 				.getCurrentSession()
 				.createQuery(
 						"UPDATE Prowadzacy SET Aktywowany=:Aktywowany WHERE Login=:Login")
 				.setString("Login", Login).setBoolean("Aktywowany", Aktywowany)
 				.executeUpdate();
+		tx.commit();
+		session.close();
 	}
 
 	@Transactional
 	public void zmienPass(Integer iduser, String haslo) {
+
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		sessionFactory
 				.getCurrentSession()
 				.createQuery(
 						"UPDATE Prowadzacy SET haslo=:haslo WHERE idProwadzacy=:iduser")
 				.setInteger("iduser", iduser).setString("haslo", haslo)
 				.executeUpdate();
+		tx.commit();
+		session.close();
 	}
 
 	@Transactional
@@ -174,23 +187,24 @@ public class LoginDAOImpl implements LoginDAO {
 	@Transactional
 	public void addKursy(String kodkursu, String nazwakursu) {
 
-		/*
-		 * String query =
-		 * "insert into Kursy(kodKursu,nazwaKursu) values(:kodkursu,:nazwakursu)"
-		 * ;
-		 * 
-		 * sessionFactory.getCurrentSession().createQuery(query)
-		 * .setParameter("kodkursu", kodkursu) .setParameter("nazwakursu",
-		 * nazwakursu).executeUpdate();
-		 */
-		Kursy kursy = new Kursy();
-		kursy.setKodKursu(kodkursu);
-		kursy.setNazwaKursu(nazwakursu);
-		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(kursy);
-		} catch (HibernateException e) {
-		}
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 
+		String query = "insert into Kursy(kodKursu,nazwaKursu) values(:kodkursu,:nazwakursu)";
+
+		sessionFactory.getCurrentSession().createQuery(query)
+				.setParameter("kodkursu", kodkursu)
+				.setParameter("nazwakursu", nazwakursu).executeUpdate();
+
+		tx.commit();
+		session.close();
+
+		/*
+		 * Kursy kursy = new Kursy(); kursy.setKodKursu(kodkursu);
+		 * kursy.setNazwaKursu(nazwakursu); try {
+		 * sessionFactory.getCurrentSession().saveOrUpdate(kursy); } catch
+		 * (HibernateException e) { }
+		 */
 	}
 
 	@Transactional
@@ -200,6 +214,9 @@ public class LoginDAOImpl implements LoginDAO {
 
 		// String query =
 		// "insert ignore into GrupyZajeciowe(kodGrupy,infoEdu,idProwadzacego, idKursu, nazwa, termin, komentarz) values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+
 		String query = "insert ignore into grupy_zajeciowe("
 				+ "Kod_grupy, "
 				+ "Info_Edukacja, "
@@ -216,13 +233,15 @@ public class LoginDAOImpl implements LoginDAO {
 				.setInteger("idKursu", idKursu).setString("nazwa", nazwa)
 				.setString("termin", termin).setString("komentarz", komentarz)
 				.executeUpdate();
-
+		tx.commit();
+		session.close();
 	}
 
 	@Transactional
 	public void addStudenciDoGrupZajeciowych(Integer idStudenta,
 			Integer idGrupyOryginalnej, Integer idGrupyChodzacej) {
-
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		// String query =
 		// "insert ignore into kursy(idStudenta,idGrupyOryginalnej,idGrupyChodzacej) values(:idStudenta,:idGrupyOryginalnej,:idGrupyChodzacej)";
 		String query = "insert into studenci_do_grup_zajeciowych(id_studenta,id_grupy_oryginalnej,id_grupy_chodzacej) values(:idStudenta,:idGrupyOryginalnej,:idGrupyChodzacej)";
@@ -232,7 +251,8 @@ public class LoginDAOImpl implements LoginDAO {
 				.setParameter("idGrupyOryginalnej", idGrupyOryginalnej)
 				.setParameter("idGrupyChodzacej", idGrupyChodzacej)
 				.executeUpdate();
-
+		tx.commit();
+		session.close();
 	}
 
 	@Transactional
@@ -240,6 +260,8 @@ public class LoginDAOImpl implements LoginDAO {
 			String email, Integer rok, Integer semestr, String przedmiot,
 			String login, String haslo) {
 
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		String query = "insert into studenci(imiona,nazwisko,nr_indeksu, email, rok, semestr, przedmiot_krztalcenia, login, haslo) values(:imie,:nazwisko,:nrIndeksu,:email,:rok,:semestr,:przedmiot,:login,:haslo)";
 
 		sessionFactory.getCurrentSession().createSQLQuery(query)
@@ -250,6 +272,7 @@ public class LoginDAOImpl implements LoginDAO {
 				.setParameter("przedmiot", przedmiot)
 				.setParameter("login", login).setParameter("haslo", haslo)
 				.executeUpdate();
-
+		tx.commit();
+		session.close();
 	}
 }

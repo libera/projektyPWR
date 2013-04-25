@@ -54,7 +54,7 @@ public class ImportCSV {
 
 				System.err.println("fields.length:" + fields.length);
 
-				if (fields[0].equals("Politechnika WrocÅ‚awska")) {
+				if (fields[0].equals("Politechnika Wroc³awska")) {
 					infoPwr = fields[0];
 					continue;
 				} else if (fields[0].equals("Rok akademicki")) {
@@ -86,7 +86,7 @@ public class ImportCSV {
 					// Dodanie do tabeli kursy danych.
 
 					loginService.addKursy(kod_kursu, nazwa_kursu);
-					System.out.println("Dodawanie kodow kursï¿½w");
+					System.out.println("Dodawanie kodow kursów");
 					continue;
 				} else if (fields[0].equals("Prowadzacy")) {
 					fields[1] = fields[1].trim().replaceAll(" +", " ");
@@ -94,7 +94,7 @@ public class ImportCSV {
 					for (int i = 0; i < fields.length - 1; i++) {
 						if (fields[i].equalsIgnoreCase("prof.")
 								|| fields[i].equalsIgnoreCase("dr")
-								|| fields[i].equalsIgnoreCase("inÅ¼.")
+								|| fields[i].equalsIgnoreCase("in¿.")
 								|| fields[i].equalsIgnoreCase("hab.")
 								|| fields[i].equalsIgnoreCase("mgr")
 								|| fields[i].equalsIgnoreCase("mgr.")) {
@@ -146,27 +146,28 @@ public class ImportCSV {
 
 				List<Kursy> klistKursies = loginService.validateKursy(
 						kod_kursu, nazwa_kursu);
-
-				sIdKursu = klistKursies.get(0).getIdKursy();
-				System.out.println("rozmiarklistkURSIES: "
-						+ klistKursies.size());
-
-				if (klistKursies.size() > 0 && iterator == 0) {
-
-					loginService.addGrupyZajeciowe(kod_grupy, infoEdu, userid,
-							sIdKursu, nazwa_kursu, termin, komentarz);
-					iterator++;
-				}
 				List<Studenci> slistList = loginService
 						.validateSname(nrInd_student);
 				List<GrupyZajeciowe> glist = loginService.validateGrupyza(
 						kod_grupy, termin);
+
+				System.out.println("rozmiarklistkURSIES: "
+						+ klistKursies.size());
+
+				if (klistKursies.size() == 1 && iterator == 0) {
+					// sIdKursu = klistKursies.get(0).getIdKursy();
+					sIdKursu = glist.get(0).getIdKursu().getIdKursy();
+					loginService.addGrupyZajeciowe(kod_grupy, infoEdu, userid,
+							sIdKursu, nazwa_kursu, termin, komentarz);
+					iterator++;
+				}
+
 				// Tutaj pobieramy id studenta ktory jest w tabeli studenci
 				int sIdStudent = slistList.get(0).getIdStudenci();
 				int sIdGrupyZaj = glist.get(0).getIdGrupyZajeciowe();
 				loginService.addStudenciDoGrupZajeciowych(sIdStudent,
 						sIdGrupyZaj, sIdGrupyZaj);
-	
+
 			}
 
 		} catch (FileNotFoundException e) {
