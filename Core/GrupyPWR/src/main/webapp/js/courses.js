@@ -112,50 +112,51 @@ function loadCourses() {
 		dataType: 'json',
 		data: {userid: userID},
 		success: function(data, textStatus, jqXHR) {
-			console.log(data + " " + textStatus);
+			console.log(JSON.stringify(data) + " " + textStatus);
 			coursesData = data;
+			
+			//filling courses list
+			$.each(coursesData.courses, function() {
+				currCourse = this;
+			
+				$('#courses').append(
+					'<li class="course ' + currCourse.id + '">' + 
+						'<header>' + currCourse.name + '</header><ul>');
+				
+				$.each(currCourse.dates, function() {
+					$('#courses li.course.' + currCourse.id + ' ul').append('<li class="date ' + this.id + '"><input type="checkbox" name="checkedDates" id="date-' + this.id + '-check" value="' + this.id + '" /><label for="date-' + this.id + '-check">' + this.name + ' (' + this.code + ')</label></li>');
+				});
+				
+				$('#courses').append('</ul></li>');
+			});
+			
+			$('#courses li.course ul').hide();
+			
+			$('#courses li.course header').click(function() {
+				if(!$(this).parent().hasClass('active')) {
+					//hiding other courses
+					$('#courses li.course ul').hide('blind', {}, 200);
+					$('#courses li.course').removeClass('active');
+					
+					//removing all checks
+					$('input[name="checkedDates"]:checked').attr('checked', false);
+					
+					//showing clicked course
+					$(this).next().show('blind', {}, 200);
+					$(this).parent().addClass('active');
+				}
+			});
+			
+			$('input[name="checkedDates"]').click(function() {
+				if($(this).is(':checked')) {
+					loadDate($(this).val());
+				} else {
+					unloadDate($(this).val());
+				}
+			});
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log(textStatus + " " + errorThrown);
-		}
-	});
-	
-	$.each(coursesData.courses, function() {
-		currCourse = this;
-	
-		$('#courses').append(
-			'<li class="course ' + currCourse.id + '">' + 
-				'<header>' + currCourse.name + '</header><ul>');
-		
-		$.each(currCourse.dates, function() {
-			$('#courses li.course.' + currCourse.id + ' ul').append('<li class="date ' + this.id + '"><input type="checkbox" name="checkedDates" id="date-' + this.id + '-check" value="' + this.id + '" /><label for="date-' + this.id + '-check">' + this.name + ' (' + this.code + ')</label></li>');
-		});
-		
-		$('#courses').append('</ul></li>');
-	});
-	
-	$('#courses li.course ul').hide();
-	
-	$('#courses li.course header').click(function() {
-		if(!$(this).parent().hasClass('active')) {
-			//hiding other courses
-			$('#courses li.course ul').hide('blind', {}, 200);
-			$('#courses li.course').removeClass('active');
-			
-			//removing all checks
-			$('input[name="checkedDates"]:checked').attr('checked', false);
-			
-			//showing clicked course
-			$(this).next().show('blind', {}, 200);
-			$(this).parent().addClass('active');
-		}
-	});
-	
-	$('input[name="checkedDates"]').click(function() {
-		if($(this).is(':checked')) {
-			loadDate($(this).val());
-		} else {
-			unloadDate($(this).val());
 		}
 	});
 }
