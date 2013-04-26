@@ -190,9 +190,9 @@ public class LoginDAOImpl implements LoginDAO {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 
-		String query = "insert into Kursy(kodKursu,nazwaKursu) values(:kodkursu,:nazwakursu)";
+		String query = "insert ignore into Kursy(Kod_kursu,Nazwa_kursu) values(:kodkursu,:nazwakursu)";
 
-		sessionFactory.getCurrentSession().createQuery(query)
+		sessionFactory.getCurrentSession().createSQLQuery(query)
 				.setParameter("kodkursu", kodkursu)
 				.setParameter("nazwakursu", nazwakursu).executeUpdate();
 
