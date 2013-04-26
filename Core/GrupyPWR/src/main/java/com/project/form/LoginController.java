@@ -123,19 +123,20 @@ public class LoginController extends SendMail {
 			Model model) {
 
 
-		int []idKursu = null;
-		int i;
+
 		List<GrupyZajeciowe> grupyzajeciowe = pobierzGrupyService
 				.pobierzGrupyZajeciowe(login);
+		int idKursu ;
+		int i;
 		JsonKursy jsonKursy = new JsonKursy();
 		//grupyzajeciowe.get(0).getIdKursu().getIdKursy();
 		JsonGrupy jsonGrupy = new JsonGrupy();
 		JsonGrupyZajeciowe jsonGrupyZajeciowe = new JsonGrupyZajeciowe();
 		List<JsonGrupy> courses = new ArrayList<JsonGrupy>();
 		for( i = 0; i<= grupyzajeciowe.size()-1; i++){
-			idKursu[i] = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
+			idKursu = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
 			//List<KursVOIF> kursy = service.getKursy();
-			List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu[i]);
+			List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu);
 
 			for(Kursy kurs : kurslist) {
 				List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
