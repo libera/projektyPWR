@@ -115,7 +115,7 @@ public class LoginController extends SendMail {
 		}
 	}
 
-	@SuppressWarnings("null")
+	//@SuppressWarnings("null")
 	@RequestMapping(value = "/getcourses", method = RequestMethod.POST)
 	public @ResponseBody
 	JsonKursy wyslijKursy(

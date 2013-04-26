@@ -26,10 +26,6 @@ public class ImportCSV {
 	@Autowired
 	private LoginService loginService;
 
-	// GrupyZajeciowe grupa;
-	// List<Studenci> Lista_studentow = new ArrayList<Studenci>();
-	// Kursy kursy;
-
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
@@ -146,6 +142,7 @@ public class ImportCSV {
 
 				List<Kursy> klistKursies = loginService.validateKursy(
 						kod_kursu, nazwa_kursu);
+
 				List<Studenci> slistList = loginService
 						.validateSname(nrInd_student);
 				List<GrupyZajeciowe> glist = loginService.validateGrupyza(
@@ -155,8 +152,7 @@ public class ImportCSV {
 						+ klistKursies.size());
 
 				if (klistKursies.size() == 1 && iterator == 0) {
-					 sIdKursu = klistKursies.get(0).getIdKursy();
-					//sIdKursu = glist.get(0).getIdKursu().getIdKursy();
+					sIdKursu = klistKursies.get(0).getIdKursy();
 					loginService.addGrupyZajeciowe(kod_grupy, infoEdu, userid,
 							sIdKursu, nazwa_kursu, termin, komentarz);
 					iterator++;
@@ -164,9 +160,18 @@ public class ImportCSV {
 
 				// Tutaj pobieramy id studenta ktory jest w tabeli studenci
 				int sIdStudent = slistList.get(0).getIdStudenci();
-				int sIdGrupyZaj = glist.get(0).getIdGrupyZajeciowe();
-				loginService.addStudenciDoGrupZajeciowych(sIdStudent,
-						sIdGrupyZaj, sIdGrupyZaj);
+				System.out
+						.println("Id Studencika, którego chcemy przypisac do grup zjeciowych: "
+								+ sIdStudent);
+				
+				if (glist.size() > 0) {
+					System.out
+					.println("Id grupy zajeciowej, ktora nalezy przypisac do encji student do zajec (TUTAJ SIE WYWALA!!!): "
+							+ glist.get(0).getIdGrupyZajeciowe());
+					int sIdGrupyZaj = glist.get(0).getIdGrupyZajeciowe();
+					loginService.addStudenciDoGrupZajeciowych(sIdStudent,
+							sIdGrupyZaj, sIdGrupyZaj);
+				}
 
 			}
 
