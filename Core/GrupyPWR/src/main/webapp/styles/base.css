@@ -127,7 +127,8 @@ div.middle-col {
 }
 
 div.right-col {
-	margin: 30px 0 0 20px;
+	margin: 30px 0 0 0;
+	padding: 0;
 	width: 260px;
 	float: left;
 	overflow-x: hidden;
@@ -255,6 +256,20 @@ div#change-pass table {
 }
 
 /*Grupy projektowe*/
+
+/*Input declarations*/
+input[type="text"], input[type="password"] {
+	outline-width: 0;
+	border: 1px solid #e0e0e0;
+	padding: 1px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+	outline-width: 0;
+	border: 1px solid #3b73f3;
+	padding: 1px;
+}
+
 div.middle-col header.section-title {
 	margin-left: 20px;
 }
@@ -289,6 +304,89 @@ div.group div.details {
 	background-color: #f2f2f2;
 	border-bottom: 1px solid #e0e0e0;
 	padding: 7px 20px;
+	overflow: auto;
+}
+
+div.group div.details .students tr.header {
+	font-weight: bold;
+}
+
+div.group div.details .students td.meeting {
+	width: 100px;
+}
+
+div.group div.details .students tr.student td.name {
+	min-width: 150px;
+	white-space: nowrap;
+}
+
+/*div.group div.details .students tr.student:hover {
+	background-color: white;
+}*/
+
+.students span.index {
+	font-size: 0.8em;
+}
+
+div.group div.details .students td {
+	padding: 5px;
+}
+
+div.group div.details .students td.meeting, div.group div.details .students td.meeting input {
+	font-size: 0.9em;
+}
+
+div.group div.details .students tr.header input.name {
+	width: 98px;
+}
+
+div.group div.details .students tr.header input.date {
+	width: 47px;
+}
+
+div.group div.details .students tr.header input.weight {
+	width: 47px;
+}
+
+div.group div.details .students td.meeting input.mark {
+	width: 77px;
+	float: right;
+}
+
+/*fixing checkbox position*/
+div.group div.details .students td.meeting label {
+	position: relative;
+	top: 2px;
+}
+
+/*Not in group*/
+div.right-col header.section-title {
+	margin-left: 20px;
+}
+
+table#notingroup {
+	width: 260px;
+	background-color: #f2f2f2;
+	border-top: 1px solid #e0e0e0;
+}
+
+table#notingroup td  {
+	padding: 3px 0;
+	border-bottom: 1px solid #e0e0e0;
+	cursor: pointer;
+}
+
+table#notingroup tr {
+	width: 260px;
+}
+
+table#notingroup tr:hover {
+	background-color: #f6f6f6;
+}
+
+table#notingroup td.name {
+	padding-left: 20px;
+	width: 260px;
 }
 
 

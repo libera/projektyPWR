@@ -15,7 +15,7 @@
 		<meta http-equiv="Pragma" content="no-cache" />
 		
 		<script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript" src="./js/jquery-ui-1.10.2.custom.min.js"></script>
+		<script type="text/javascript" src="./js/jquery-ui-1.10.2.custom.js"></script>
 		<script type="text/javascript" src="./js/jquery.md5.js"></script>
 		<script type="text/javascript" src="./js/jquery.jqGrid.min.js"></script>
 		<script type="text/javascript" src="./js/groups.js"></script>
@@ -174,6 +174,8 @@
 			</div>
 			<div class="right-col">
 				<header class="section-title">Nieprzypisani</header>
+				<table id="notingroup" class="students" cellpadding="0" cellspacing="0">
+				</table>
 			</div>
 		</div>
 	</body>

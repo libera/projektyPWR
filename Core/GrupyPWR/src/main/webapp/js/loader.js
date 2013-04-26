@@ -4,7 +4,7 @@ var userName = "";
 
 function resizeWindow() {
 	//setting right-col width
-	$('.middle-col').width($(document).width() - $('.left-col').width() - $('.right-col').width() - 32);
+	$('.middle-col').width($(document).width() - $('.left-col').width() - $('.right-col').width() - 12);
 	
 	//setting cols height
 	$('.left-col').height($(document).height() - 100);

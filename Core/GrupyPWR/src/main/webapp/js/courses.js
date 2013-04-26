@@ -80,6 +80,8 @@ function initCourses() {
 					if(data == '1') {
 						$('div#upload-csv td.info').show();
 						$('div#upload-csv td.info').html('<span class="success">Plik został zaimportowany!</span>');
+						
+						loadCourses();
 					} else {
 						$('div#upload-csv td.info').show();
 						$('div#upload-csv td.info').html('<span class="error">Błąd podczas importu pliku!</span>');
