@@ -7,13 +7,13 @@
 		<title>Politechnika Wrocławska - zarządzanie projektami studenckimi</title>
 		<link rel="stylesheet" type="text/css" href="./styles/base.css" />
 		<meta charset="utf-8" />
-		
+
 		<!--disable caching-->
 		<meta http-equiv="Expires" content="0" />
 		<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
 		<meta http-equiv="Cache-Control" content="post-check=0, pre-check=0" />
 		<meta http-equiv="Pragma" content="no-cache" />
-		
+
 		<script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="./js/jquery-ui-1.10.2.custom.js"></script>
 		<script type="text/javascript" src="./js/jquery.md5.js"></script>

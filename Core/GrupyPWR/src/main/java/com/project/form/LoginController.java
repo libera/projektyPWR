@@ -68,7 +68,7 @@ public class LoginController extends SendMail {
 			@RequestParam(value = "user", required = true) String login,
 			Model model) {
 		String from = "grupy.pwr.wroc@gmail.com";
-		String subject = "Przes�anie has�a do logowania!";
+		String subject = "Przesłanie hasła do logowania!";
 		Date data = new Date();
 		Prowadzacy prowadzacy = new Prowadzacy();
 		prowadzacy.setImiona(imie);
@@ -114,7 +114,6 @@ public class LoginController extends SendMail {
 		}
 	}
 
-	//@SuppressWarnings("null")
 	@RequestMapping(value = "/getcourses", method = RequestMethod.POST)
 	public @ResponseBody
 	JsonKursy wyslijKursy(
@@ -128,76 +127,29 @@ public class LoginController extends SendMail {
 		int idKursu ;
 		int i;
 		JsonKursy jsonKursy = new JsonKursy();
-		//grupyzajeciowe.get(0).getIdKursu().getIdKursy();
 		JsonGrupy jsonGrupy = new JsonGrupy();
 		JsonGrupyZajeciowe jsonGrupyZajeciowe = new JsonGrupyZajeciowe();
 		List<JsonGrupy> courses = new ArrayList<JsonGrupy>();
 		for( i = 0; i<= grupyzajeciowe.size()-1; i++){
 			idKursu = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
-			//List<KursVOIF> kursy = service.getKursy();
 			List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu);
 
 			for(Kursy kurs : kurslist) {
 				List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
-				// List<GrupaVOIF> grupy = service.getGrupy();
 				for(GrupyZajeciowe grupa : grupyzajeciowe) {
 					//  set dla JsonGrupyZajeciowe
 					jsonGrupyZajeciowe.setId(grupa.getIdKursu().getIdKursy());
 					jsonGrupyZajeciowe.setCode(grupa.getKodGrupy());
 					jsonGrupyZajeciowe.setName(grupa.getNazwa());
 				}
-			//jsonGrupy.setList(name);
 			jsonGrupy.setName(kurs.getNazwaKursu());
 			jsonGrupy.setId(kurs.getIdKursy());
 			jsonGrupy.setDates(name);
-			//set dla JsonGrupy
 			}
 			jsonKursy.setCourses(courses);
 		}
 		
 		return jsonKursy;
-		
-		/*for (KursVOIF kurs : kursy) {
-			List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
-			List<GrupaVOIF> grupy = service.getGrupy();
-
-			for (GrupaVOIF grupa : grupy) { // set dla JsonGrupyZajeciowe
-				jsonzjecia.setCode(code);
-				jsonzjecia.setId(id);
-				jsonzjecia.setName(name);
-			} // jsongrupy.s //
-			jsonGrupy.setList(name); // set dla JsonGrupy jsongrupy.setId(id);
-			jsongrupy.setName(name);
-			jsongrupy.setDates(dates);
-
-		}
-		jsonkursy.setCourses(courses);*/
-
-		
-
-		// taki ma byc generwany response do klienta
-		// Jeszcze nalezy dodac, �e sprawdzamy w tabeli grupy_zajeciowe czy
-		// przeslany postem
-		// id_ usera jest taki jaki chcemy wy�wietli� przyporz�dkowane do niego
-		// grupy(przesylane POSTEM)
-		/*
-		 * Czyli tutaj korzystamy z encji Kursy kt�ra wyswietla nam(teraz
-		 * wypisuje wszystkie pola z kurs�w): - nazwa_kursu - kod_kursu
-		 * Nast�pnie w danych kursach mamy wi�cej grup i teraz robi� si� checa(
-		 * czyli w tym momencie wyswietlamy zawarto�� encji grupy_zjeciowe,
-		 * odpowiednio: - idGrupy_zajeciowej - Kod_grupy - Termin
-		 */
-
-		/*
-		 * "{'courses': [ {'name':'Informatyka w gospodarce', 'id':'1', 'dates':
-		 * [ {'id':'1', 'code':'bla1', 'name':'PN 13.15'}, {'id':'2',
-		 * 'code':'bla2', 'name':'WT 11.15'}, {'id':'3', 'code':'bla3',
-		 * 'name':'PT 19.55'}, ] }, {'name':'In�ynieria oprogramowania',
-		 * 'id':'2', 'dates': [ {'id':'4', 'code':'bla4', 'name':'PN 13.15'},
-		 * {'id':'5', 'code':'bla5', 'name':'WT 11.15'}, {'id':'6',
-		 * 'code':'bla6', 'name':'PT 19.55'}, ] } ] }"
-		 */
-
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -236,7 +188,7 @@ public class LoginController extends SendMail {
 	String upload(
 			@RequestParam(value = "filecontent", required = false) CommonsMultipartFile file,
 			@RequestParam(value = "userid", required = true) int login,
-			Model model) /* throws Exception */{
+			Model model){
 
 		InputStream is = null;
 		StringBuilder sb = new StringBuilder();

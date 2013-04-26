@@ -2,6 +2,9 @@ package com.project.Json;
 
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonSubTypes;
+
+@JsonSubTypes({ @JsonSubTypes.Type(JsonGrupyZajeciowe.class) })
 public class JsonGrupy {
 
 	private String name;
