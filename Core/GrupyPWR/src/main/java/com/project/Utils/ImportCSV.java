@@ -155,8 +155,8 @@ public class ImportCSV {
 						+ klistKursies.size());
 
 				if (klistKursies.size() == 1 && iterator == 0) {
-					// sIdKursu = klistKursies.get(0).getIdKursy();
-					sIdKursu = glist.get(0).getIdKursu().getIdKursy();
+					 sIdKursu = klistKursies.get(0).getIdKursy();
+					//sIdKursu = glist.get(0).getIdKursu().getIdKursy();
 					loginService.addGrupyZajeciowe(kod_grupy, infoEdu, userid,
 							sIdKursu, nazwa_kursu, termin, komentarz);
 					iterator++;
