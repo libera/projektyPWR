@@ -128,7 +128,7 @@ function initUser() {
 		$('#logout-success').css('left', $(document).width()/2 - $('#logout-success').width()/2);
 		$('#logout-success').css('top', $(document).height()/2 - $('#logout-success').height()/2-50);
 		
-		//clearing login form
+		//TO DO: clear dynamic data
 		$('#login-user').val('');
 		$('#login-pass').val('');
 	});

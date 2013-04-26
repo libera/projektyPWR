@@ -367,13 +367,16 @@ div.right-col header.section-title {
 table#notingroup {
 	width: 260px;
 	background-color: #f2f2f2;
-	border-top: 1px solid #e0e0e0;
 }
 
 table#notingroup td  {
 	padding: 3px 0;
 	border-bottom: 1px solid #e0e0e0;
 	cursor: pointer;
+}
+
+table#notingroup td.top {
+	border-top: 1px solid #e0e0e0;
 }
 
 table#notingroup tr {
