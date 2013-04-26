@@ -58,6 +58,12 @@ function loadDate(id) {
 			
 			$('#notingroup').append('<tr id="student' + currNoGroup.id + '" class="course-date ' + currDate.id + '"><td class="name"><a href="mailto:' + currNoGroup.mail + '">' + currNoGroup.firstname + ' ' + currNoGroup.surname + '</a><br /><span class="index">(' + currNoGroup.index + ')</span></td></tr>');
 			
+			$('#notingroup tr#student' + currNoGroup.id).data('studentID', currNoGroup.id);
+			$('#notingroup tr#student' + currNoGroup.id).data('studentMail', currNoGroup.mail);
+			$('#notingroup tr#student' + currNoGroup.id).data('studentFirstname', currNoGroup.firstname);
+			$('#notingroup tr#student' + currNoGroup.id).data('studentSurname', currNoGroup.surname);
+			$('#notingroup tr#student' + currNoGroup.id).data('studentIndex', currNoGroup.index);
+			
 			$('#notingroup td').first().addClass('top');
 			
 			//enabling user dragging
@@ -91,7 +97,7 @@ function loadDate(id) {
 		});
 		
 		//adding in groups
-		$('#groups').append('<div class="course-date ' + currDate.id + '"></div>');
+		$('#groups').append('<div class="course-date ' + currDate.id + '"><header>' + currDate.name +' (' + currDate.code + ')</header></div>');
 		
 		$.each(currDate.groups, function() {
 			currGroup = this;
@@ -104,6 +110,24 @@ function loadDate(id) {
 			//enable user dropping
 			$('#groups .group.' + currGroup.id).droppable({
 				drop: function(e, ui) {
+					$(this).removeClass('ui-state-hover');
+					
+					//adding to students table
+					var studentID = ui.draggable.data('studentID');
+					var studentMail = ui.draggable.data('studentMail');
+					var studentFirstname = ui.draggable.data('studentFirstname');
+					var studentSurname = ui.draggable.data('studentSurname');
+					var studentIndex = ui.draggable.data('studentIndex');
+					
+					$(' #groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + studentID + '" id="student' + studentID + '"><td class="name"><a href="mailto:' + studentMail + '">' + studentFirstname + ' ' + studentSurname + '</a><br /><span class="index">(' + studentIndex + ')</span></td></tr>');
+					
+					$.each(currGroup.meetings, function() {
+						currMeeting = this;
+						$('#groups .group.' + currGroup.id + ' .students tr.student.' + studentID).append('<td class="meeting ' + currMeeting.id + '"></td>');
+					});
+					
+					//TO DO: Ajax getting marksandpresence
+					
 					ui.draggable.remove();
 					
 					$('#notingroup td').first().addClass('top');
@@ -111,7 +135,13 @@ function loadDate(id) {
 					if($('#notingroup td').hasClass('top')) {
 						$('#notingroup td').css('borderTop',  '1px solid #e0e0e0');
 					}
-				}
+				},
+				over: function(e, ui) {
+					$(this).addClass('ui-state-hover');
+				},
+				out: function(e, ui) {
+					$(this).removeClass('ui-state-hover');
+				},
 			});
 			
 			//adding meetings header
@@ -132,7 +162,7 @@ function loadDate(id) {
 				//TO DO: getting array of newly created cells {meetingid {studentid, markid, presenceid}}
 				
 				//adding additional header
-				$('<td class="meeting ' + newMeetingID + '" id="meeting' + newMeetingID + '"><input type="text" class="name" /><br /><input type="text" maxlength="5" class="date" /><input type="text" maxlength="3" class="weight" /></td>').insertBefore($('#groups .group.' + currGroup.id + ' .students tr.header td.add-meeting'));
+				$('<td class="meeting ' + newMeetingID + '" id="meeting' + newMeetingID + '"><input type="text" class="name" /><br /><input type="text" maxlength="5" class="date" /><input type="text" maxlength="3" class="weight" /></td>').insertBefore($('#groups .course-date.' + currDate.id + ' .group .students tr.header td.add-meeting'));
 			
 				//adding new meeting to each student
 				$.each(currGroup.students, function() {
