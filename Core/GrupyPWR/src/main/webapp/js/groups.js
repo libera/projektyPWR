@@ -47,7 +47,20 @@ function loadDate(id) {
 	console.log("load date " + id);
 	
 	var datesData = datesSample;
+	
 	//AJAX
+	$.ajax({
+		url: serverURL + 'getgroups',
+		type: 'POST',
+		data: {dateid: id},
+		dataType: 'json',
+		success: function(data, textStatus, jqXHR ) {
+			console.log(JSON.stringify(data) + ' ' + textStatus);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log(textStatus + ' ' + errorThrown);
+		}
+	});
 	
 	$.each(datesData.dates, function() {
 		currDate = this;

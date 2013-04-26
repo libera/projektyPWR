@@ -112,8 +112,9 @@ function loadCourses() {
 		dataType: 'json',
 		data: {userid: userID},
 		success: function(data, textStatus, jqXHR) {
-			console.log(JSON.stringify(data) + " " + textStatus);
 			coursesData = data;
+			
+			console.log(JSON.stringify(coursesData) + " " + textStatus);
 			
 			//filling courses list
 			$.each(coursesData.courses, function() {
