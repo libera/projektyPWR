@@ -68,7 +68,7 @@ public class LoginController extends SendMail {
 			@RequestParam(value = "user", required = true) String login,
 			Model model) {
 		String from = "grupy.pwr.wroc@gmail.com";
-		String subject = "Przes³anie has³a do logowania!";
+		String subject = "Przesï¿½anie hasï¿½a do logowania!";
 		Date data = new Date();
 		Prowadzacy prowadzacy = new Prowadzacy();
 		prowadzacy.setImiona(imie);
@@ -81,7 +81,6 @@ public class LoginController extends SendMail {
 		String haslo = RandomPassword.Random();
 		prowadzacy.setHaslo(Encryption.encrypt(haslo));
 		loginService.addProwadzacy(prowadzacy);
-		// SendMail sendMail = new SendMail();
 		Wyslij_maila(mail, subject, haslo, from);
 		List<Prowadzacy> registerlist = loginService.validateRegister(imie,
 				nazwisko, mail, login);
@@ -177,15 +176,15 @@ public class LoginController extends SendMail {
 		
 
 		// taki ma byc generwany response do klienta
-		// Jeszcze nalezy dodac, ¿e sprawdzamy w tabeli grupy_zajeciowe czy
+		// Jeszcze nalezy dodac, ï¿½e sprawdzamy w tabeli grupy_zajeciowe czy
 		// przeslany postem
-		// id_ usera jest taki jaki chcemy wyœwietliæ przyporz¹dkowane do niego
+		// id_ usera jest taki jaki chcemy wyï¿½wietliï¿½ przyporzï¿½dkowane do niego
 		// grupy(przesylane POSTEM)
 		/*
-		 * Czyli tutaj korzystamy z encji Kursy która wyswietla nam(teraz
-		 * wypisuje wszystkie pola z kursów): - nazwa_kursu - kod_kursu
-		 * Nastêpnie w danych kursach mamy wiêcej grup i teraz robi¹ siê checa(
-		 * czyli w tym momencie wyswietlamy zawartoœæ encji grupy_zjeciowe,
+		 * Czyli tutaj korzystamy z encji Kursy ktï¿½ra wyswietla nam(teraz
+		 * wypisuje wszystkie pola z kursï¿½w): - nazwa_kursu - kod_kursu
+		 * Nastï¿½pnie w danych kursach mamy wiï¿½cej grup i teraz robiï¿½ siï¿½ checa(
+		 * czyli w tym momencie wyswietlamy zawartoï¿½ï¿½ encji grupy_zjeciowe,
 		 * odpowiednio: - idGrupy_zajeciowej - Kod_grupy - Termin
 		 */
 
@@ -193,7 +192,7 @@ public class LoginController extends SendMail {
 		 * "{'courses': [ {'name':'Informatyka w gospodarce', 'id':'1', 'dates':
 		 * [ {'id':'1', 'code':'bla1', 'name':'PN 13.15'}, {'id':'2',
 		 * 'code':'bla2', 'name':'WT 11.15'}, {'id':'3', 'code':'bla3',
-		 * 'name':'PT 19.55'}, ] }, {'name':'In¿ynieria oprogramowania',
+		 * 'name':'PT 19.55'}, ] }, {'name':'Inï¿½ynieria oprogramowania',
 		 * 'id':'2', 'dates': [ {'id':'4', 'code':'bla4', 'name':'PN 13.15'},
 		 * {'id':'5', 'code':'bla5', 'name':'WT 11.15'}, {'id':'6',
 		 * 'code':'bla6', 'name':'PT 19.55'}, ] } ] }"

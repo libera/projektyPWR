@@ -353,10 +353,6 @@ div.group div.details .students td.meeting input.mark {
 	float: right;
 }
 
-div.group.ui-state-hover div.details, div.group.ui-state-hover header {
-	background-color: #f8f8f8;
-}
-
 /*fixing checkbox position*/
 div.group div.details .students td.meeting label {
 	position: relative;
@@ -388,7 +384,7 @@ table#notingroup tr {
 }
 
 table#notingroup tr:hover {
-	background-color: #f8f8f8;
+	background-color: #f6f6f6;
 }
 
 table#notingroup td.name {
