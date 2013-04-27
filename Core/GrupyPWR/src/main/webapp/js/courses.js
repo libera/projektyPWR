@@ -1,3 +1,6 @@
+/*
+{'meetings': [{'meetingid':'1', 'presenceid':'3', markid: '3'}]}
+*/
 //sample json courses data
 var coursesSample = {'courses':
 	[
