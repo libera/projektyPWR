@@ -1,5 +1,6 @@
 package com.project.Json;
-
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY)
 public class JsonMarksAndPresence {
 
 	// Encja obecnosci

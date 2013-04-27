@@ -2,6 +2,9 @@ package com.project.Json;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY)
 public class JsonSpotkania {
 
 	private int id;

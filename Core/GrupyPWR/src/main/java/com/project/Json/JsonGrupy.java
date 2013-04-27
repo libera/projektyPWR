@@ -2,9 +2,11 @@ package com.project.Json;
 
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 
 @JsonSubTypes({ @JsonSubTypes.Type(JsonGrupyZajeciowe.class) })
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY)
 public class JsonGrupy {
 
 	private String name;

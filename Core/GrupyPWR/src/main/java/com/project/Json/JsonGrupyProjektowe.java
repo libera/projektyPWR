@@ -2,11 +2,13 @@ package com.project.Json;
 
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 
 @JsonSubTypes({ @JsonSubTypes.Type(JsonStudents.class),
 		@JsonSubTypes.Type(JsonSpotkania.class),
 		@JsonSubTypes.Type(JsonNotes.class) })
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY)
 public class JsonGrupyProjektowe {
 	private int id;
 	private String name;

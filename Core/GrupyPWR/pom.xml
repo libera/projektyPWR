@@ -117,13 +117,23 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.12</version>
 		</dependency>
-		
+
 		<dependency>
-	<groupId>com.fasterxml.jackson.core</groupId>
-	<artifactId>jackson-core</artifactId>
-	<version>2.1.4</version>
-</dependency>
-            
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+
 
 		<!-- GSON -->
 		<!--<dependency> <groupId>com.google.code.gson</groupId> <artifactId>gson</artifactId> 

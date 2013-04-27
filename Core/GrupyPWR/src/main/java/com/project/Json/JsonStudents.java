@@ -2,8 +2,10 @@ package com.project.Json;
 
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY)
 @JsonSubTypes({ @JsonSubTypes.Type(JsonMarksAndPresence.class) })
 public class JsonStudents {
 
