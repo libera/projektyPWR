@@ -32,6 +32,7 @@ import com.project.data.Kursy;
 import com.project.data.Prowadzacy;
 import com.project.service.LoginService;
 import com.project.service.PobierzGrupyService;
+import com.project.service.PobranieGrupZajService;
 import com.project.Utils.Encryption;
 import com.project.Utils.ImportCSV;
 import com.project.Utils.RandomPassword;
@@ -47,6 +48,9 @@ public class LoginController extends SendMail {
 
 	@Autowired
 	private PobierzGrupyService pobierzGrupyService;
+
+	@Autowired
+	private PobranieGrupZajService pobierzGrupyZajService;
 
 	@Autowired
 	private HttpServletRequest context;
@@ -102,7 +106,7 @@ public class LoginController extends SendMail {
 			Model model) {
 
 		List<Prowadzacy> loginlist = loginService.validateLogin(login, haslo);
-		
+
 		System.out.println("Hasło: " + haslo + " Login: " + login);
 		System.out.println("\nRozmiar loginlist: " + loginlist.size());
 
@@ -114,41 +118,120 @@ public class LoginController extends SendMail {
 		}
 	}
 
-	@RequestMapping(value = "/getcourses", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/getgroups", method = RequestMethod.POST, produces="application/json")
+	public @ResponseBody
+	JsonGroupWyzej wyslijGrupy(
+			@RequestParam(value = "dateid", required = true) int idGrupyZaj,
+			Model model) {
+
+		JsonMarksAndPresence jsonmarks = new JsonMarksAndPresence();
+
+		JsonStudents jsonstudent = new JsonStudents();
+		JsonSpotkania jsonspotkania = new JsonSpotkania();
+		JsonNotes jsonnotatki = new JsonNotes();
+
+		JsonGrupyProjektowe jsongrup = new JsonGrupyProjektowe();
+		JsonNieWGrupie jsonniewgrupie = new JsonNieWGrupie();
+
+		JsonGroupZajeciowe jsonGroupZajeciowe = new JsonGroupZajeciowe();
+
+		JsonGroupWyzej jsonGroupWyzej = new JsonGroupWyzej();
+		
+		List<GrupyZajeciowe> grupzajeciowe = pobierzGrupyZajService.pobierzGrupyZajeciowe(idGrupyZaj);
+		int i;
+		int idgrupyZaj;
+		
+		List<JsonGroupZajeciowe> dates = new ArrayList<JsonGroupZajeciowe>();
+		for(i=0; i<grupzajeciowe.size(); i++) {
+			idgrupyZaj = grupzajeciowe.get(i).getIdGrupyZajeciowe();
+			
+			
+			for(){
+				for() {
+					for(){
+						for() {
+							
+						}
+					}
+					for() {
+						
+					}
+					for() {
+						
+					}
+				}
+				for() {
+					
+				}
+			}
+			jsonGroupWyzej.setDates(dates);
+		}
+		return jsonGroupWyzej;
+		/*
+		 * List<GrupyZajeciowe> grupyzajeciowe = pobierzGrupyService
+		 * .pobierzGrupyZajeciowe(login);
+		 */
+		/*
+		 * int idKursu ; int i; JsonKursy jsonKursy = new JsonKursy(); JsonGrupy
+		 * jsonGrupy = new JsonGrupy(); JsonGrupyZajeciowe jsonGrupyZajeciowe =
+		 * new JsonGrupyZajeciowe(); List<JsonGrupy> courses = new
+		 * ArrayList<JsonGrupy>(); 
+		 * for( i = 0; i<= grupyzajeciowe.size()-1;
+		 * i++){ 
+		 * idKursu = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
+		 * 
+		 * List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu);
+		 * 
+		 * for(Kursy kurs : kurslist) { List<JsonGrupyZajeciowe> name = new
+		 * ArrayList<JsonGrupyZajeciowe>(); for(GrupyZajeciowe grupa :
+		 * grupyzajeciowe) { // set dla JsonGrupyZajeciowe
+		 * jsonGrupyZajeciowe.setId(grupa.getIdKursu().getIdKursy());
+		 * jsonGrupyZajeciowe.setCode(grupa.getKodGrupy());
+		 * jsonGrupyZajeciowe.setName(grupa.getNazwa()); }
+		 * jsonGrupy.setName(kurs.getNazwaKursu());
+		 * jsonGrupy.setId(kurs.getIdKursy()); jsonGrupy.setDates(name); }
+		 * jsonKursy.setCourses(courses); }
+		 * 
+		 * return jsonKursy;
+		 */
+
+//	}*/
+
+	@RequestMapping(value = "/getcourses", method = RequestMethod.POST,  produces="application/json")
 	public @ResponseBody
 	JsonKursy wyslijKursy(
 			@RequestParam(value = "userid", required = true) int login,
 			Model model) {
 
-
-
 		List<GrupyZajeciowe> grupyzajeciowe = pobierzGrupyService
 				.pobierzGrupyZajeciowe(login);
-		int idKursu ;
+		int idKursu;
 		int i;
 		JsonKursy jsonKursy = new JsonKursy();
 		JsonGrupy jsonGrupy = new JsonGrupy();
 		JsonGrupyZajeciowe jsonGrupyZajeciowe = new JsonGrupyZajeciowe();
 		List<JsonGrupy> courses = new ArrayList<JsonGrupy>();
-		for( i = 0; i<= grupyzajeciowe.size()-1; i++){
+		for (i = 0; i < grupyzajeciowe.size(); i++) {
 			idKursu = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
+
 			List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu);
 
-			for(Kursy kurs : kurslist) {
+			for (Kursy kurs : kurslist) {
 				List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
-				for(GrupyZajeciowe grupa : grupyzajeciowe) {
-					//  set dla JsonGrupyZajeciowe
+				for (GrupyZajeciowe grupa : grupyzajeciowe) {
+					// set dla JsonGrupyZajeciowe
 					jsonGrupyZajeciowe.setId(grupa.getIdKursu().getIdKursy());
 					jsonGrupyZajeciowe.setCode(grupa.getKodGrupy());
 					jsonGrupyZajeciowe.setName(grupa.getNazwa());
 				}
-			jsonGrupy.setName(kurs.getNazwaKursu());
-			jsonGrupy.setId(kurs.getIdKursy());
-			jsonGrupy.setDates(name);
+				jsonGrupy.setName(kurs.getNazwaKursu());
+				jsonGrupy.setId(kurs.getIdKursy());
+				jsonGrupy.setDates(name);
 			}
 			jsonKursy.setCourses(courses);
+			System.out.println("Test wydruk"+ jsonKursy);
 		}
-		
+
 		return jsonKursy;
 	}
 
@@ -188,7 +271,7 @@ public class LoginController extends SendMail {
 	String upload(
 			@RequestParam(value = "filecontent", required = false) CommonsMultipartFile file,
 			@RequestParam(value = "userid", required = true) int login,
-			Model model){
+			Model model) {
 
 		InputStream is = null;
 		StringBuilder sb = new StringBuilder();
