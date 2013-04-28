@@ -28,18 +28,17 @@
 			</div>
 			<div id="upload-csv" class="dialog">
 				<header class="section-title">Upload CSV</header>
-				<form enctype="multipart/form-data" action="http://localhost:8080/tut/importcsv" method="post">
+				<form enctype="multipart/form-data" method="post" id="upload-csv-form">
 					<table>
 						<tr>
 							<td class="info" colspan="2"></td>
 						</tr>
 						<tr>
 							<td><input name="filecontent" type="file" id="csv-file" /></td>
-							<!--  <td><input type="button" value="Wyślij" /></td>-->
+							<td><input type="button" value="Wyślij" /></td>
 						</tr>
 					</table>
-					<!--<input type="hidden" name="userid" id="csv-userid" value="" />-->
-					<input type="hidden" name="userid" value="1" />
+					<input type="hidden" name="userid" id="csv-userid" value="1" />
 				</form>
 			</div>
 			<div id="register-success" class="dialog">
