@@ -94,11 +94,15 @@ function loadDate(id) {
 								$(this).children('td').css('borderTop',  '1px solid #e0e0e0');
 							}
 						}
-						});
+					});
 				});
 				
 				//adding in groups
 				$('#groups').append('<div class="course-date ' + currDate.id + '"><header class="course-date-header">' + currDate.name +' (' + currDate.code + ')<div class="tools"><a href="#" class="add-group-button">dodaj grupe projektowa w tym terminie</a></div></header></div>');
+				
+				$.each(currDate.groups, function() {
+					addGroup(currDate, this);
+				});
 				
 				//add group button
 				$('#groups .course-date .course-date-header .add-group-button').click(function(e) {
@@ -156,10 +160,6 @@ function loadDate(id) {
 						}
 					});
 				});
-				
-				/*$.each(currDate.groups, function() {
-					addGroup(currDate, this);
-				});*/
 			});
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
@@ -173,7 +173,7 @@ function addGroup(date, group) {
 	currGroup = group;
 	
 	$('#groups .course-date.' + currDate.id).append('<div class="group ' + currGroup.id + '">' +
-			'<header>' + currGroup.subject + '<div class="tools"><a href="#" class="more">Więcej</a></div></header>' +
+			'<header>' + currGroup.subject + '<div class="tools"><a href="#" class="more">Więcej</a><a href="#" class="edit-group">Edytuj grupe projektowa</a></div></header>' +
 			'<div class="details"><table class="students"><tr class="header"><td class="empty"></td></tr></table></div>' +
 		'</div>');
 		

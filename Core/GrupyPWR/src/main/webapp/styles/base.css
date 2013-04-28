@@ -314,6 +314,12 @@ div.group header {
 div.group header div.tools {
 	float: right;
 	height: 100%;
+}
+
+div.group header div.tools a.more {
+	height: 100%;
+	float: right;
+	display: block;
 	width: 9px;
 	text-indent: 9px;
 	overflow: hidden;
@@ -321,7 +327,20 @@ div.group header div.tools {
 	background: url('./../images/list_closed.png') left center no-repeat;
 }
 
-div.group.active header div.tools {
+div.group header div.tools a.edit-group {
+	height: 100%;
+	float: right;
+	display: block;
+	width: 13px;
+	height: 13px;
+	text-indent: 13px;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-right: 10px;
+	background: url('./../images/edit_small.png') left center no-repeat;
+}
+
+div.group.active header div.tools a.more {
 	background: url('./../images/list_opened.png') left center no-repeat;
 }
 
