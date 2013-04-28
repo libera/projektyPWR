@@ -26,6 +26,35 @@
 		<div id="lightbox">
 			<div class="bg">
 			</div>
+			<div id="add-group" class="dialog">
+				<header class="section-title">Dodaj grupę projektową</header>
+				<table>
+					<tr>
+						<td colspan="2" class="info">
+							Wpisz dane nowej grupy projektowej w terminie <span id="add-group-course"></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="param">Nazwa:</td>
+						<td class="value"><input type="text" id="add-group-name" /></td>
+					</tr>
+					<tr>
+						<td class="param">Temat:</td>
+						<td class="value"><input type="text" id="add-group-subject" /></td>
+					</tr>
+					<tr>
+						<td class="param">URL do repozytorium:</td>
+						<td class="value"><input type="text" id="add-group-repo" /></td>
+					</tr>
+					<tr>
+						<td class="param">Komentarz:</td>
+						<td class="value"><textarea rows="10" cols="30" id="add-group-comment"></textarea></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;" colspan="2"><input type="button" id="add-group-submit-button" value="Dodaj" /></td>
+					</tr>
+				</table>
+			</div>
 			<div id="upload-csv" class="dialog">
 				<header class="section-title">Upload CSV</header>
 				<form enctype="multipart/form-data" method="post" id="upload-csv-form">

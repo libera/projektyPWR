@@ -3,7 +3,7 @@ var datesSample = {'dates':
 	[
 		{'id':'1', 'code':'bla1', 'name':'PN 13.15', 'groups':
 			[
-				{'id':'1', 'name':'Nie wiem po co to', 'subject':'System zarządzania projektami studenckimi', 'repo':'GitHub...',
+				{'id':'1', 'name':'Nie wiem po co to', 'subject':'System zarządzania projektami studenckimi', 'repo':'GitHub...', 'comment':'Bardzo dobra grupa',
 					'students':
 					[
 						{'id':'1', 'firstname':'Michał', 'surname':'Glenc', 'index':'181031', 'finalmark':'5', 'position':'robol', 'mail':'181031@student.pwr.wroc.pl',
@@ -49,15 +49,15 @@ function loadDate(id) {
 	var datesData = datesSample;
 	
 	//AJAX
-	$.ajax({
+	/*$.ajax({
 		url: serverURL + 'getgroups',
 		type: 'POST',
 		data: {dateid: id},
 		dataType: 'json',
 		success: function(data, textStatus, jqXHR ) {
-			datesData = data;
+			datesData = data;*/
 			
-			console.log(JSON.stringify(data) + ' ' + textStatus);
+			console.log(JSON.stringify(datesData));
 			
 			$.each(datesData.dates, function() {
 				currDate = this;
@@ -92,137 +92,194 @@ function loadDate(id) {
 							if($(this).children('td').hasClass('top')) {
 								$(this).children('td').css('borderTop',  '1px solid #e0e0e0');
 							}
-							
-							//$('#notingroup td').first().addClass('top');
 						}
 						});
-					
-					/*$('#notingroup tr#student' + currNoGroup.id).mousedown(function() {
-						
-					});
-					
-					$('#notingroup tr#student' + currNoGroup.id).mouseup(function() {
-						
-					});*/
 				});
 				
 				//adding in groups
-				$('#groups').append('<div class="course-date ' + currDate.id + '"><header>' + currDate.name +' (' + currDate.code + ')</header></div>');
+				$('#groups').append('<div class="course-date ' + currDate.id + '"><header class="course-date-header">' + currDate.name +' (' + currDate.code + ')<div class="tools"><a href="#" class="add-group-button">dodaj grupe projektowa w tym terminie</a></div></header></div>');
+				
+				//add group button
+				$('#groups .course-date .course-date-header .add-group-button').click(function(e) {
+					e.preventDefault();
+					$('div#lightbox').show();
+					
+					$('#add-group').show();
+					$('#add-group').css('left', $(document).width()/2 - $('#add-group').width()/2);
+					$('#add-group').css('top', $(document).height()/2 - $('#add-group').height()/2-50);
+					
+					$('#add-group-course').html(currDate.name);
+					
+					$('#add-group-name').val('');
+					$('#add-group-subject').val('');
+					$('#add-group-repo').val('');
+					$('#add-group-comment').val('');
+				});
+				
+				//add group submit
+				$('#add-group input#add-group-submit-button').click(function(e) {
+					e.preventDefault();
+					
+					var currGroup = new Object();
+					
+					currGroup.name = $('#add-group-name').val();
+					currGroup.subject = $('#add-group-subject').val();
+					currGroup.repo = $('#add-group-repo').val();
+					currGroup.comment = $('#add-group-comment').val();
+					currGroup.students = new Array();
+					currGroup.meetings = new Array();
+					currGroup.notes = new Array();
+					
+					currGroup.id = 10;
+					
+					addGroup(currDate, currGroup);
+					
+					/*$.ajax({
+						url: serverURL + 'addgroup',
+						type: 'POST',
+						data: {name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
+						dataType: 'json',
+						success: function(data, textStatus, jqXHR ) {
+							console.log("Add group: " + data + " " + textStatus);
+							
+							if(data >= '0') {
+								$('div#add-group td.info').show();
+								$('div#add-group td.info').html('<span class="success">Grupa została dodana!</span>');
+								
+								addGroup(currGroup);
+								
+							} else {
+								$('div#add-group td.info').show();
+								$('div#add-group td.info').html('<span class="error">Błąd podczas dodawania grupy!</span>');
+							}
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log(textStatus + ' ' + errorThrown);
+						}
+					});*/
+				});
 				
 				$.each(currDate.groups, function() {
-					currGroup = this;
-					
-					$('#groups .course-date.' + currDate.id).append('<div class="group ' + currGroup.id + '">' +
-						'<header>' + currGroup.subject + '<div class="tools"><a href="#" class="more">Więcej</a></div></header>' +
-						'<div class="details"><table class="students"><tr class="header"><td class="empty"></td></tr></table></div>' +
-					'</div>');
-					
-					//enable user dropping
-					$('#groups .group.' + currGroup.id).droppable({
-						drop: function(e, ui) {
-							$(this).removeClass('ui-state-hover');
-							
-							//adding to students table
-							var studentID = ui.draggable.data('studentID');
-							var studentMail = ui.draggable.data('studentMail');
-							var studentFirstname = ui.draggable.data('studentFirstname');
-							var studentSurname = ui.draggable.data('studentSurname');
-							var studentIndex = ui.draggable.data('studentIndex');
-							
-							$(' #groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + studentID + '" id="student' + studentID + '"><td class="name"><a href="mailto:' + studentMail + '">' + studentFirstname + ' ' + studentSurname + '</a><br /><span class="index">(' + studentIndex + ')</span></td></tr>');
-							
-							$.each(currGroup.meetings, function() {
-								currMeeting = this;
-								$('#groups .group.' + currGroup.id + ' .students tr.student.' + studentID).append('<td class="meeting ' + currMeeting.id + '"></td>');
-							});
-							
-							//TO DO: Ajax getting marksandpresence
-							
-							ui.draggable.remove();
-							
-							$('#notingroup td').first().addClass('top');
-							
-							if($('#notingroup td').hasClass('top')) {
-								$('#notingroup td').css('borderTop',  '1px solid #e0e0e0');
-							}
-						},
-						over: function(e, ui) {
-							$(this).addClass('ui-state-hover');
-						},
-						out: function(e, ui) {
-							$(this).removeClass('ui-state-hover');
-						},
-					});
-					
-					//adding meetings header
-					$.each(currGroup.meetings, function() {
-						currMeeting = this;
-						
-						$('#groups .group.' + currGroup.id + ' .students tr.header').append('<td class="meeting ' + currMeeting.id + '" id="meeting' + currMeeting.id + '"><input type="text" class="name" value="' + currMeeting.name + '" /><br /><input type="text" maxlength="5" class="date" value="' + currMeeting.date + '" /><input type="text" maxlength="3" class="weight" value="' + currMeeting.weight + '" /></td>');
-					});
-					
-					$('#groups .group.' + currGroup.id + ' .students tr.header').append('<td class="add-meeting"><a href="#">dodaj</a></td>');
-					
-					$('#groups .group.' + currGroup.id + ' .students tr.header td.add-meeting a').click(function(e) {
-						e.preventDefault();
-						
-						//first we need to connect to database and get new meeting id
-						newMeetingID = null;
-						
-						//TO DO: getting array of newly created cells {meetingid {studentid, markid, presenceid}}
-						
-						//adding additional header
-						$('<td class="meeting ' + newMeetingID + '" id="meeting' + newMeetingID + '"><input type="text" class="name" /><br /><input type="text" maxlength="5" class="date" /><input type="text" maxlength="3" class="weight" /></td>').insertBefore($('#groups .course-date.' + currDate.id + ' .group .students tr.header td.add-meeting'));
-					
-						//adding new meeting to each student
-						$.each(currGroup.students, function() {
-							currStudent = this;
-							$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + newMeetingID + '"><input type="checkbox" id="student' + currStudent.id + '_meeting' + newMeetingID +'" /><label for="student' + currStudent.id + '_meeting' + newMeetingID +'"></label><input type="text" maxlength="3" class="mark" /></td>');
-						});
-					});
-					
-					//adding students header
-					$.each(currGroup.students, function() {
-						currStudent = this;
-						
-						$(' #groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + currStudent.id + '" id="student' + currStudent.id + '"><td class="name"><a href="mailto:' + currStudent.mail + '">' + currStudent.firstname + ' ' + currStudent.surname + '</a><br /><span class="index">(' + currStudent.index + ')</span></td></tr>');
-					
-						//adding meeting to each student
-						$.each(currGroup.meetings, function() {
-							currMeeting = this;
-							$('#groups .group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + currMeeting.id + '"></td>');
-						});
-						
-						$.each(currStudent.marksandpresence, function() {
-							currMarkAndPresence = this;
-							
-							//TO DO: add mark and presence id
-							
-							$('#groups .group.' + currGroup.id + ' .students tr.student.' + currStudent.id + ' td.meeting.' + currMarkAndPresence.meetingid).html('<input type="checkbox" id="student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid +'" /><label for="student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid +'"></label><input type="text" maxlength="3" class="mark" value="' + currMarkAndPresence.mark + '" />');
-							if(currMarkAndPresence.present == '1') {
-								$('input#student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid).attr('checked', true);
-							}
-						});
-					});
-					
-					$('#groups .group.' + currGroup.id + ' .details').hide();
-					
-					$('#groups .group.' + currGroup.id + ' header').click(function() {
-						if($(this).parent().hasClass('active')) {
-							$(this).next().hide('blind', 200, function() {
-								$('#groups .group.' + currGroup.id).removeClass('active');
-							});
-						} else {
-							$(this).next().show('blind', 200, function() {
-								$('#groups .group.' + currGroup.id).addClass('active');
-							});
-						}
-					});
+					addGroup(currDate, this);
 				});
 			});
-		},
+		/*},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log(textStatus + ' ' + errorThrown);
+		}
+	});*/
+}
+
+function addGroup(date, group) {
+	currDate = date;
+	currGroup = group;
+	
+	$('#groups .course-date.' + currDate.id).append('<div class="group ' + currGroup.id + '">' +
+			'<header>' + currGroup.subject + '<div class="tools"><a href="#" class="more">Więcej</a></div></header>' +
+			'<div class="details"><table class="students"><tr class="header"><td class="empty"></td></tr></table></div>' +
+		'</div>');
+		
+	//enable user dropping
+	$('#groups .group.' + currGroup.id).droppable({
+		drop: function(e, ui) {
+			$(this).removeClass('ui-state-hover');
+			
+			//adding to students table
+			var studentID = ui.draggable.data('studentID');
+			var studentMail = ui.draggable.data('studentMail');
+			var studentFirstname = ui.draggable.data('studentFirstname');
+			var studentSurname = ui.draggable.data('studentSurname');
+			var studentIndex = ui.draggable.data('studentIndex');
+			
+			$(' #groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + studentID + '" id="student' + studentID + '"><td class="name"><a href="mailto:' + studentMail + '">' + studentFirstname + ' ' + studentSurname + '</a><br /><span class="index">(' + studentIndex + ')</span></td></tr>');
+			
+			$.each(currGroup.meetings, function() {
+				currMeeting = this;
+				$('#groups .group.' + currGroup.id + ' .students tr.student.' + studentID).append('<td class="meeting ' + currMeeting.id + '"></td>');
+			});
+			
+			//TO DO: Ajax getting marksandpresence
+			
+			ui.draggable.remove();
+			
+			$('#notingroup td').first().addClass('top');
+			
+			if($('#notingroup td').hasClass('top')) {
+				$('#notingroup td').css('borderTop',  '1px solid #e0e0e0');
+			}
+		},
+		over: function(e, ui) {
+			$(this).addClass('ui-state-hover');
+		},
+		out: function(e, ui) {
+			$(this).removeClass('ui-state-hover');
+		},
+	});
+	
+	//adding meetings header
+	$.each(currGroup.meetings, function() {
+		currMeeting = this;
+		
+		$('#groups .group.' + currGroup.id + ' .students tr.header').append('<td class="meeting ' + currMeeting.id + '" id="meeting' + currMeeting.id + '"><input type="text" class="name" value="' + currMeeting.name + '" /><br /><input type="text" maxlength="5" class="date" value="' + currMeeting.date + '" /><input type="text" maxlength="3" class="weight" value="' + currMeeting.weight + '" /></td>');
+	});
+	
+	$('#groups .group.' + currGroup.id + ' .students tr.header').append('<td class="add-meeting"><a href="#">dodaj</a></td>');
+	
+	$('#groups .group.' + currGroup.id + ' .students tr.header td.add-meeting a').click(function(e) {
+		e.preventDefault();
+		
+		//first we need to connect to database and get new meeting id
+		newMeetingID = null;
+		
+		//TO DO: getting array of newly created cells {meetingid {studentid, markid, presenceid}}
+		
+		//adding additional header
+		$('<td class="meeting ' + newMeetingID + '" id="meeting' + newMeetingID + '"><input type="text" class="name" /><br /><input type="text" maxlength="5" class="date" /><input type="text" maxlength="3" class="weight" /></td>').insertBefore($('#groups .course-date.' + currDate.id + ' .group .students tr.header td.add-meeting'));
+	
+		//adding new meeting to each student
+		$.each(currGroup.students, function() {
+			currStudent = this;
+			$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + newMeetingID + '"><input type="checkbox" id="student' + currStudent.id + '_meeting' + newMeetingID +'" /><label for="student' + currStudent.id + '_meeting' + newMeetingID +'"></label><input type="text" maxlength="3" class="mark" /></td>');
+		});
+	});
+	
+	//adding students header
+	$.each(currGroup.students, function() {
+		currStudent = this;
+		
+		$(' #groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + currStudent.id + '" id="student' + currStudent.id + '"><td class="name"><a href="mailto:' + currStudent.mail + '">' + currStudent.firstname + ' ' + currStudent.surname + '</a><br /><span class="index">(' + currStudent.index + ')</span></td></tr>');
+	
+		//adding meeting to each student
+		$.each(currGroup.meetings, function() {
+			currMeeting = this;
+			$('#groups .group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + currMeeting.id + '"></td>');
+		});
+		
+		$.each(currStudent.marksandpresence, function() {
+			currMarkAndPresence = this;
+			
+			//TO DO: add mark and presence id
+			
+			$('#groups .group.' + currGroup.id + ' .students tr.student.' + currStudent.id + ' td.meeting.' + currMarkAndPresence.meetingid).html('<input type="checkbox" id="student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid +'" /><label for="student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid +'"></label><input type="text" maxlength="3" class="mark" value="' + currMarkAndPresence.mark + '" />');
+			if(currMarkAndPresence.present == '1') {
+				$('input#student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid).attr('checked', true);
+			}
+		});
+	});
+	
+	$('#groups .group.' + currGroup.id + ' .details').hide();
+	
+	var group = currGroup;
+	$('#groups .group.' + group.id + ' header').click(function() {
+		
+		if($('.group.' + group.id).hasClass('active')) {
+			$(this).next().hide('blind', 200, function() {
+				$('#groups .group.' + group.id).removeClass('active');
+			});
+		} else {
+			$(this).next().show('blind', 200, function() {
+				$('#groups .group.' + group.id).addClass('active');
+			});
 		}
 	});
 }
