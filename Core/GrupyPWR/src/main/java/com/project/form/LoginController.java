@@ -217,12 +217,59 @@ public class LoginController extends SendMail {
 
 		List<GrupyZajeciowe> grupyzajeciowe = pobierzGrupyService
 				.pobierzGrupyZajeciowe(login);
-		int idKursu;
+
 		int i;
+		List<Integer> idKursow = new ArrayList<Integer>();
 		JsonKursy jsonKursy = new JsonKursy();
-		JsonGrupy jsonGrupy = new JsonGrupy();
-		JsonGrupyZajeciowe jsonGrupyZajeciowe = new JsonGrupyZajeciowe();
-		List<JsonGrupy> courses = new ArrayList<JsonGrupy>();
+		
+		for (i = 0; i < grupyzajeciowe.size(); i++) {
+			int tmpIdKusru = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
+			
+			if( false == idKursow.contains(tmpIdKusru))
+			{
+				idKursow.add(tmpIdKusru);
+			}
+			
+		}
+		List<JsonGrupy> courses2 = new ArrayList<JsonGrupy>();
+		for( int j=0; j<idKursow.size(); j++)
+		{
+			
+			List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
+			
+			
+			for (i = 0; i < grupyzajeciowe.size(); i++)
+			{
+				
+				if(idKursow.get(j) != grupyzajeciowe.get(i).getIdKursu().getIdKursy())
+				{
+					continue;
+				}
+				System.out.println(idKursow.get(j).toString() +"==?"+ grupyzajeciowe.get(i).getIdKursu().getIdKursy().toString());
+				
+				JsonGrupyZajeciowe jsonGrupyZajeciowe2 = new JsonGrupyZajeciowe();
+				jsonGrupyZajeciowe2.setId(grupyzajeciowe.get(i).getIdKursu().getIdKursy());
+				jsonGrupyZajeciowe2.setCode(grupyzajeciowe.get(i).getKodGrupy());
+				jsonGrupyZajeciowe2.setName(grupyzajeciowe.get(i).getTermin());
+				
+				name.add(jsonGrupyZajeciowe2);
+			}
+			
+				JsonGrupy jsonGrupy2 = new JsonGrupy();
+				
+				List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursow.get(j));
+				
+				jsonGrupy2.setName(kurslist.get(0).getNazwaKursu());
+				jsonGrupy2.setId(kurslist.get(0).getIdKursy());
+				jsonGrupy2.setDates(name);
+				
+				courses2.add(jsonGrupy2);
+	
+			
+		}
+		jsonKursy.setCourses(courses2);
+		System.out.println("Test wydruk"+ jsonKursy);
+		/*
 		for (i = 0; i < grupyzajeciowe.size(); i++) {
 			idKursu = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
 
@@ -247,7 +294,7 @@ public class LoginController extends SendMail {
 			jsonKursy.setCourses(courses);
 			System.out.println("Test wydruk"+ jsonKursy);
 		}
-
+*/
 		return jsonKursy;
 	}
 
