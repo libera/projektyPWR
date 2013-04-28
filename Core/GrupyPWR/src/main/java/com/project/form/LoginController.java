@@ -5,7 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,12 +69,20 @@ public class LoginController extends SendMail {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public @ResponseBody
-	Integer addProwadzacy(
+	Integer addProwadzacy (
 			@RequestParam(value = "firstname", required = true) String imie,
 			@RequestParam(value = "surname", required = true) String nazwisko,
 			@RequestParam(value = "email", required = true) String mail,
 			@RequestParam(value = "user", required = true) String login,
-			Model model) {
+			Model model) /*throws UnsupportedEncodingException*/ {
+		
+		//
+		 /*PrintStream out = new PrintStream(System.out, true, "UTF-8");
+		 out.println("Registeąęr: " + imie + " " + nazwisko);*/
+		
+		//System.out.println("Registeąęr: " + imie + " " + nazwisko);
+		//
+		
 		String from = "grupy.pwr.wroc@gmail.com";
 		String subject = "Przesłanie hasła do logowania!";
 		Date data = new Date();
@@ -107,7 +119,7 @@ public class LoginController extends SendMail {
 
 		List<Prowadzacy> loginlist = loginService.validateLogin(login, haslo);
 
-		System.out.println("Hasło: " + haslo + " Login: " + login);
+		System.out.println("Has≈Ço: " + haslo + " Login: " + login);
 		System.out.println("\nRozmiar loginlist: " + loginlist.size());
 
 		if (loginlist.size() > 0) {

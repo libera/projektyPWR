@@ -1,4 +1,5 @@
 //sample json dates and groups data
+
 var datesSample = {'dates':
 	[
 		{'id':'1', 'code':'bla1', 'name':'PN 13.15', 'groups':

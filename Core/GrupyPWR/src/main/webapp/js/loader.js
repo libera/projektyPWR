@@ -203,13 +203,15 @@ function initRegister() {
 		} else {
 			$.ajax({
 				url: serverURL + "register",
+				
 				type: 'POST',
 				data: {firstname: firstname, surname: surname, email: email, user: user},
+				scriptCharset: "utf-8",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				success: function(data, textStatus, jqXHR ) {
 					if(data == '1') {
 						hideRegister();
 						showLogin();
-						
 						//showing registered dialog
 						$('div#lightbox').show();
 						$('#register-success').show();

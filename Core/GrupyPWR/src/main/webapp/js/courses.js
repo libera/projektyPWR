@@ -35,6 +35,17 @@ var coursesSample = {'courses':
 	]
 };
 
+coursesSample = {"courses":
+	[
+		{"name":"Inø. e-syst.-techn. JAVA","id":1,"dates":
+			[
+			 {"id":1,"code":"E07-64d","name":"cz 07:30-09:00"}, 
+			 {"id":2,"code":"E07-64e","name":"úr 13:15-15:00"}
+			 ]
+		}
+	]
+};
+
 function initCourses() {
 	//courses tools
 	$('a#import-csv-button').click(function(e) {
