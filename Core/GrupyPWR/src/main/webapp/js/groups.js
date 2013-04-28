@@ -50,13 +50,13 @@ function loadDate(id) {
 	var datesData = datesSample;
 	
 	//AJAX
-	$.ajax({
+	/*$.ajax({
 		url: serverURL + 'getgroups',
 		type: 'POST',
 		data: {dateid: id},
 		dataType: 'json',
 		success: function(data, textStatus, jqXHR ) {
-			datesData = data;
+			datesData = data;*/
 			
 			console.log(JSON.stringify(datesData));
 			
@@ -161,10 +161,61 @@ function loadDate(id) {
 					});
 				});
 			});
-		},
+		/*},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log(textStatus + ' ' + errorThrown);
 		}
+	});*/
+}
+
+function addMeeting(group, meeting) {
+	currGroup = group;
+	currMeeting = meeting;
+	
+	//adding additional header
+	$('<td class="meeting ' + meeting.id + '" id="meeting' + meeting.id + '"><input type="text" class="name" value="'+ meeting.name + '" /><br /><input type="text" maxlength="5" class="date" value="' + meeting.date + '"/><input type="text" maxlength="3" class="weight" value="' + meeting.weight + '"  /></td>').insertBefore($('#groups .course-date .group.' + currGroup.id +  ' .students tr.header td.add-meeting'));
+
+	//adding new meeting to each student
+	$.each(currGroup.students, function() {
+		currStudent = this;
+		
+		console.log(JSON.stringify(currStudent));
+		
+		$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + meeting.id + '"><input type="checkbox" id="mark' + meeting.id +'" /><label for="student' + currStudent.id + '_meeting' + meeting.id +'"></label><input type="text" maxlength="3" class="mark" /></td>');
+	
+		$.each(currStudent.marksandpresence, function() {
+			currMarkAndPresence = this;
+			
+			$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id + ' td.' + currMarkAndPresence.meetingid + ' .mark').val(currMarkAndPresence.mark);
+			if(currMarkAndPresence.present == '1') {
+				$('input#student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid).attr('checked', true);
+			}
+		});
+	});
+	
+	//setmeeting
+	$('td#meeting' + meeting.id + ' input').blur(function() {
+		name = $('.meeting.' + meeting.id + ' input.name').val();
+		date = $('.meeting.' + meeting.id+ ' input.date').val();
+		weight = $('.meeting.' + meeting.id + ' input.weight').val();
+		
+		$.ajax({
+			url: serverURL + 'setmeeting',
+			type: 'POST',
+			data: {meetingid: meeting.id, name: name, date: date, weight: weight},
+			dataType: 'json',
+			success: function(data, textStatus, jqXHR ) {
+				console.log("Set meeting: " + data + " " + textStatus);
+				
+				if(data == '1') {
+				} else {
+					console.log(error);
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(textStatus + ' ' + errorThrown);
+			}
+		});
 	});
 }
 
@@ -173,8 +224,8 @@ function addGroup(date, group) {
 	currGroup = group;
 	
 	$('#groups .course-date.' + currDate.id).append('<div class="group ' + currGroup.id + '">' +
-			'<header>' + currGroup.subject + '<div class="tools"><a href="#" class="more">Więcej</a><a href="#" class="edit-group">Edytuj grupe projektowa</a></div></header>' +
-			'<div class="details"><table class="students"><tr class="header"><td class="empty"></td></tr></table></div>' +
+			'<header><span class="subject">' + currGroup.subject + '</span><div class="tools"><a href="#" class="more">Więcej</a><a href="#" class="edit-group">Edytuj grupe projektowa</a></div></header>' +
+			'<div class="details"><table class="students"><tr class="header"><td class="empty"></td><td class="add-meeting"><a href=#">dodaj</a></td></tr></table></div>' +
 		'</div>');
 		
 	//enable user dropping
@@ -211,34 +262,22 @@ function addGroup(date, group) {
 		},
 		out: function(e, ui) {
 			$(this).removeClass('ui-state-hover');
-		},
+		}
 	});
-	
-	//adding meetings header
-	$.each(currGroup.meetings, function() {
-		currMeeting = this;
-		
-		$('#groups .group.' + currGroup.id + ' .students tr.header').append('<td class="meeting ' + currMeeting.id + '" id="meeting' + currMeeting.id + '"><input type="text" class="name" value="' + currMeeting.name + '" /><br /><input type="text" maxlength="5" class="date" value="' + currMeeting.date + '" /><input type="text" maxlength="3" class="weight" value="' + currMeeting.weight + '" /></td>');
-	});
-	
-	$('#groups .group.' + currGroup.id + ' .students tr.header').append('<td class="add-meeting"><a href="#">dodaj</a></td>');
 	
 	$('#groups .group.' + currGroup.id + ' .students tr.header td.add-meeting a').click(function(e) {
 		e.preventDefault();
 		
 		//first we need to connect to database and get new meeting id
-		newMeetingID = null;
+		newMeeting = new Object();
+		newMeeting.id = 1000;
+		newMeeting.name = "";
+		newMeeting.date = "";
+		newMeeting.weight = "";
 		
 		//TO DO: getting array of newly created cells {meetingid {studentid, markid, presenceid}}
 		
-		//adding additional header
-		$('<td class="meeting ' + newMeetingID + '" id="meeting' + newMeetingID + '"><input type="text" class="name" /><br /><input type="text" maxlength="5" class="date" /><input type="text" maxlength="3" class="weight" /></td>').insertBefore($('#groups .course-date.' + currDate.id + ' .group .students tr.header td.add-meeting'));
-	
-		//adding new meeting to each student
-		$.each(currGroup.students, function() {
-			currStudent = this;
-			$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + newMeetingID + '"><input type="checkbox" id="student' + currStudent.id + '_meeting' + newMeetingID +'" /><label for="student' + currStudent.id + '_meeting' + newMeetingID +'"></label><input type="text" maxlength="3" class="mark" /></td>');
-		});
+		addMeeting(currGroup, newMeeting);
 	});
 	
 	//adding students header
@@ -248,21 +287,17 @@ function addGroup(date, group) {
 		$(' #groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + currStudent.id + '" id="student' + currStudent.id + '"><td class="name"><a href="mailto:' + currStudent.mail + '">' + currStudent.firstname + ' ' + currStudent.surname + '</a><br /><span class="index">(' + currStudent.index + ')</span></td></tr>');
 	
 		//adding meeting to each student
-		$.each(currGroup.meetings, function() {
+		/*$.each(currGroup.meetings, function() {
 			currMeeting = this;
 			$('#groups .group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + currMeeting.id + '"></td>');
-		});
+		});*/
 		
-		$.each(currStudent.marksandpresence, function() {
-			currMarkAndPresence = this;
-			
-			//TO DO: add mark and presence id
-			
-			$('#groups .group.' + currGroup.id + ' .students tr.student.' + currStudent.id + ' td.meeting.' + currMarkAndPresence.meetingid).html('<input type="checkbox" id="student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid +'" /><label for="student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid +'"></label><input type="text" maxlength="3" class="mark" value="' + currMarkAndPresence.mark + '" />');
-			if(currMarkAndPresence.present == '1') {
-				$('input#student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid).attr('checked', true);
-			}
-		});
+		
+	});
+	
+	//adding meetings header
+	$.each(currGroup.meetings, function() {
+		addMeeting(currGroup, this);
 	});
 	
 	$('#groups .group.' + currGroup.id + ' .details').hide();
@@ -279,6 +314,61 @@ function addGroup(date, group) {
 				$('#groups .group.' + group.id).addClass('active');
 			});
 		}
+	});
+	
+	$('#groups .group.' + group.id + ' header .tools a.edit-group').click(function() {
+		console.log("edit group " + group.id);
+		
+		e.preventDefault();
+		$('div#lightbox').show();
+		
+		$('#edit-group').show();
+		$('#edit-group').css('left', $(document).width()/2 - $('#edit-group').width()/2);
+		$('#edit-group').css('top', $(document).height()/2 - $('#edit-group').height()/2-50);
+		
+		$('#edit-group-course').html(currDate.name);
+		
+		$('#edit-group-name').val(group.name);
+		$('#edit-group-subject').val(group.subject);
+		$('#edit-group-repo').val(group.repo);
+		$('#edit-group-comment').val(group.comment);
+	});
+	
+	$('#add-group input#edit-group-submit-button').click(function(e) {
+		e.preventDefault();
+		
+		editGroup.id = group.id;
+		editGroup.name = $('#edit-group-name').val();
+		editGroup.subject = $('#edit-group-subject').val();
+		editGroup.repo = $('#edit-group-repo').val();
+		editGroup.comment = $('#edit-group-comment').val();
+		
+		currGroup = editGroup;
+		
+		$.ajax({
+			url: serverURL + 'editgroup',
+			type: 'POST',
+			data: {groupid: currGroup.id, name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
+			dataType: 'json',
+			success: function(data, textStatus, jqXHR ) {
+				console.log("Add group: " + data + " " + textStatus);
+				
+				if(data == '1') {
+					$('div#add-group td.info').show();
+					$('div#add-group td.info').html('<span class="success">Grupa została zmieniona!</span>');
+					
+					//zmiana danych grupy na stronie
+					$('#groups .group.' + currGroup.id + ' .subject').html(currGroup.subject);
+					
+				} else {
+					$('div#add-group td.info').show();
+					$('div#add-group td.info').html('<span class="error">Błąd podczas zmiany grupy!</span>');
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(textStatus + ' ' + errorThrown);
+			}
+		});
 	});
 }
 

@@ -55,6 +55,35 @@
 					</tr>
 				</table>
 			</div>
+			<div id="edit-group" class="dialog">
+				<header class="section-title">Edytuj grupę projektową</header>
+				<table>
+					<tr>
+						<td colspan="2" class="info">
+							Wpisz dane grupy projektowej
+						</td>
+					</tr>
+					<tr>
+						<td class="param">Nazwa:</td>
+						<td class="value"><input type="text" id="edit-group-name" /></td>
+					</tr>
+					<tr>
+						<td class="param">Temat:</td>
+						<td class="value"><input type="text" id="edit-group-subject" /></td>
+					</tr>
+					<tr>
+						<td class="param">URL do repozytorium:</td>
+						<td class="value"><input type="text" id="edit-group-repo" /></td>
+					</tr>
+					<tr>
+						<td class="param">Komentarz:</td>
+						<td class="value"><textarea rows="10" cols="30" id="edit-group-comment"></textarea></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;" colspan="2"><input type="button" id="edit-group-submit-button" value="Edytuj" /></td>
+					</tr>
+				</table>
+			</div>
 			<div id="upload-csv" class="dialog">
 				<header class="section-title">Upload CSV</header>
 				<form enctype="multipart/form-data" method="post" id="upload-csv-form">

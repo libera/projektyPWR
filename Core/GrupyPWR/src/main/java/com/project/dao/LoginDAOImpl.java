@@ -163,6 +163,7 @@ public class LoginDAOImpl implements LoginDAO {
 
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
+		
 		sessionFactory
 				.getCurrentSession()
 				.createQuery(

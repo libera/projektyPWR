@@ -433,22 +433,20 @@ public class LoginController extends SendMail {
 
 	@RequestMapping(value = "/changepass", method = RequestMethod.POST)
 	public @ResponseBody
-	int zmien_haslo(
+	String zmien_haslo(
 			@RequestParam(value = "userid", required = true) int login,
 			@RequestParam(value = "oldpass", required = true) String stareHaslo,
 			@RequestParam(value = "newpass", required = true) String noweHaslo,
 			Model model) {
-		List<Prowadzacy> passlist = loginService
-				.validatePass(login, stareHaslo);
-		String zmienHaslo;
+		
+		List<Prowadzacy> passlist = loginService.validatePass(login, stareHaslo);
+		
 		if (passlist.size() > 0) {
-			zmienHaslo = passlist.get(0).getHaslo();
-			if (zmienHaslo == stareHaslo) {
-				loginService.zmienPass(login, noweHaslo);
-				return 1;
-			}
+			loginService.zmienPass(login, noweHaslo);
+				
+			return "1";
 		}
-		return 0;
+		return "0";
 	}
 
 	@RequestMapping(value = "/importcsv", method = RequestMethod.POST)
