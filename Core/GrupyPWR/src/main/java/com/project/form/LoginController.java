@@ -370,7 +370,7 @@ public class LoginController extends SendMail {
 				System.out.println(idKursow.get(j).toString() +"==?"+ grupyzajeciowe.get(i).getIdKursu().getIdKursy().toString());
 				
 				JsonGrupyZajeciowe jsonGrupyZajeciowe2 = new JsonGrupyZajeciowe();
-				jsonGrupyZajeciowe2.setId(grupyzajeciowe.get(i).getIdKursu().getIdKursy());
+				jsonGrupyZajeciowe2.setId(grupyzajeciowe.get(i).getIdGrupyZajeciowe());
 				jsonGrupyZajeciowe2.setCode(grupyzajeciowe.get(i).getKodGrupy());
 				jsonGrupyZajeciowe2.setName(grupyzajeciowe.get(i).getTermin());
 				
