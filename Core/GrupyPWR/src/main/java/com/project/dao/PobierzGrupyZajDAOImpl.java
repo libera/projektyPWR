@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.data.GrupyProjektowe;
 import com.project.data.GrupyZajeciowe;
+import com.project.data.Notatki;
 import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
 import com.project.data.Spotkania;
@@ -96,5 +97,14 @@ public class PobierzGrupyZajDAOImpl implements PobierzGrupyZajDAO  {
 					.createQuery(
 							"from StudenciDoGrupZajeciowych where idGrupyChodzacej =:idGrupyChodzacej")
 					.setInteger("idGrupyChodzacej", idGrupyChodzacej).list();
+		}
+		
+		@Transactional
+		public List<Notatki> pobierzNotatki(int idGrupyProjektowej) {
+			return sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"from Notatki where idGrupyProjektowej =:idGrupyProjektowej")
+					.setInteger("idGrupyChodzacej", idGrupyProjektowej).list();
 		}
 }

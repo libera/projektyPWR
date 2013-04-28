@@ -34,6 +34,7 @@ import com.project.dao.PobierzGrupyDAO;
 import com.project.data.GrupyProjektowe;
 import com.project.data.GrupyZajeciowe;
 import com.project.data.Kursy;
+import com.project.data.Notatki;
 import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
 import com.project.data.Prowadzacy;
@@ -171,7 +172,9 @@ public class LoginController extends SendMail {
 		//List<OcenyCzastkowe> ocenki = pobierzGrupyZajService.pobierzOcenyCzastkowe(idSpotkania, idStudenta);
 		//List<Spotkania> spotkac = pobierzGrupyZajService.pobierzSpotkania(idGrupyZajeciowe);
 		//List<StudenciDoGrupZajeciowych> dogrup = pobierzGrupyZajService.pobierzStudGrup(idGrupyChodzacej);
+		//public List<Notatki> pobierzNotatki(int idGrupyProjektowej)
 		
+		//List<Notatki> notki = pobierzGrupyZajService.pobierzNotatki(idGrupyProjektowej);
 	/*	List<StudenciDoGrupProjektowych> studencidogrup = pobierzGrupyZajService.pobierzStudentowZgrupy(idGrupyProjektowej);
 	
 		List<Studenci> studenciki = pobierzGrupyZajService.pobierzStudentow(idStudenci);

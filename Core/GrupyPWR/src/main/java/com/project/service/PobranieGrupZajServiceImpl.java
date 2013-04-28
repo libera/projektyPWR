@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.dao.PobierzGrupyZajDAO;
 import com.project.data.GrupyProjektowe;
 import com.project.data.GrupyZajeciowe;
+import com.project.data.Notatki;
 import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
 import com.project.data.Spotkania;
@@ -62,6 +63,11 @@ public class PobranieGrupZajServiceImpl implements PobranieGrupZajService {
 	public List<StudenciDoGrupZajeciowych> pobierzStudGrup(int idGrupyChodzacej) {
 
 		return pobierzGrupyZajDAO.pobierzStudGrup(idGrupyChodzacej);
+	}
+	
+	@Transactional
+	public List<Notatki> pobierzNotatki(int idGrupyProjektowej) {
+		return pobierzGrupyZajDAO.pobierzNotatki(idGrupyProjektowej);
 	}
 
 }

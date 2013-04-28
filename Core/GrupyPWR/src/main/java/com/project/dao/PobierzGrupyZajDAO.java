@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.data.GrupyProjektowe;
 import com.project.data.GrupyZajeciowe;
+import com.project.data.Notatki;
 import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
 import com.project.data.Spotkania;
@@ -21,4 +22,5 @@ public interface PobierzGrupyZajDAO {
 	public List<OcenyCzastkowe> pobierzOcenyCzastkowe(int idSpotkania, int idStudenta);
 	public List<Spotkania> pobierzSpotkania(int idGrupyZajeciowe);
 	public List<StudenciDoGrupZajeciowych> pobierzStudGrup(int idGrupyChodzacej);
+	public List<Notatki> pobierzNotatki(int idGrupyProjektowej);
 }
