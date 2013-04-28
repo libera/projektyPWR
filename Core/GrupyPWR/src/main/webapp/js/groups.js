@@ -49,13 +49,13 @@ function loadDate(id) {
 	var datesData = datesSample;
 	
 	//AJAX
-	/*$.ajax({
+	$.ajax({
 		url: serverURL + 'getgroups',
 		type: 'POST',
 		data: {dateid: id},
 		dataType: 'json',
 		success: function(data, textStatus, jqXHR ) {
-			datesData = data;*/
+			datesData = data;
 			
 			console.log(JSON.stringify(datesData));
 			
@@ -130,14 +130,10 @@ function loadDate(id) {
 					currGroup.meetings = new Array();
 					currGroup.notes = new Array();
 					
-					currGroup.id = 10;
-					
-					addGroup(currDate, currGroup);
-					
-					/*$.ajax({
+					$.ajax({
 						url: serverURL + 'addgroup',
 						type: 'POST',
-						data: {name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
+						data: {courseid: currDate.id, name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
 						dataType: 'json',
 						success: function(data, textStatus, jqXHR ) {
 							console.log("Add group: " + data + " " + textStatus);
@@ -146,8 +142,9 @@ function loadDate(id) {
 								$('div#add-group td.info').show();
 								$('div#add-group td.info').html('<span class="success">Grupa została dodana!</span>');
 								
-								addGroup(currGroup);
+								currGroup.id = data;
 								
+								addGroup(currDate, currGroup);
 							} else {
 								$('div#add-group td.info').show();
 								$('div#add-group td.info').html('<span class="error">Błąd podczas dodawania grupy!</span>');
@@ -156,18 +153,18 @@ function loadDate(id) {
 						error: function(jqXHR, textStatus, errorThrown) {
 							console.log(textStatus + ' ' + errorThrown);
 						}
-					});*/
+					});
 				});
 				
-				$.each(currDate.groups, function() {
+				/*$.each(currDate.groups, function() {
 					addGroup(currDate, this);
-				});
+				});*/
 			});
-		/*},
+		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log(textStatus + ' ' + errorThrown);
 		}
-	});*/
+	});
 }
 
 function addGroup(date, group) {
