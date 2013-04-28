@@ -50,13 +50,13 @@ function loadDate(id) {
 	var datesData = datesSample;
 	
 	//AJAX
-	/*$.ajax({
+	$.ajax({
 		url: serverURL + 'getgroups',
 		type: 'POST',
 		data: {dateid: id},
 		dataType: 'json',
 		success: function(data, textStatus, jqXHR ) {
-			datesData = data;*/
+			datesData = data;
 			
 			console.log(JSON.stringify(datesData));
 			
@@ -161,11 +161,11 @@ function loadDate(id) {
 					});
 				});
 			});
-		/*},
+		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log(textStatus + ' ' + errorThrown);
 		}
-	});*/
+	});
 }
 
 function addMeeting(group, meeting) {
