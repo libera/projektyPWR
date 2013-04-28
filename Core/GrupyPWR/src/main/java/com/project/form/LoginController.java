@@ -224,12 +224,14 @@ public class LoginController extends SendMail {
 					
 					jsonGrupyZajeciowe.setId(grupa.getIdKursu().getIdKursy());
 					jsonGrupyZajeciowe.setCode(grupa.getKodGrupy());
-					jsonGrupyZajeciowe.setName(grupa.getNazwa());
+					jsonGrupyZajeciowe.setName(grupa.getTermin());
 				}
+				name.add(jsonGrupyZajeciowe);
 				jsonGrupy.setName(kurs.getNazwaKursu());
 				jsonGrupy.setId(kurs.getIdKursy());
 				jsonGrupy.setDates(name);
 			}
+			courses.add(jsonGrupy);
 			jsonKursy.setCourses(courses);
 			System.out.println("Test wydruk"+ jsonKursy);
 		}
