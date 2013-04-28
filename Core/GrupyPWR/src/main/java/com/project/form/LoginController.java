@@ -36,6 +36,7 @@ import com.project.data.OcenyCzastkowe;
 import com.project.data.Prowadzacy;
 import com.project.data.Spotkania;
 import com.project.data.StudenciDoGrupProjektowych;
+import com.project.data.StudenciDoGrupZajeciowych;
 import com.project.service.LoginService;
 import com.project.service.PobierzGrupyService;
 import com.project.service.PobranieGrupZajService;
@@ -144,6 +145,7 @@ public class LoginController extends SendMail {
 		JsonGroupWyzej jsonGroupWyzej = new JsonGroupWyzej();
 		
 		List<GrupyZajeciowe> grupzajeciowe = pobierzGrupyZajService.pobierzGrupyZajeciowe(idGrupyZaj);
+		List<Integer> studenciWProjektach = new ArrayList<Integer>();
 		
 		jsonGroupZajeciowe.setId(grupzajeciowe.get(0).getIdGrupyZajeciowe());
 		jsonGroupZajeciowe.setCode(grupzajeciowe.get(0).getKodGrupy());
@@ -171,8 +173,10 @@ public class LoginController extends SendMail {
 			//dla każdego studenta pobieram jego dane
 			for(int j=0; j<studencidogrup.size(); j++ )
 			{
-				JsonStudents tmpstud = new JsonStudents();
+				//zapisanie id studentów którzy są w jakiś projektach
+				studenciWProjektach.add(studencidogrup.get(j).getIdStudenta().getIdStudenci());
 				
+				JsonStudents tmpstud = new JsonStudents();
 				tmpstud.setId(studencidogrup.get(j).getIdStudenta().getIdStudenci());
 				tmpstud.setFirstname(studencidogrup.get(j).getIdStudenta().getImie());
 				tmpstud.setSurname(studencidogrup.get(j).getIdStudenta().getNazwisko());
@@ -255,7 +259,41 @@ public class LoginController extends SendMail {
 			groupsProjArray.add(tmpProjektowaJson);
 		}
 		jsonGroupZajeciowe.setGroups(groupsProjArray);
-		jsonGroupZajeciowe.setNotingroup(new ArrayList<JsonNieWGrupie>());
+		
+		//NIEPRZYPISANI
+		List<JsonNieWGrupie> nieprzypisani = new ArrayList<JsonNieWGrupie>();
+		
+		List<StudenciDoGrupZajeciowych> dogrup = pobierzGrupyZajService.pobierzStudGrup(idgrupyZaj);
+		Boolean bylWProjekcie = false;   
+		for(int k=0; k<dogrup.size(); k++)
+		{
+			bylWProjekcie=false;
+			
+			for(int m=0; m<studenciWProjektach.size(); m++)
+			{
+				if(dogrup.get(k).getIdStudenta().getIdStudenci() == studenciWProjektach.get(m))
+				{
+					bylWProjekcie=true;
+					break;					
+				}
+			}
+			
+			if(false == bylWProjekcie)
+			{
+				JsonNieWGrupie tmpNG = new JsonNieWGrupie();
+				
+				tmpNG.setId(dogrup.get(k).getIdStudenta().getIdStudenci());
+				tmpNG.setFirstname(dogrup.get(k).getIdStudenta().getImie());
+				tmpNG.setSurname(dogrup.get(k).getIdStudenta().getNazwisko());
+				tmpNG.setIndex(dogrup.get(k).getIdStudenta().getNrIndeksu());
+				tmpNG.setMail(dogrup.get(k).getIdStudenta().getEmail());
+				
+				nieprzypisani.add(tmpNG);
+			}
+		}
+		
+		
+		jsonGroupZajeciowe.setNotingroup(nieprzypisani);
 	
 		
 		dates.add(jsonGroupZajeciowe);
