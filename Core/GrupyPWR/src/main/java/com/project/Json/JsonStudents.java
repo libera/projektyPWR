@@ -15,9 +15,10 @@ public class JsonStudents {
 	private String firstname;
 	private String surname;
 	private String index;
+	private String mail;
 
 	// Encja Studenci_do_grup_projektowych
-	private int finalmark;
+	private String finalmark;
 	private String position;
 	private List<JsonMarksAndPresence> marksandpresence;
 	
@@ -33,6 +34,13 @@ public class JsonStudents {
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
+	
+	public String getmail() {
+		return mail;
+	}
+	public void setmail(String mail2) {
+		this.mail = mail2;
+	}
 	public String getSurname() {
 		return surname;
 	}
@@ -45,10 +53,10 @@ public class JsonStudents {
 	public void setIndex(String index) {
 		this.index = index;
 	}
-	public int getFinalmark() {
+	public String getFinalmark() {
 		return finalmark;
 	}
-	public void setFinalmark(int finalmark) {
+	public void setFinalmark(String finalmark) {
 		this.finalmark = finalmark;
 	}
 	public String getPosition() {
