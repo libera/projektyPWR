@@ -31,9 +31,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.project.dao.PobierzGrupyDAO;
+import com.project.data.GrupyProjektowe;
 import com.project.data.GrupyZajeciowe;
 import com.project.data.Kursy;
+import com.project.data.Obecnosc;
+import com.project.data.OcenyCzastkowe;
 import com.project.data.Prowadzacy;
+import com.project.data.Spotkania;
+import com.project.data.Studenci;
+import com.project.data.StudenciDoGrupProjektowych;
+import com.project.data.StudenciDoGrupZajeciowych;
 import com.project.service.LoginService;
 import com.project.service.PobierzGrupyService;
 import com.project.service.PobranieGrupZajService;
@@ -69,20 +76,22 @@ public class LoginController extends SendMail {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public @ResponseBody
-	Integer addProwadzacy (
+	Integer addProwadzacy(
 			@RequestParam(value = "firstname", required = true) String imie,
 			@RequestParam(value = "surname", required = true) String nazwisko,
 			@RequestParam(value = "email", required = true) String mail,
 			@RequestParam(value = "user", required = true) String login,
-			Model model) /*throws UnsupportedEncodingException*/ {
-		
+			Model model) /* throws UnsupportedEncodingException */{
+
 		//
-		 /*PrintStream out = new PrintStream(System.out, true, "UTF-8");
-		 out.println("Registeąęr: " + imie + " " + nazwisko);*/
-		
-		//System.out.println("Registeąęr: " + imie + " " + nazwisko);
+		/*
+		 * PrintStream out = new PrintStream(System.out, true, "UTF-8");
+		 * out.println("Registeąęr: " + imie + " " + nazwisko);
+		 */
+
+		// System.out.println("Registeąęr: " + imie + " " + nazwisko);
 		//
-		
+
 		String from = "grupy.pwr.wroc@gmail.com";
 		String subject = "Przesłanie hasła do logowania!";
 		Date data = new Date();
@@ -130,7 +139,7 @@ public class LoginController extends SendMail {
 		}
 	}
 
-	/*@RequestMapping(value = "/getgroups", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value = "/getgroups", method = RequestMethod.POST, produces="application/json")
 	public @ResponseBody
 	JsonGroupWyzej wyslijGrupy(
 			@RequestParam(value = "dateid", required = true) int idGrupyZaj,
@@ -150,8 +159,28 @@ public class LoginController extends SendMail {
 		JsonGroupWyzej jsonGroupWyzej = new JsonGroupWyzej();
 		
 		List<GrupyZajeciowe> grupzajeciowe = pobierzGrupyZajService.pobierzGrupyZajeciowe(idGrupyZaj);
-		int i;
-		int idgrupyZaj;
+		
+		List<GrupyProjektowe> grupaprojektowa = pobierzGrupyZajService.pobierzGrupyProjektowe(idGrupyZaj);
+		
+		//public List<Obecnosc> pobierzObecnosci(int idSpotkania, int idStudenta);
+	//	public List<OcenyCzastkowe> pobierzOcenyCzastkowe(int idSpotkania, int idStudenta);
+	//	public List<Spotkania> pobierzSpotkania(int idGrupyZajeciowe);
+	//	public List<StudenciDoGrupZajeciowych> pobierzStudGrup(int idGrupyChodzacej);
+		
+		//List<Obecnosc> obecny = pobierzGrupyZajService.pobierzObecnosci(idSpotkania, idStudenta);
+		//List<OcenyCzastkowe> ocenki = pobierzGrupyZajService.pobierzOcenyCzastkowe(idSpotkania, idStudenta);
+		//List<Spotkania> spotkac = pobierzGrupyZajService.pobierzSpotkania(idGrupyZajeciowe);
+		//List<StudenciDoGrupZajeciowych> dogrup = pobierzGrupyZajService.pobierzStudGrup(idGrupyChodzacej);
+		
+	/*	List<StudenciDoGrupProjektowych> studencidogrup = pobierzGrupyZajService.pobierzStudentowZgrupy(idGrupyProjektowej);
+	
+		List<Studenci> studenciki = pobierzGrupyZajService.pobierzStudentow(idStudenci);
+		
+		List<Obecnosc> obec = pobierzGrupyZajService.pobierzObecnosci(idSpotkania);
+		List<OcenyCzastkowe> ocenki = pobierzGrupyZajService.pobierzOcenyCzastkowe(idSpotkania);
+		List<Spotkania> spotkania = pobierzGrupyZajService.pobierzSpotkania(idGrupyZajeciowe)
+		/*int i;*/
+	/*	int idgrupyZaj;
 		
 		List<JsonGroupZajeciowe> dates = new ArrayList<JsonGroupZajeciowe>();
 		for(i=0; i<grupzajeciowe.size(); i++) {
@@ -177,7 +206,8 @@ public class LoginController extends SendMail {
 				}
 			}
 			jsonGroupWyzej.setDates(dates);
-		}
+		}*/
+		
 		return jsonGroupWyzej;
 		/*
 		 * List<GrupyZajeciowe> grupyzajeciowe = pobierzGrupyService
@@ -207,9 +237,9 @@ public class LoginController extends SendMail {
 		 * return jsonKursy;
 		 */
 
-//	}*/
+	}
 
-	@RequestMapping(value = "/getcourses", method = RequestMethod.POST,  produces="application/json")
+	@RequestMapping(value = "/getcourses", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
 	JsonKursy wyslijKursy(
 			@RequestParam(value = "userid", required = true) int login,
@@ -217,84 +247,79 @@ public class LoginController extends SendMail {
 
 		List<GrupyZajeciowe> grupyzajeciowe = pobierzGrupyService
 				.pobierzGrupyZajeciowe(login);
-
 		int i;
 		List<Integer> idKursow = new ArrayList<Integer>();
 		JsonKursy jsonKursy = new JsonKursy();
-		
+
 		for (i = 0; i < grupyzajeciowe.size(); i++) {
 			int tmpIdKusru = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
-			
-			if( false == idKursow.contains(tmpIdKusru))
-			{
+
+			if (false == idKursow.contains(tmpIdKusru)) {
 				idKursow.add(tmpIdKusru);
 			}
-			
+
 		}
 		List<JsonGrupy> courses2 = new ArrayList<JsonGrupy>();
-		for( int j=0; j<idKursow.size(); j++)
-		{
-			
+		for (int j = 0; j < idKursow.size(); j++) {
+
 			List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
-			
-			
-			for (i = 0; i < grupyzajeciowe.size(); i++)
-			{
-				
-				if(idKursow.get(j) != grupyzajeciowe.get(i).getIdKursu().getIdKursy())
-				{
+
+			for (i = 0; i < grupyzajeciowe.size(); i++) {
+
+				if (idKursow.get(j) != grupyzajeciowe.get(i).getIdKursu()
+						.getIdKursy()) {
 					continue;
 				}
-				System.out.println(idKursow.get(j).toString() +"==?"+ grupyzajeciowe.get(i).getIdKursu().getIdKursy().toString());
-				
+				System.out.println(idKursow.get(j).toString()
+						+ "==?"
+						+ grupyzajeciowe.get(i).getIdKursu().getIdKursy()
+								.toString());
+
 				JsonGrupyZajeciowe jsonGrupyZajeciowe2 = new JsonGrupyZajeciowe();
-				jsonGrupyZajeciowe2.setId(grupyzajeciowe.get(i).getIdKursu().getIdKursy());
-				jsonGrupyZajeciowe2.setCode(grupyzajeciowe.get(i).getKodGrupy());
+				jsonGrupyZajeciowe2.setId(grupyzajeciowe.get(i).getIdKursu()
+						.getIdKursy());
+				jsonGrupyZajeciowe2
+						.setCode(grupyzajeciowe.get(i).getKodGrupy());
 				jsonGrupyZajeciowe2.setName(grupyzajeciowe.get(i).getTermin());
-				
+
 				name.add(jsonGrupyZajeciowe2);
 			}
-			
-				JsonGrupy jsonGrupy2 = new JsonGrupy();
-				
-				List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursow.get(j));
-				
-				jsonGrupy2.setName(kurslist.get(0).getNazwaKursu());
-				jsonGrupy2.setId(kurslist.get(0).getIdKursy());
-				jsonGrupy2.setDates(name);
-				
-				courses2.add(jsonGrupy2);
-	
-			
+
+			JsonGrupy jsonGrupy2 = new JsonGrupy();
+
+			List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursow
+					.get(j));
+
+			jsonGrupy2.setName(kurslist.get(0).getNazwaKursu());
+			jsonGrupy2.setId(kurslist.get(0).getIdKursy());
+			jsonGrupy2.setDates(name);
+
+			courses2.add(jsonGrupy2);
+
 		}
 		jsonKursy.setCourses(courses2);
-		System.out.println("Test wydruk"+ jsonKursy);
+		System.out.println("Test wydruk" + jsonKursy);
 		/*
-		for (i = 0; i < grupyzajeciowe.size(); i++) {
-			idKursu = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
-
-			List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu);
-
-			for (Kursy kurs : kurslist) {
-				List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
-			
-				for(GrupyZajeciowe grupa : grupyzajeciowe) {				
-					//  set dla JsonGrupyZajeciowe
-					
-					jsonGrupyZajeciowe.setId(grupa.getIdKursu().getIdKursy());
-					jsonGrupyZajeciowe.setCode(grupa.getKodGrupy());
-					jsonGrupyZajeciowe.setName(grupa.getTermin());
-				}
-				name.add(jsonGrupyZajeciowe);
-				jsonGrupy.setName(kurs.getNazwaKursu());
-				jsonGrupy.setId(kurs.getIdKursy());
-				jsonGrupy.setDates(name);
-			}
-			courses.add(jsonGrupy);
-			jsonKursy.setCourses(courses);
-			System.out.println("Test wydruk"+ jsonKursy);
-		}
-*/
+		 * for (i = 0; i < grupyzajeciowe.size(); i++) { idKursu =
+		 * grupyzajeciowe.get(i).getIdKursu().getIdKursy();
+		 * 
+		 * List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu);
+		 * 
+		 * for (Kursy kurs : kurslist) { List<JsonGrupyZajeciowe> name = new
+		 * ArrayList<JsonGrupyZajeciowe>();
+		 * 
+		 * for(GrupyZajeciowe grupa : grupyzajeciowe) { // set dla
+		 * JsonGrupyZajeciowe
+		 * 
+		 * jsonGrupyZajeciowe.setId(grupa.getIdKursu().getIdKursy());
+		 * jsonGrupyZajeciowe.setCode(grupa.getKodGrupy());
+		 * jsonGrupyZajeciowe.setName(grupa.getTermin()); }
+		 * name.add(jsonGrupyZajeciowe);
+		 * jsonGrupy.setName(kurs.getNazwaKursu());
+		 * jsonGrupy.setId(kurs.getIdKursy()); jsonGrupy.setDates(name); }
+		 * courses.add(jsonGrupy); jsonKursy.setCourses(courses);
+		 * System.out.println("Test wydruk"+ jsonKursy); }
+		 */
 		return jsonKursy;
 	}
 
@@ -326,6 +351,14 @@ public class LoginController extends SendMail {
 				return 1;
 			}
 		}
+		return 0;
+	}
+
+	@RequestMapping(value = "/setmeeting", method = RequestMethod.POST)
+	public @ResponseBody
+	int zmianaSpotkania(
+			@RequestParam(value = "meetingid", required = false) int iSpotkania) {
+
 		return 0;
 	}
 
