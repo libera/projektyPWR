@@ -430,6 +430,28 @@ public class LoginController extends SendMail {
 		}
 		return 0;
 	}
+	
+	@RequestMapping(value = "/addgroup", method = RequestMethod.POST)
+	public @ResponseBody
+	String dodajGrupe(@RequestParam(value = "curseid", required = true) int idGrupyZajeciowej,
+			@RequestParam(value = "name", required = true)String nazwa,
+			@RequestParam(value = "subject", required = true)String temat,
+			@RequestParam(value = "repo", required = true)String repo,
+			@RequestParam(value = "comment", required = true)String komentarz
+			) {
+
+		
+		List<GrupyProjektowe> grupki = pobierzGrupyService.pobierzGrupke(idGrupyZajeciowej);
+		if(grupki.size()==0) {
+			pobierzGrupyService.addGrupyProj(idGrupyZajeciowej, nazwa, temat, repo, komentarz);
+			
+			return grupki.get(0).getIdGrupyProjektowe().toString();
+		}
+		else {
+			return "-1";
+		}
+	
+	}
 
 	@RequestMapping(value = "/changepass", method = RequestMethod.POST)
 	public @ResponseBody

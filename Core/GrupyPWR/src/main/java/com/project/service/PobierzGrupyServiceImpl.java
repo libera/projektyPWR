@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.PobierzGrupyDAO;
+import com.project.data.GrupyProjektowe;
 import com.project.data.GrupyZajeciowe;
 import com.project.data.Kursy;
 
@@ -17,7 +18,7 @@ public class PobierzGrupyServiceImpl implements PobierzGrupyService {
 	private PobierzGrupyDAO pobierzGrupyDAO;
 
 	@Transactional
-	public List<Kursy> pobierzKursy(int idKursu){
+	public List<Kursy> pobierzKursy(int idKursu) {
 		return pobierzGrupyDAO.pobierzKursy(idKursu);
 	}
 
@@ -26,4 +27,16 @@ public class PobierzGrupyServiceImpl implements PobierzGrupyService {
 		return pobierzGrupyDAO.pobierzGrupyZajeciowe(idProwadzacego);
 	}
 
+	@Transactional
+	public List<GrupyProjektowe> pobierzGrupke(int idGrupyZajeciowe) {
+		return pobierzGrupyDAO.pobierzGrupke(idGrupyZajeciowe);
+	}
+
+	@Transactional
+	public void addGrupyProj(int idGrupyZajeciowe, String nazwa, String temat,
+			String resositoryLink, String komentarz) {
+		pobierzGrupyDAO.addGrupyProj(idGrupyZajeciowe, nazwa, temat,
+				resositoryLink, komentarz);
+
+	}
 }

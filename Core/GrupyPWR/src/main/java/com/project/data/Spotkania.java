@@ -29,8 +29,8 @@ public class Spotkania implements Serializable {
 	private Integer idSpotkania;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idgrupyzajeciowej", nullable = false)
-	private GrupyZajeciowe idGrupyZajeciowe;
+	@JoinColumn(name = "idgrupyprojektowej", nullable = false)
+	private GrupyProjektowe idGrupyProjektowej;
 
 	@Column(name = "dataspotkania")
 	private Date dataSpotkania;
@@ -41,11 +41,13 @@ public class Spotkania implements Serializable {
 	@Column(name = "wagaoceny")
 	private Integer wagaOceny;
 
+
 	// *************************************************************************************************
 	// ***************************************Getters and
 	// Setters***************************************
 	// *************************************************************************************************
 
+	
 	public Integer getIdSpotkania() {
 		return idSpotkania;
 	}
@@ -54,12 +56,12 @@ public class Spotkania implements Serializable {
 		this.idSpotkania = idSpotkania;
 	}
 
-	public GrupyZajeciowe getIdGrupyZajeciowe() {
-		return idGrupyZajeciowe;
+	public GrupyProjektowe getIdGrupyProjektowej() {
+		return idGrupyProjektowej;
 	}
 
-	public void setIdGrupyZajeciowe(GrupyZajeciowe idGrupyZajeciowe) {
-		this.idGrupyZajeciowe = idGrupyZajeciowe;
+	public void setIdGrupyProjektowej(GrupyProjektowe idGrupyProjektowej) {
+		this.idGrupyProjektowej = idGrupyProjektowej;
 	}
 
 	public Date getDataSpotkania() {
@@ -84,6 +86,10 @@ public class Spotkania implements Serializable {
 
 	public void setWagaOceny(Integer wagaOceny) {
 		this.wagaOceny = wagaOceny;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
