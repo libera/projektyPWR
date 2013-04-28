@@ -39,7 +39,7 @@ public class Notatki implements Serializable {
 	@Column(name = "plik")
 	private Integer plik;
 
-	@Column(name = "data_dodania", columnDefinition = "DATETIME")
+	@Column(name = "data_dodatania", columnDefinition = "DATETIME")
 	private Date dataDodania;
 
 	@Column(name = "data_modyfikacji", columnDefinition = "DATETIME")
