@@ -105,6 +105,6 @@ public class PobierzGrupyZajDAOImpl implements PobierzGrupyZajDAO  {
 					.getCurrentSession()
 					.createQuery(
 							"from Notatki where idGrupyProjektowej =:idGrupyProjektowej")
-					.setInteger("idGrupyChodzacej", idGrupyProjektowej).list();
+					.setInteger("idGrupyProjektowej", idGrupyProjektowej).list();
 		}
 }
