@@ -104,8 +104,10 @@ function loadDate(id) {
 					addGroup(currDate, this);
 				});
 				
+				var date = currDate;
+				
 				//add group button
-				$('#groups .course-date .course-date-header .add-group-button').click(function(e) {
+				$('#groups .course-date.' + date.id + ' .course-date-header .add-group-button').click(function(e) {
 					e.preventDefault();
 					$('div#lightbox').show();
 					
@@ -138,7 +140,7 @@ function loadDate(id) {
 					$.ajax({
 						url: serverURL + 'addgroup',
 						type: 'POST',
-						data: {courseid: currDate.id, name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
+						data: {courseid: date.id, name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
 						dataType: 'json',
 						success: function(data, textStatus, jqXHR ) {
 							console.log("Add group: " + data + " " + textStatus);
@@ -384,7 +386,7 @@ function addGroup(date, group) {
 		$('#edit-group-comment').val(group.comment);
 	});
 	
-	$('#add-group input#edit-group-submit-button').click(function(e) {
+	$('#edit-group input#edit-group-submit-button').click(function(e) {
 		e.preventDefault();
 		
 		editGroup.id = group.id;
@@ -404,15 +406,15 @@ function addGroup(date, group) {
 				console.log("Add group: " + data + " " + textStatus);
 				
 				if(data == '1') {
-					$('div#add-group td.info').show();
-					$('div#add-group td.info').html('<span class="success">Grupa została zmieniona!</span>');
+					$('div#edit-group td.info').show();
+					$('div#edit-group td.info').html('<span class="success">Grupa została zmieniona!</span>');
 					
 					//zmiana danych grupy na stronie
 					$('#groups .group.' + currGroup.id + ' .subject').html(currGroup.subject);
 					
 				} else {
-					$('div#add-group td.info').show();
-					$('div#add-group td.info').html('<span class="error">Błąd podczas zmiany grupy!</span>');
+					$('div#edit-group td.info').show();
+					$('div#edit-group td.info').html('<span class="error">Błąd podczas zmiany grupy!</span>');
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {

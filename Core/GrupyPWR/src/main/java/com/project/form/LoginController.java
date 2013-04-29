@@ -433,7 +433,7 @@ public class LoginController extends SendMail {
 	
 	@RequestMapping(value = "/addgroup", method = RequestMethod.POST)
 	public @ResponseBody
-	String dodajGrupe(@RequestParam(value = "curseid", required = true) int idGrupyZajeciowej,
+	String dodajGrupe(@RequestParam(value = "courseid", required = true) int idGrupyZajeciowej,
 			@RequestParam(value = "name", required = true)String nazwa,
 			@RequestParam(value = "subject", required = true)String temat,
 			@RequestParam(value = "repo", required = true)String repo,
@@ -441,15 +441,18 @@ public class LoginController extends SendMail {
 			) {
 
 		
-		List<GrupyProjektowe> grupki = pobierzGrupyService.pobierzGrupke(idGrupyZajeciowej);
-		if(grupki.size()==0) {
-			pobierzGrupyService.addGrupyProj(idGrupyZajeciowej, nazwa, temat, repo, komentarz);
+		
+		pobierzGrupyService.addGrupyProj(idGrupyZajeciowej, nazwa, temat, repo, komentarz);
 			
-			return grupki.get(0).getIdGrupyProjektowe().toString();
+		List<GrupyProjektowe> grupki = pobierzGrupyService.pobierzGrupke(idGrupyZajeciowej);
+		
+		for(int i = 0; i < grupki.size(); i++) {
+			if(grupki.get(i).getNazwa() == nazwa) {
+				return grupki.get(i).getIdGrupyProjektowe().toString();
+			}
 		}
-		else {
-			return "-1";
-		}
+		
+		return "-1";
 	
 	}
 
