@@ -153,6 +153,10 @@ function loadCourses() {
 					$('#courses li.course ul').hide('blind', {}, 200);
 					$('#courses li.course').removeClass('active');
 					
+					//removing data from middle and right col
+					$('#groups').html('');
+					$('#notingroup').html('');
+					
 					//removing all checks
 					$('input[name="checkedDates"]:checked').attr('checked', false);
 					

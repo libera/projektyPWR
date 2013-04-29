@@ -9,6 +9,7 @@ function resizeWindow() {
 	//setting cols height
 	$('.left-col').height($(document).height() - 100);
 	$('.middle-col').height($(document).height() - 100);
+	$('.right-col').height($(document).height() - 100);
 }
 
 function showContent() {

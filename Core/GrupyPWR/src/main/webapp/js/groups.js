@@ -253,9 +253,9 @@ function addGroup(date, group) {
 			
 			$('#notingroup td').first().addClass('top');
 			
-			if($('#notingroup td').hasClass('top')) {
+			/*if($('#notingroup td').hasClass('top')) {
 				$('#notingroup td').css('borderTop',  '1px solid #e0e0e0');
-			}
+			}*/
 		},
 		over: function(e, ui) {
 			$(this).addClass('ui-state-hover');
@@ -378,6 +378,9 @@ function unloadDate(id) {
 	//moving from groups and notingroup
 	$('#notingroup .course-date.' + id).remove();
 	$('#groups .course-date.' + id).remove();
+	
+	//correcting border
+	$('#notingroup td').first().addClass('top');
 }
 
 function loadGroups() {
