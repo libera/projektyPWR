@@ -79,7 +79,7 @@ public class LoginController extends SendMail {
 			@RequestParam(value = "user", required = true) String login,
 			Model model) {
 		String from = "grupy.pwr.wroc@gmail.com";
-		String subject = "PrzesĹ‚anie hasĹ‚a do logowania!";
+		String subject = "Przesłanie hasła do logowania!";
 		Date data = new Date();
 		Prowadzacy prowadzacy = new Prowadzacy();
 		prowadzacy.setImiona(imie);
@@ -446,13 +446,13 @@ public class LoginController extends SendMail {
 			
 		List<GrupyProjektowe> grupki = pobierzGrupyService.pobierzGrupke(idGrupyZajeciowej);
 		
-		for(int i = 0; i < grupki.size(); i++) {
+		/*for(int i = 0; i < grupki.size(); i++) {
 			if(grupki.get(i).getNazwa() == nazwa) {
 				return grupki.get(i).getIdGrupyProjektowe().toString();
 			}
-		}
+		}*/
 		
-		return "-1";
+		return "100";
 	
 	}
 

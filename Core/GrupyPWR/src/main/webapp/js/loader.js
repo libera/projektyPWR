@@ -249,6 +249,8 @@ $(document).ready(function() {
 	initLogin();
 	initRegister();
 	
+	initGroups();
+	
 	initLightbox();
 	initCourses();
 	initUser();

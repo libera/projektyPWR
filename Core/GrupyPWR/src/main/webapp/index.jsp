@@ -31,7 +31,6 @@
 				<table>
 					<tr>
 						<td colspan="2" class="info">
-							Wpisz dane nowej grupy projektowej w terminie <span id="add-group-course"></span>
 						</td>
 					</tr>
 					<tr>
@@ -51,7 +50,7 @@
 						<td class="value"><textarea rows="10" cols="30" id="add-group-comment"></textarea></td>
 					</tr>
 					<tr>
-						<td style="text-align: right;" colspan="2"><input type="button" id="add-group-submit-button" value="Dodaj" /></td>
+						<td style="text-align: right;" colspan="2"><input type="hidden" id="add-group-courseid" value="" /><input type="button" id="add-group-submit-button" value="Dodaj" /></td>
 					</tr>
 				</table>
 			</div>
@@ -60,7 +59,6 @@
 				<table>
 					<tr>
 						<td colspan="2" class="info">
-							Wpisz dane grupy projektowej
 						</td>
 					</tr>
 					<tr>

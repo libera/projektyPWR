@@ -101,7 +101,7 @@ function loadDate(id) {
 				$('#groups').append('<div class="course-date ' + currDate.id + '"><header class="course-date-header">' + currDate.name +' (' + currDate.code + ')<div class="tools"><a href="#" class="add-group-button">dodaj grupe projektowa w tym terminie</a></div></header></div>');
 				
 				$.each(currDate.groups, function() {
-					addGroup(currDate, this);
+					addGroup(currDate.id, this);
 				});
 				
 				var date = currDate;
@@ -117,50 +117,15 @@ function loadDate(id) {
 					
 					$('#add-group-course').html(currDate.name);
 					
+					$('#add-group .info').html('');
+					$('#add-group .info').hide('');
+					
 					$('#add-group-name').val('');
 					$('#add-group-subject').val('');
 					$('#add-group-repo').val('');
 					$('#add-group-comment').val('');
-				});
-				
-				//add group submit
-				$('#add-group input#add-group-submit-button').click(function(e) {
-					e.preventDefault();
 					
-					var currGroup = new Object();
-					
-					currGroup.name = $('#add-group-name').val();
-					currGroup.subject = $('#add-group-subject').val();
-					currGroup.repo = $('#add-group-repo').val();
-					currGroup.comment = $('#add-group-comment').val();
-					currGroup.students = new Array();
-					currGroup.meetings = new Array();
-					currGroup.notes = new Array();
-					
-					$.ajax({
-						url: serverURL + 'addgroup',
-						type: 'POST',
-						data: {courseid: date.id, name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
-						dataType: 'json',
-						success: function(data, textStatus, jqXHR ) {
-							console.log("Add group: " + data + " " + textStatus);
-							
-							if(data >= '0') {
-								$('div#add-group td.info').show();
-								$('div#add-group td.info').html('<span class="success">Grupa została dodana!</span>');
-								
-								currGroup.id = data;
-								
-								addGroup(currDate, currGroup);
-							} else {
-								$('div#add-group td.info').show();
-								$('div#add-group td.info').html('<span class="error">Błąd podczas dodawania grupy!</span>');
-							}
-						},
-						error: function(jqXHR, textStatus, errorThrown) {
-							console.log(textStatus + ' ' + errorThrown);
-						}
-					});
+					$('#add-group input#add-group-courseid').val(date.id);
 				});
 			});
 		},
@@ -267,11 +232,12 @@ function addMeeting(group, meeting) {
 	});
 }
 
-function addGroup(date, group) {
-	currDate = date;
+function addGroup(dateID, group) {
 	currGroup = group;
 	
-	$('#groups .course-date.' + currDate.id).append('<div class="group ' + currGroup.id + '">' +
+	console.log("dodanie grupy " + JSON.stringify(group));
+	
+	$('#groups .course-date.' + dateID).append('<div class="group ' + currGroup.id + '">' +
 			'<header><span class="subject">' + currGroup.subject + '</span><div class="tools"><a href="#" class="more">Więcej</a><a href="#" class="edit-group">Edytuj grupe projektowa</a></div></header>' +
 			'<div class="details"><table class="students"><tr class="header"><td class="empty"></td><td class="add-meeting"><a href=#">dodaj</a></td></tr></table></div>' +
 		'</div>');
@@ -415,6 +381,49 @@ function addGroup(date, group) {
 				} else {
 					$('div#edit-group td.info').show();
 					$('div#edit-group td.info').html('<span class="error">Błąd podczas zmiany grupy!</span>');
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(textStatus + ' ' + errorThrown);
+			}
+		});
+	});
+}
+
+function initGroups() {
+	//add group submit
+	$('#add-group input#add-group-submit-button').click(function(e) {
+		e.preventDefault();
+		
+		var currGroup = new Object();
+		
+		currGroup.name = $('#add-group-name').val();
+		currGroup.subject = $('#add-group-subject').val();
+		currGroup.repo = $('#add-group-repo').val();
+		currGroup.comment = $('#add-group-comment').val();
+		currGroup.students = new Array();
+		currGroup.meetings = new Array();
+		currGroup.notes = new Array();
+		currGroup.courseid = $('#add-group-courseid').val();
+		
+		$.ajax({
+			url: serverURL + 'addgroup',
+			type: 'POST',
+			data: {courseid: currGroup.courseid, name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
+			dataType: 'json',
+			success: function(data, textStatus, jqXHR ) {
+				console.log("Add group: " + data + " " + textStatus);
+				
+				if(data >= '0') {
+					$('div#add-group td.info').show();
+					$('div#add-group td.info').html('<span class="success">Grupa została dodana!</span>');
+					
+					currGroup.id = data;
+					
+					addGroup(currGroup.courseid, currGroup);
+				} else {
+					$('div#add-group td.info').show();
+					$('div#add-group td.info').html('<span class="error">Błąd podczas dodawania grupy!</span>');
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
