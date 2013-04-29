@@ -32,9 +32,6 @@ public class Obecnosc implements Serializable {
 	@Column(name = "stan")
 	private boolean stan;
 
-	@Column(name = "nazwa")
-	private String nazwa;
-
 	@Column(name = "data_wprowadzenia", columnDefinition = "DATETIME")
 	private Date dataWprowadzenia;
 
@@ -68,14 +65,6 @@ public class Obecnosc implements Serializable {
 
 	public void setStan(boolean stan) {
 		this.stan = stan;
-	}
-
-	public String getNazwa() {
-		return nazwa;
-	}
-
-	public void setNazwa(String nazwa) {
-		this.nazwa = nazwa;
 	}
 
 	public Date getDataWprowadzenia() {
