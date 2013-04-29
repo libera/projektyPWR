@@ -8,7 +8,7 @@ import org.codehaus.jackson.annotate.JsonAutoDetect;
 public class JsonSpotkania {
 
 	private int id;
-	private Date date;
+	private String date;
 	private String name;
 	private int weight;
 	public int getId() {
@@ -17,10 +17,10 @@ public class JsonSpotkania {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public String getName() {

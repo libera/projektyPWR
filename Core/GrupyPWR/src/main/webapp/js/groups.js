@@ -175,22 +175,68 @@ function addMeeting(group, meeting) {
 	//adding additional header
 	$('<td class="meeting ' + meeting.id + '" id="meeting' + meeting.id + '"><input type="text" class="name" value="'+ meeting.name + '" /><br /><input type="text" maxlength="5" class="date" value="' + meeting.date + '"/><input type="text" maxlength="3" class="weight" value="' + meeting.weight + '"  /></td>').insertBefore($('#groups .course-date .group.' + currGroup.id +  ' .students tr.header td.add-meeting'));
 
+	$('#meeting' + meeting.id + ' input.name').focus(function() {
+		if($(this).val() == "nazwa spotkania") {
+			$(this).val('');
+		}
+	});
+	$('#meeting' + meeting.id + ' input.name').blur(function() {
+		if($(this).val() == "") {
+			$(this).val('nazwa spotkania');
+		}
+	});
+	
+	$('#meeting' + meeting.id + ' input.date').focus(function() {
+		if($(this).val() == "data") {
+			$(this).val('');
+		}
+	});
+	$('#meeting' + meeting.id + ' input.date').blur(function() {
+		if($(this).val() == "") {
+			$(this).val('data');
+		}
+	});
+	
+	$('#meeting' + meeting.id + ' input.weight').focus(function() {
+		if($(this).val() == "waga") {
+			$(this).val('');
+		}
+	});
+	$('#meeting' + meeting.id + ' input.weight').blur(function() {
+		if($(this).val() == "") {
+			$(this).val('waga');
+		}
+	});
+	
+	//console.log(JSON.stringify(currGroup.students));
+	
 	//adding new meeting to each student
 	$.each(currGroup.students, function() {
 		currStudent = this;
 		
-		console.log(JSON.stringify(currStudent));
+		$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + meeting.id + '"><input type="checkbox" id="student' + currStudent.id + '_meeting' + meeting.id + '" /><label for="student' + currStudent.id + '_meeting' + meeting.id +'"></label><input type="text" maxlength="3" class="mark" value="ocena" /></td>');
 		
-		$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + meeting.id + '"><input type="checkbox" id="mark' + meeting.id +'" /><label for="student' + currStudent.id + '_meeting' + meeting.id +'"></label><input type="text" maxlength="3" class="mark" /></td>');
-	
-		$.each(currStudent.marksandpresence, function() {
-			currMarkAndPresence = this;
-			
-			$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id + ' td.' + currMarkAndPresence.meetingid + ' .mark').val(currMarkAndPresence.mark);
-			if(currMarkAndPresence.present == '1') {
-				$('input#student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid).attr('checked', true);
+		$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id + ' input.mark').focus(function() {
+			if($(this).val() == "ocena") {
+				$(this).val('');
 			}
 		});
+		$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id + ' input.mark').blur(function() {
+			if($(this).val() == "") {
+				$(this).val('ocena');
+			}
+		});
+		
+		if(currStudent.marksandpresence != undefined) {
+			$.each(currStudent.marksandpresence, function() {
+				currMarkAndPresence = this;
+				
+				$('.group.' + currGroup.id + ' .students tr.student.' + currStudent.id + ' td.' + currMarkAndPresence.meetingid + ' .mark').val(currMarkAndPresence.mark);
+				if(currMarkAndPresence.present == '1') {
+					$('input#student' + currStudent.id + '_meeting' + currMarkAndPresence.meetingid).attr('checked', true);
+				}
+			});
+		}
 	});
 	
 	//setmeeting
@@ -227,9 +273,11 @@ function addGroup(date, group) {
 			'<header><span class="subject">' + currGroup.subject + '</span><div class="tools"><a href="#" class="more">Więcej</a><a href="#" class="edit-group">Edytuj grupe projektowa</a></div></header>' +
 			'<div class="details"><table class="students"><tr class="header"><td class="empty"></td><td class="add-meeting"><a href=#">dodaj</a></td></tr></table></div>' +
 		'</div>');
+	
+	var group = currGroup;
 		
 	//enable user dropping
-	$('#groups .group.' + currGroup.id).droppable({
+	$('#groups .group.' + group.id).droppable({
 		drop: function(e, ui) {
 			$(this).removeClass('ui-state-hover');
 			
@@ -240,11 +288,13 @@ function addGroup(date, group) {
 			var studentSurname = ui.draggable.data('studentSurname');
 			var studentIndex = ui.draggable.data('studentIndex');
 			
-			$(' #groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + studentID + '" id="student' + studentID + '"><td class="name"><a href="mailto:' + studentMail + '">' + studentFirstname + ' ' + studentSurname + '</a><br /><span class="index">(' + studentIndex + ')</span></td></tr>');
+			group.students.push({'id':studentID, 'firstname': studentFirstname, 'surname': studentSurname, 'mail': studentMail, 'index': studentIndex});
+			
+			$(' #groups .group.' + group.id + ' .students').append('<tr class="student ' + studentID + '" id="student' + studentID + '"><td class="name"><a href="mailto:' + studentMail + '">' + studentFirstname + ' ' + studentSurname + '</a><br /><span class="index">(' + studentIndex + ')</span></td></tr>');
 			
 			$.each(currGroup.meetings, function() {
 				currMeeting = this;
-				$('#groups .group.' + currGroup.id + ' .students tr.student.' + studentID).append('<td class="meeting ' + currMeeting.id + '"></td>');
+				$('#groups .group.' + group.id + ' .students tr.student.' + studentID).append('<td class="meeting ' + currMeeting.id + '"></td>');
 			});
 			
 			//TO DO: Ajax getting marksandpresence
@@ -265,19 +315,21 @@ function addGroup(date, group) {
 		}
 	});
 	
+	group = currGroup;
+	
 	$('#groups .group.' + currGroup.id + ' .students tr.header td.add-meeting a').click(function(e) {
 		e.preventDefault();
 		
 		//first we need to connect to database and get new meeting id
 		newMeeting = new Object();
 		newMeeting.id = 1000;
-		newMeeting.name = "";
-		newMeeting.date = "";
-		newMeeting.weight = "";
+		newMeeting.name = "nazwa spotkania";
+		newMeeting.date = "data";
+		newMeeting.weight = "waga";
 		
 		//TO DO: getting array of newly created cells {meetingid {studentid, markid, presenceid}}
 		
-		addMeeting(currGroup, newMeeting);
+		addMeeting(group, newMeeting);
 	});
 	
 	//adding students header
@@ -291,8 +343,6 @@ function addGroup(date, group) {
 			currMeeting = this;
 			$('#groups .group.' + currGroup.id + ' .students tr.student.' + currStudent.id).append('<td class="meeting ' + currMeeting.id + '"></td>');
 		});*/
-		
-		
 	});
 	
 	//adding meetings header
@@ -303,20 +353,20 @@ function addGroup(date, group) {
 	$('#groups .group.' + currGroup.id + ' .details').hide();
 	
 	var group = currGroup;
-	$('#groups .group.' + group.id + ' header').click(function() {
+	$('#groups .group.' + group.id + ' header .tools a.more').click(function() {
 		
 		if($('.group.' + group.id).hasClass('active')) {
-			$(this).next().hide('blind', 200, function() {
+			$('.group.' + group.id + ' .details').hide('blind', 200, function() {
 				$('#groups .group.' + group.id).removeClass('active');
 			});
 		} else {
-			$(this).next().show('blind', 200, function() {
+			$('.group.' + group.id + ' .details').show('blind', 200, function() {
 				$('#groups .group.' + group.id).addClass('active');
 			});
 		}
 	});
 	
-	$('#groups .group.' + group.id + ' header .tools a.edit-group').click(function() {
+	$('#groups .group.' + group.id + ' header .tools a.edit-group').click(function(e) {
 		console.log("edit group " + group.id);
 		
 		e.preventDefault();

@@ -230,7 +230,7 @@ public class LoginController extends SendMail {
 				JsonSpotkania tmpspot = new JsonSpotkania();
 				
 				tmpspot.setId(spotkania.get(k).getIdSpotkania());
-				tmpspot.setDate(spotkania.get(k).getDataSpotkania());
+				tmpspot.setDate(spotkania.get(k).getDataSpotkania().toString());
 				tmpspot.setName(spotkania.get(k).getNazwa());
 				tmpspot.setWeight(spotkania.get(k).getWagaOceny());
 				
