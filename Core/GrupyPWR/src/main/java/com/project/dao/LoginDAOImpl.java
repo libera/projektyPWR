@@ -27,7 +27,7 @@ public class LoginDAOImpl implements LoginDAO {
 
 	@Transactional
 	public void addProwadzacy(Prowadzacy prowadzacy) {
-		
+
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		sessionFactory.getCurrentSession().save(prowadzacy);
@@ -163,7 +163,7 @@ public class LoginDAOImpl implements LoginDAO {
 
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		
+
 		sessionFactory
 				.getCurrentSession()
 				.createQuery(
@@ -215,27 +215,34 @@ public class LoginDAOImpl implements LoginDAO {
 
 		// String query =
 		// "insert ignore into GrupyZajeciowe(kodGrupy,infoEdu,idProwadzacego, idKursu, nazwa, termin, komentarz) values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+			String query = "insert ignore into grupy_zajeciowe("
+					+ "Kod_grupy, "
+					+ "Info_Edukacja, "
+					+ "id_Prowadzacego, "
+					+ "id_Kursu, "
+					+ "Nazwa, "
+					+ "Termin, "
+					+ "Komentarz)"
+					+ " values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
 
-		String query = "insert ignore into grupy_zajeciowe("
-				+ "Kod_grupy, "
-				+ "Info_Edukacja, "
-				+ "id_Prowadzacego, "
-				+ "id_Kursu, "
-				+ "Nazwa, "
-				+ "Termin, "
-				+ "Komentarz)"
-				+ " values(:kodGrupy,:infoEdu,:idProwadzacego,:idKursu,:nazwa,:termin,:komentarz)";
+			sessionFactory.getCurrentSession().createSQLQuery(query)
+					.setString("kodGrupy", kodGrupy)
+					.setString("infoEdu", infoEdu)
+					.setInteger("idProwadzacego", idProwadzacego)
+					.setInteger("idKursu", idKursu).setString("nazwa", nazwa)
+					.setString("termin", termin)
+					.setString("komentarz", komentarz).executeUpdate();
+			tx.commit();
+		} catch (Exception e) {
 
-		sessionFactory.getCurrentSession().createSQLQuery(query)
-				.setString("kodGrupy", kodGrupy).setString("infoEdu", infoEdu)
-				.setInteger("idProwadzacego", idProwadzacego)
-				.setInteger("idKursu", idKursu).setString("nazwa", nazwa)
-				.setString("termin", termin).setString("komentarz", komentarz)
-				.executeUpdate();
-		tx.commit();
-		session.close();
+		} finally {
+			session.close();
+		}
 	}
 
 	@Transactional
