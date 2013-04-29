@@ -39,7 +39,7 @@ public class OcenyCzastkowe implements Serializable {
 	private Date dataModyfikacji;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_studenta", nullable = false)
+	@JoinColumn(name = "idstudenta", nullable = false)
 	private Studenci idStudenta;
 
 	@ManyToOne(fetch = FetchType.EAGER)
