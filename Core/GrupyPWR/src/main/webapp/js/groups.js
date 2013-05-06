@@ -258,7 +258,7 @@ function addGroup(dateID, group) {
 			
 			group.students.push({'id':studentID, 'firstname': studentFirstname, 'surname': studentSurname, 'mail': studentMail, 'index': studentIndex});
 			
-			$(' #groups .group.' + group.id + ' .students').append('<tr class="student ' + studentID + '" id="student' + studentID + '"><td class="name"><a href="mailto:' + studentMail + '">' + studentFirstname + ' ' + studentSurname + '</a><br /><span class="index">(' + studentIndex + ')</span></td></tr>');
+			$('#groups .group.' + group.id + ' .students').append('<tr class="student ' + studentID + '" id="student' + studentID + '"><td class="name"><a href="mailto:' + studentMail + '">' + studentFirstname + ' ' + studentSurname + '</a><br /><span class="index">(' + studentIndex + ')</span></td></tr>');
 			
 			$.each(currGroup.meetings, function() {
 				currMeeting = this;
@@ -343,8 +343,6 @@ function addGroup(dateID, group) {
 		$('#edit-group').show();
 		$('#edit-group').css('left', $(document).width()/2 - $('#edit-group').width()/2);
 		$('#edit-group').css('top', $(document).height()/2 - $('#edit-group').height()/2-50);
-		
-		$('#edit-group-course').html(currDate.name);
 		
 		$('#edit-group-name').val(group.name);
 		$('#edit-group-subject').val(group.subject);
@@ -442,38 +440,4 @@ function unloadDate(id) {
 	
 	//correcting border
 	$('#notingroup td').first().addClass('top');
-}
-
-function loadGroups() {
-	//Rewrite to load only newly selected dates and remove unselected
-	//clearing previous
-	//$('#groups').html('');
-	
-	//TO DO: get selected groups by AJAX
-	
-	/*$.each(datesSample.dates, function() {
-		currDate = this;
-	
-		console.log(currDate.name);
-		
-		$.each(currDate.groups, function() {
-			console.log('\t' + this.subject);
-		});
-	});
-	
-	$('div.group div.details').hide('blind', 200, function() {
-		$('div.group').removeClass('active');
-	});
-	
-	$('div.group header').click(function() {
-		if($(this).parent().hasClass('active')) {
-			$(this).next().hide('blind', 200, function() {
-				$('div.group').removeClass('active');
-			});
-		} else {
-			$(this).next().show('blind', 200, function() {
-				$('div.group').addClass('active');
-			});
-		}
-	});*/
 }
