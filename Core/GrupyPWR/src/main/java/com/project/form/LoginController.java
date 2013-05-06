@@ -452,7 +452,7 @@ public class LoginController extends SendMail {
 			}
 		}*/
 		
-		return "100";
+		return grupki.get(grupki.size()-1).getIdGrupyProjektowe().toString();
 	
 	}
 

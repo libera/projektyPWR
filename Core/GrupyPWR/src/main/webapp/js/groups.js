@@ -67,7 +67,7 @@ function loadDate(id) {
 				$.each(currDate.notingroup, function(index, value) {
 					currNoGroup = this;
 					
-					$('#notingroup').append('<tr id="student' + currNoGroup.id + '" class="course-date ' + currDate.id + '"><td class="name"><a href="mailto:' + currNoGroup.mail + '">' + currNoGroup.firstname + ' ' + currNoGroup.surname + '</a><br /><span class="index">(' + currNoGroup.index + ')</span></td></tr>');
+					$('#notingroup').append('<tr id="student' + currNoGroup.id + '" class="student course-date ' + currDate.id + '"><td class="name"><a href="mailto:' + currNoGroup.mail + '">' + currNoGroup.firstname + ' ' + currNoGroup.surname + '</a><br /><span class="index">(' + currNoGroup.index + ')</span></td></tr>');
 					
 					$('#notingroup tr#student' + currNoGroup.id).data('studentID', currNoGroup.id);
 					$('#notingroup tr#student' + currNoGroup.id).data('studentMail', currNoGroup.mail);
@@ -81,19 +81,13 @@ function loadDate(id) {
 					$('#notingroup tr#student' + currNoGroup.id).draggable({
 						revert: 'invalid',
 						start: function(e, ui) {
-							$(this).css('position', 'absolute');
-							$(this).children('td').css('border', '1px solid #e0e0e0');
+							$(this).hide();
 						},
 						stop: function(e, ui) {
-							$(this).css('position', 'relative');
-							$(this).children('td').css('border', 'none');
-							
-							$(this).children('td').css('borderBottom', '1px solid #e0e0e0');
-							
-							if($(this).children('td').hasClass('top')) {
-								$(this).children('td').css('borderTop',  '1px solid #e0e0e0');
-							}
-						}
+							$(this).show();
+						},
+						appendTo: 'body',
+						helper: 'clone'
 					});
 				});
 				
