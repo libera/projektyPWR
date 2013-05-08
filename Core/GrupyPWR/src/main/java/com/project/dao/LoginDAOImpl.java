@@ -136,9 +136,9 @@ public class LoginDAOImpl implements LoginDAO {
 
 	@Transactional
 	public List<Studenci> validateSname(String nr_indeksu) {
-
+//System.console().writer().println(nr_indeksu);
 		return sessionFactory.getCurrentSession()
-				.createQuery("from Studenci where nrIndeksu=:nr_indeksu")
+				.createQuery("from Studenci where email=:nr_indeksu")
 				.setString("nr_indeksu", nr_indeksu).list();
 
 	}
@@ -220,7 +220,7 @@ public class LoginDAOImpl implements LoginDAO {
 		try {
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
-			String query = "insert ignore into grupy_zajeciowe("
+			String query = "insert into grupy_zajeciowe("
 					+ "Kod_grupy, "
 					+ "Info_Edukacja, "
 					+ "id_Prowadzacego, "
@@ -264,15 +264,16 @@ public class LoginDAOImpl implements LoginDAO {
 	}
 
 	@Transactional
-	public void addStudenci(String imie, String nazwisko, String nrIndeksu,
+	public Integer addStudenci(String imie, String nazwisko, String nrIndeksu,
 			String email, Integer rok, Integer semestr, String przedmiot,
 			String login, String haslo) {
 
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String query = "insert into studenci(imiona,nazwisko,nr_indeksu, email, rok, semestr, przedmiot_krztalcenia, login, haslo) values(:imie,:nazwisko,:nrIndeksu,:email,:rok,:semestr,:przedmiot,:login,:haslo)";
+		String query = "insert ignore into studenci(imiona,nazwisko,nr_indeksu, email, rok, semestr, przedmiot_krztalcenia, login, haslo) values(:imie,:nazwisko,:nrIndeksu,:email,:rok,:semestr,:przedmiot,:login,:haslo)";
 
-		sessionFactory.getCurrentSession().createSQLQuery(query)
+		Integer addInt=-1;
+		addInt= sessionFactory.getCurrentSession().createSQLQuery(query)
 				.setParameter("imie", imie).setParameter("nazwisko", nazwisko)
 				.setParameter("nrIndeksu", nrIndeksu)
 				.setParameter("email", email).setParameter("rok", rok)
@@ -280,7 +281,11 @@ public class LoginDAOImpl implements LoginDAO {
 				.setParameter("przedmiot", przedmiot)
 				.setParameter("login", login).setParameter("haslo", haslo)
 				.executeUpdate();
+		
+//		System.err.println(addInt);		
 		tx.commit();
 		session.close();
+		
+		return addInt;
 	}
 }

@@ -1,5 +1,6 @@
 package com.project.Utils;
 
+import java.io.Console;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -46,15 +47,15 @@ public class SendMail {
 			// InternetAddress.parse(mail_do_kogo));
 
 			message.setSubject(temat + "###" + mail_do_kogo + "###");
-			message.setText("Mail wygenerowany przez system zarzÄ…dzania projektami PWR\n"
+			message.setText("Mail wygenerowany przez system zarz¹dzania projektami PWR\n"
 					+ "---------------------------------------------------------\n\n"
-					+ "WiadomoÅ›Ä‡ od "
+					+ "Wiadomoœæ od "
 					+ od_kogo
 					+ ":\n"
-					+ "Twoje hasÅ‚o to:"
+					+ "Twoje has³o to:"
 					+ wiadomosc
 					+ "\n\n---------------------------------------------------------\n"
-					+ "WiadomoÅ›Ä‡ wygenerowana automatycznie, prosimy nie odpowiadaÄ‡");
+					+ "Wiadomoœæ wygenerowana automatycznie, prosimy nie odpowiadaæ");
 			try {
 				Transport.send(message);
 			} catch (SendFailedException e) {
@@ -73,6 +74,8 @@ public class SendMail {
 			e.getLocalizedMessage();
 			e.getStackTrace();
 			// nie dziala
+			
+			System.console().writer().println(e.getMessage());
 			return -1;
 		}
 

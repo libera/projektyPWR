@@ -26,7 +26,7 @@ public interface LoginDAO {
 
 	public void addKursy(String kodkursu, String nazwakursu);
 
-	public void addStudenci(String imie, String nazwisko, String nrIndeksu,
+	public Integer addStudenci(String imie, String nazwisko, String nrIndeksu,
 			String email, Integer rok, Integer semestr, String przedmiot,
 			String login, String haslo);
 

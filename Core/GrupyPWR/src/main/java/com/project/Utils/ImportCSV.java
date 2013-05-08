@@ -13,7 +13,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 import com.project.data.GrupyZajeciowe;
 import com.project.data.Kursy;
@@ -56,7 +58,7 @@ public class ImportCSV {
 				} else if (fields[0].equals("Rok akademicki")) {
 					rokAkad = fields[0] + ";" + fields[1];
 					continue;
-				} else if (fields[0].equals("Typ klendarza")) {
+				} else if (fields[0].equals("Typ kalendarza")) {
 					typKalendarz = fields[0] + ";" + fields[1];
 					continue;
 				} else if (fields[0].equals("Semestr")
@@ -84,8 +86,9 @@ public class ImportCSV {
 					loginService.addKursy(kod_kursu, nazwa_kursu);
 					System.out.println("Dodawanie kodow kursów");
 					continue;
-				} else if (fields[0].equals("Prowadzacy")) {
-					fields[1] = fields[1].trim().replaceAll(" +", " ");
+				} else if (fields[0].equals("Prowadz¹cy")) {
+					prowadzacy_id=fields[1];
+					/*fields[1] = fields[1].trim().replaceAll(" +", " ");
 					fields = fields[1].split(" ");
 					for (int i = 0; i < fields.length - 1; i++) {
 						if (fields[i].equalsIgnoreCase("prof.")
@@ -104,15 +107,36 @@ public class ImportCSV {
 							}
 							imie += fields[i];
 							if (prowadzacy_id == null) {
-								prowadzacy_id = imie;
+							//	prowadzacy_id = imie;
 							}
-						}
-					}
-					nazwisko = fields[fields.length - 1];
-					prowadzacy_id += "." + nazwisko;
+						}*/
+					//}
+					//nazwisko = fields[fields.length - 1];
+					//prowadzacy_id += "." + nazwisko;
 					continue;
-				} else if (fields[0].matches("[0-9]+")) {
-					nrInd_student = fields[1].substring(4);
+				} else if (fields[0].equals("Lp.")) {
+					infoEdu = "\n" + infoPwr + "\n" + rokAkad + "\n"
+							+ typKalendarz + "\n" + dwusemestr + "\n"
+							+ "Kod grupy;" + kod_grupy + "\n" + "Kod kursu;"
+							+ kod_kursu + "\n" + "Nazwa kursu;" + nazwa_kursu
+							+ "\n" + "Termin;" + termin + "\n" + "Prowadzacy;"
+							+ prowadzacy_id + "\n";
+					
+					List<Kursy> klistKursies = loginService.validateKursy(
+							kod_kursu, nazwa_kursu);
+					int sIdKursu = 0;
+					if (klistKursies.size() == 1) {
+						sIdKursu = klistKursies.get(0).getIdKursy();
+						loginService.addGrupyZajeciowe(kod_grupy, infoEdu, userid,
+								sIdKursu, nazwa_kursu, termin, komentarz);
+					}
+					continue;
+				}				
+				else if (fields[0].matches("[0-9]+")) {
+					nrInd_student = fields[1];
+					String tmpabc = fields[1];
+					//System.console().writer().write(line);
+					nazwisko_student = fields[2];
 					name_student = fields[3];
 					rok = fields[4];
 					semestr = fields[5];
@@ -120,58 +144,61 @@ public class ImportCSV {
 					komentarz = fields[9];
 					rokI = Integer.parseInt(rok);
 					semestrI = Integer.parseInt(semestr);
-					nazwisko_student = fields[2];
-					infoEdu = "\n" + infoPwr + "\n" + rokAkad + "\n"
-							+ typKalendarz + "\n" + dwusemestr + "\n"
-							+ "Kod grupy;" + kod_grupy + "\n" + "Kod kursu;"
-							+ kod_kursu + "\n" + "Nazwa kursu;" + nazwa_kursu
-							+ "\n" + "Termin;" + termin + "\n" + "Prowadzacy"
-							+ prowadzacy_id + "\n";
-					email = nrInd_student + "@student.pwr.wroc.pl";
-					login = nrInd_student;
-					haslo = nrInd_student;
+					
+					
+					email = nrInd_student.substring(4) + "@student.pwr.wroc.pl";
+					login = nrInd_student.substring(4);
+					haslo = nrInd_student + RandomPassword.Random();
+					String hasloSend = haslo;
+					haslo = Encryption.encrypt(haslo);
 
-					loginService.addStudenci(name_student, nazwisko_student,
+					Integer addNumber = -1;
+					addNumber = loginService.addStudenci(name_student, nazwisko_student,
 							nrInd_student, email, rokI, semestrI,
 							przedmiot_ksztalcenia, login, haslo);
+					/*System.console().writer().println(addNumber);
+					if(1 == addNumber)
+					{
+						String temat = "Przes³anie has³a do logowania!";
+						try{
+							//SendMail.Wyslij_maila(email, temat, hasloSend, "System zarz¹dzania projektami na PWR");
+						}
+						catch(Exception ex)
+						{
+							;
+						}
+						
+					}
+					else
+					{
+						nrInd_student = fields[1];
+					}*/
+
+					List<Studenci> slistList = loginService
+							.validateSname(email);
+
+					List<GrupyZajeciowe> glist = loginService.validateGrupyza(
+							kod_grupy, termin);
+					
+					// Tutaj pobieramy id studenta ktory jest w tabeli studenci
+					int sIdStudent = slistList.get(0).getIdStudenci();
+					System.out
+							.println("Id Studencika, którego chcemy przypisac do grup zjeciowych: "
+									+ sIdStudent);
+					
+					if (glist.size() > 0) {
+						System.out
+						.println("Id grupy zajeciowej, ktora nalezy przypisac do encji student do zajec (TUTAJ SIE WYWALA!!!): "
+								+ glist.get(0).getIdGrupyZajeciowe());
+						int sIdGrupyZaj = glist.get(0).getIdGrupyZajeciowe();
+						loginService.addStudenciDoGrupZajeciowych(sIdStudent,
+								sIdGrupyZaj, sIdGrupyZaj);
+					}
 				} else
 					continue;
-				System.out.println("field[0]" + fields[0]);
-				int sIdKursu = 0;
-				// loginService.addKursy(kod_kursu, nazwa_kursu);
-
-				List<Kursy> klistKursies = loginService.validateKursy(
-						kod_kursu, nazwa_kursu);
-
-				List<Studenci> slistList = loginService
-						.validateSname(nrInd_student);
-				List<GrupyZajeciowe> glist = loginService.validateGrupyza(
-						kod_grupy, termin);
-
-				System.out.println("rozmiarklistkURSIES: "
-						+ klistKursies.size());
-
-				if (klistKursies.size() == 1 && iterator == 0) {
-					sIdKursu = klistKursies.get(0).getIdKursy();
-					loginService.addGrupyZajeciowe(kod_grupy, infoEdu, userid,
-							sIdKursu, nazwa_kursu, termin, komentarz);
-					iterator++;
-				}
-
-				// Tutaj pobieramy id studenta ktory jest w tabeli studenci
-				int sIdStudent = slistList.get(0).getIdStudenci();
-				System.out
-						.println("Id Studencika, którego chcemy przypisac do grup zjeciowych: "
-								+ sIdStudent);
 				
-				if (glist.size() > 0) {
-					System.out
-					.println("Id grupy zajeciowej, ktora nalezy przypisac do encji student do zajec (TUTAJ SIE WYWALA!!!): "
-							+ glist.get(0).getIdGrupyZajeciowe());
-					int sIdGrupyZaj = glist.get(0).getIdGrupyZajeciowe();
-					loginService.addStudenciDoGrupZajeciowych(sIdStudent,
-							sIdGrupyZaj, sIdGrupyZaj);
-				}
+				
+				System.out.println("field[0]" + fields[0]);
 
 			}
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.LoginDAO;
@@ -102,10 +103,10 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Transactional
-	public void addStudenci(String imie, String nazwisko, String nrIndeksu,
+	public Integer addStudenci(String imie, String nazwisko, String nrIndeksu,
 			String email, Integer rok, Integer semestr, String przedmiot,
 			String login, String haslo) {
-		loginDAO.addStudenci(imie, nazwisko, nrIndeksu, email, rok, semestr,
+		return loginDAO.addStudenci(imie, nazwisko, nrIndeksu, email, rok, semestr,
 				przedmiot, login, haslo);
 	}
 

@@ -96,7 +96,7 @@ public class LoginController extends SendMail {
 		List<Prowadzacy> registerlist = loginService.validateRegister(imie,
 				nazwisko, mail, login);
 		if (registerlist.size() > 0) {
-
+			
 			return 1;
 		} else {
 
@@ -118,7 +118,22 @@ public class LoginController extends SendMail {
 		System.out.println("\nRozmiar loginlist: " + loginlist.size());
 
 		if (loginlist.size() > 0) {
-			return loginlist.get(0).getIdProwadzacy().toString();
+			if(true == loginlist.get(0).isWaznosc())
+			{
+				if(false == loginlist.get(0).isAktywowany())
+				{
+					try{
+					loginService.aktywacja(loginlist.get(0).getLogin(), true);
+					}
+					catch(Exception ex){
+						;
+					}
+				}
+				
+				return loginlist.get(0).getIdProwadzacy().toString();
+			}
+			
+			return "-1";
 
 		} else {
 			return "-1";
