@@ -52,7 +52,7 @@ div#login table, div#register table {
 	width: 450px;
 }
 
-div#login table td, div#register table td, div#upload-csv table td, div#change-pass table td {
+div#login table td, div#register table td, div#upload-csv table td, div#change-pass table td, div#add-group table td, div#edit-group table td {
 	padding: 6px;
 }
 
@@ -340,6 +340,19 @@ div.group header div.tools a.edit-group {
 	background: url('./../images/edit_small.png') left center no-repeat;
 }
 
+div.group header div.tools a.remove-group {
+	height: 100%;
+	float: right;
+	display: block;
+	width: 9px;
+	height: 13px;
+	text-indent: 9px;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-right: 10px;
+	background: url('./../images/remove_small.png') left center no-repeat;
+}
+
 div.group.active header div.tools a.more {
 	background: url('./../images/list_opened.png') left center no-repeat;
 }
@@ -450,11 +463,11 @@ tr.student.ui-draggable-dragging td {
 }
 
 /*Add group*/
-div#add-group td.param {
+div#add-group td.param, div#edit-group td.param {
 	width: 40%;
 }
 
-div#add-group td.value {
+div#add-group td.value, div#edit-group td.value {
 	width: 60%;
 }
 
