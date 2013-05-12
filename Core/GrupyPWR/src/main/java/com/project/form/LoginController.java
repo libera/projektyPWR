@@ -316,34 +316,6 @@ public class LoginController extends SendMail {
 		
 		jsonGroupWyzej.setDates(dates);
 		return jsonGroupWyzej;
-		/*
-		 * List<GrupyZajeciowe> grupyzajeciowe = pobierzGrupyService
-		 * .pobierzGrupyZajeciowe(login);
-		 */
-		/*
-		 * int idKursu ; int i; JsonKursy jsonKursy = new JsonKursy(); JsonGrupy
-		 * jsonGrupy = new JsonGrupy(); JsonGrupyZajeciowe jsonGrupyZajeciowe =
-		 * new JsonGrupyZajeciowe(); List<JsonGrupy> courses = new
-		 * ArrayList<JsonGrupy>(); 
-		 * for( i = 0; i<= grupyzajeciowe.size()-1;
-		 * i++){ 
-		 * idKursu = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
-		 * 
-		 * List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu);
-		 * 
-		 * for(Kursy kurs : kurslist) { List<JsonGrupyZajeciowe> name = new
-		 * ArrayList<JsonGrupyZajeciowe>(); for(GrupyZajeciowe grupa :
-		 * grupyzajeciowe) { // set dla JsonGrupyZajeciowe
-		 * jsonGrupyZajeciowe.setId(grupa.getIdKursu().getIdKursy());
-		 * jsonGrupyZajeciowe.setCode(grupa.getKodGrupy());
-		 * jsonGrupyZajeciowe.setName(grupa.getNazwa()); }
-		 * jsonGrupy.setName(kurs.getNazwaKursu());
-		 * jsonGrupy.setId(kurs.getIdKursy()); jsonGrupy.setDates(name); }
-		 * jsonKursy.setCourses(courses); }
-		 * 
-		 * return jsonKursy;
-		 */
-
 	}
 
 	@RequestMapping(value = "/getcourses", method = RequestMethod.POST,  produces="application/json")
@@ -406,32 +378,7 @@ public class LoginController extends SendMail {
 		}
 		jsonKursy.setCourses(courses2);
 		System.out.println("Test wydruk"+ jsonKursy);
-		/*
-		for (i = 0; i < grupyzajeciowe.size(); i++) {
-			idKursu = grupyzajeciowe.get(i).getIdKursu().getIdKursy();
 
-			List<Kursy> kurslist = pobierzGrupyService.pobierzKursy(idKursu);
-
-			for (Kursy kurs : kurslist) {
-				List<JsonGrupyZajeciowe> name = new ArrayList<JsonGrupyZajeciowe>();
-			
-				for(GrupyZajeciowe grupa : grupyzajeciowe) {				
-					//  set dla JsonGrupyZajeciowe
-					
-					jsonGrupyZajeciowe.setId(grupa.getIdKursu().getIdKursy());
-					jsonGrupyZajeciowe.setCode(grupa.getKodGrupy());
-					jsonGrupyZajeciowe.setName(grupa.getTermin());
-				}
-				name.add(jsonGrupyZajeciowe);
-				jsonGrupy.setName(kurs.getNazwaKursu());
-				jsonGrupy.setId(kurs.getIdKursy());
-				jsonGrupy.setDates(name);
-			}
-			courses.add(jsonGrupy);
-			jsonKursy.setCourses(courses);
-			System.out.println("Test wydruk"+ jsonKursy);
-		}
-*/
 		return jsonKursy;
 	}
 
