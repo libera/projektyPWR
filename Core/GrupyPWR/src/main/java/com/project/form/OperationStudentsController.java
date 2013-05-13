@@ -41,8 +41,16 @@ public class OperationStudentsController {
 	Integer usunGrupeProj(
 			@RequestParam(value = "groupid", required = true) int idGrupy,
 			Model model) {
-
-		return 0;
+		// List<Prowadzacy> loginlist = loginService.validateLogin(login,
+		// haslo);
+		List<GrupyProjektowe> czysagrupki = addGroupsService
+				.getIdGrupZaj(idGrupy);
+		if (czysagrupki.size() > 0) {
+			addGroupsService.deleteGroupProj(idGrupy);
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	// Zmień grupe
@@ -56,7 +64,15 @@ public class OperationStudentsController {
 			@RequestParam(value = "repo", required = true) String repo,
 			@RequestParam(value = "comment", required = true) String komentarz,
 			Model model) {
-		return 0;
+		List<GrupyProjektowe> czyjestid = addGroupsService
+				.getIdGrupZaj(idGrupy);
+		if (czyjestid.size() > 0) {
+			addGroupsService.updateGrupZaj(idGrupy, nazwa, przedmiot, repo,
+					komentarz);
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	// Dodaj spotkanie
@@ -67,49 +83,52 @@ public class OperationStudentsController {
 			Model model) {
 		INJsonMeetingId inJsonMeetingId = new INJsonMeetingId();
 		Date date = new Date();
-		//pkt. 1
+		// pkt. 1
 		addGroupsService.addSpotkania(idGrupy, date, date.toString(), 0);
-		//pkt. 2
-		List<Spotkania> spotkaniabyid = addGroupsService.getSpotByGroupId(idGrupy);
+		// pkt. 2
+		List<Spotkania> spotkaniabyid = addGroupsService
+				.getSpotByGroupId(idGrupy);
 		int rozmiarSpotk = 0;
-		
-		rozmiarSpotk = spotkaniabyid.size()-1;
-		
-		 Spotkania lastSpotkania =  spotkaniabyid.get(rozmiarSpotk);
-		 int idSpotkania = lastSpotkania.getIdSpotkania();
-		 
-		 
-		
-		//pkt. 3
-		 List<StudenciDoGrupProjektowych> studencidogrup = pobierzGrupyZajService.pobierzStudentowZgrupy(idGrupy);
-		 inJsonMeetingId.setDate(lastSpotkania.getDataSpotkania());
-		 inJsonMeetingId.setMeetingid(lastSpotkania.getIdSpotkania());
-		 
-		 List<INJsonMarksAndPresence>marksandpresence = new ArrayList<INJsonMarksAndPresence>();
-		 
-		 for(StudenciDoGrupProjektowych sdg : studencidogrup) {
-			 INJsonMarksAndPresence jsonTMP = new INJsonMarksAndPresence();
-			 
-			 List<Obecnosc> obec = pobierzGrupyZajService.pobierzObecnosci(idSpotkania,sdg.getIdStudenta().getIdStudenci());
-			 List<OcenyCzastkowe> ocenki = pobierzGrupyZajService.pobierzOcenyCzastkowe(idSpotkania,sdg.getIdStudenta().getIdStudenci());  
-			
-			 jsonTMP.setStudentid(sdg.getIdStudenta().getIdStudenci());
-			 jsonTMP.setMarkid(ocenki.get(0).getIdOcenyCzastkowe());
-			 jsonTMP.setPresenceid(obec.get(0).getIdObecnosc());
-			 
-			 marksandpresence.add(jsonTMP);
-		 }
-		 
-		 inJsonMeetingId.setMarksandpresence(marksandpresence);
-		 
-		//pkt. 4 
+
+		rozmiarSpotk = spotkaniabyid.size() - 1;
+
+		Spotkania lastSpotkania = spotkaniabyid.get(rozmiarSpotk);
+		int idSpotkania = lastSpotkania.getIdSpotkania();
+
+		// pkt. 3
+		List<StudenciDoGrupProjektowych> studencidogrup = pobierzGrupyZajService
+				.pobierzStudentowZgrupy(idGrupy);
+		inJsonMeetingId.setDate(lastSpotkania.getDataSpotkania());
+		inJsonMeetingId.setMeetingid(lastSpotkania.getIdSpotkania());
+
+		List<INJsonMarksAndPresence> marksandpresence = new ArrayList<INJsonMarksAndPresence>();
+
+		for (StudenciDoGrupProjektowych sdg : studencidogrup) {
+			INJsonMarksAndPresence jsonTMP = new INJsonMarksAndPresence();
+
+			List<Obecnosc> obec = pobierzGrupyZajService.pobierzObecnosci(
+					idSpotkania, sdg.getIdStudenta().getIdStudenci());
+			List<OcenyCzastkowe> ocenki = pobierzGrupyZajService
+					.pobierzOcenyCzastkowe(idSpotkania, sdg.getIdStudenta()
+							.getIdStudenci());
+
+			jsonTMP.setStudentid(sdg.getIdStudenta().getIdStudenci());
+			jsonTMP.setMarkid(ocenki.get(0).getIdOcenyCzastkowe());
+			jsonTMP.setPresenceid(obec.get(0).getIdObecnosc());
+
+			marksandpresence.add(jsonTMP);
+		}
+
+		inJsonMeetingId.setMarksandpresence(marksandpresence);
+
+		// pkt. 4
 		// json tutaj
-		
+
 		// ----------
 
 		// Tutaj mamy zabawe oczywiscie z drzewem Jsona
 		// {'meetingid':'1',
-		//  'date':'data',
+		// 'date':'data',
 		// 'marksandpresence':
 		// [{'studentid':'1', 'presenceid':'3',markid: '3'}]
 		// }
@@ -126,51 +145,55 @@ public class OperationStudentsController {
 			@RequestParam(value = "groupid", required = true) int idGrupy,
 			@RequestParam(value = "courseid", required = true) int idZaj,
 			Model model) {
-		
+
 		// pkt. 1
 		addGroupsService.addStudents(idStudent, idGrupy, "brak", " ", " ");
-		
+
 		// pkt. 2
-		List<GrupyProjektowe> listgrupzaj = addGroupsService.getIdGrupZaj(idGrupy);
-		
-		int idGZajeciowe=listgrupzaj.get(0).getIdGrupyZajeciowe().getIdGrupyZajeciowe();
-		//System.out.println(idGZajeciowe);
+		List<GrupyProjektowe> listgrupzaj = addGroupsService
+				.getIdGrupZaj(idGrupy);
+
+		int idGZajeciowe = listgrupzaj.get(0).getIdGrupyZajeciowe()
+				.getIdGrupyZajeciowe();
+		// System.out.println(idGZajeciowe);
 		// pkt. 3
-		//w tym miejscu brak idGrupyZajeciowej danego studenta
-		
-		
-		
-		
-		//---------------------->W tym miejscu recznie wprowadzamy idGrupy Zajeciowej prosze uważać<----------------------
-		//idZaj = 3;
-		//----------------------------------------------------------------------------------------------------------------
+		// w tym miejscu brak idGrupyZajeciowej danego studenta
+
+		// ---------------------->W tym miejscu recznie wprowadzamy idGrupy
+		// Zajeciowej prosze uważać<----------------------
+		// idZaj = 3;
+		// ----------------------------------------------------------------------------------------------------------------
 		addGroupsService.updateStudZaj(idStudent, idZaj, idGZajeciowe);
-		
+
 		// pkt 4
-		List <Spotkania> getMeeting = addGroupsService.getSpotkaniaByGroup(idGrupy);
-		List <StudenciDoGrupProjektowych> getStudProj = addGroupsService.getStudent(idStudent);
-		
-		
+		List<Spotkania> getMeeting = addGroupsService
+				.getSpotkaniaByGroup(idGrupy);
+		List<StudenciDoGrupProjektowych> getStudProj = addGroupsService
+				.getStudent(idStudent);
+
 		// pkt 5
-		int iloscSpotkan = getMeeting.size()-1;
-		
-		
+		int iloscSpotkan = getMeeting.size() - 1;
+
 		INStudentJsonMark inJsonStudentMark = new INStudentJsonMark();
-		
+
 		List<INStudentJsonMarksAndPresence> tmp1 = new ArrayList<INStudentJsonMarksAndPresence>();
-		for(int i = 0; i<=iloscSpotkan; i++){
-			
+		for (int i = 0; i <= iloscSpotkan; i++) {
+
 			INStudentJsonMarksAndPresence instudent = new INStudentJsonMarksAndPresence();
-			
-			List<Obecnosc> obec = addGroupsService.getObecnosc(getStudProj.get(0).getIdStudenta().getIdStudenci(), getMeeting.get(i).getIdSpotkania());
-			List<OcenyCzastkowe> ocenki = addGroupsService.getOcenki(getStudProj.get(0).getIdStudenta().getIdStudenci(), getMeeting.get(i).getIdSpotkania());
+
+			List<Obecnosc> obec = addGroupsService.getObecnosc(
+					getStudProj.get(0).getIdStudenta().getIdStudenci(),
+					getMeeting.get(i).getIdSpotkania());
+			List<OcenyCzastkowe> ocenki = addGroupsService.getOcenki(
+					getStudProj.get(0).getIdStudenta().getIdStudenci(),
+					getMeeting.get(i).getIdSpotkania());
 			instudent.setMeetingid(getMeeting.get(i).getIdSpotkania());
 			instudent.setPresenceid(obec.get(0).getIdObecnosc());
 			instudent.setMarkid(ocenki.get(0).getIdOcenyCzastkowe());
 			tmp1.add(instudent);
 		}
 		inJsonStudentMark.setMarksandpresence(tmp1);
-		System.out.println("Test wydruk"+ inJsonStudentMark);
+		System.out.println("Test wydruk" + inJsonStudentMark);
 		return inJsonStudentMark;
 	}
 
@@ -193,7 +216,16 @@ public class OperationStudentsController {
 	Integer setPresence(
 			@RequestParam(value = "presenceid", required = true) int idObecnosc,
 			@RequestParam(value = "present", required = true) boolean stan) {
-		return 0;
+
+		Date data_mod = new Date();
+		List<Obecnosc> obec = addGroupsService.getIdObec(idObecnosc);
+		if (obec.size() > 0) {
+			addGroupsService.updateObecnosci(idObecnosc, stan, data_mod);
+			return 1;
+		} else {
+			return 0;
+		}
+
 	}
 
 	// Zmiana oceny na
@@ -203,7 +235,15 @@ public class OperationStudentsController {
 	Integer setMark(
 			@RequestParam(value = "markid", required = true) int markid,
 			@RequestParam(value = "value", required = true) String wOcena) {
-		return 0;
+		Date data_mod = new Date();
+		List<OcenyCzastkowe> ocenki = addGroupsService.getidOcen(markid);
+		if (ocenki.size() > 0) {
+			addGroupsService.updateOcenki(markid, wOcena, data_mod);
+			return 1;
+		} else {
+			return 0;
+		}
+
 	}
 
 	// Zmiana danych
@@ -219,6 +259,14 @@ public class OperationStudentsController {
 			@RequestParam(value = "name", required = true) String nazwa,
 			@RequestParam(value = "date", required = true) Date data,
 			@RequestParam(value = "weight", required = true) int waga) {
-		return 0;
+		List<Spotkania> tmpspot = addGroupsService.getIdSpotkania(idSpotkanie);
+		if(tmpspot.size()>0){
+			addGroupsService.updateSpotkania(idSpotkanie, nazwa, data, waga);
+			return 1;
+		}
+		else {
+			return 0;
+		}
+		
 	}
 }
