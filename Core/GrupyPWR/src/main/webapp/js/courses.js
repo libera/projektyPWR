@@ -63,7 +63,9 @@ function initCourses() {
 	$('#upload-csv :file').change(function(){
 	    var file = this.files[0];
 	    
-	    if(file.type != "text/csv") {
+	    var suffix = '.csv';
+	    
+	    if(file.name.indexOf(suffix, file.name.length - suffix.length) == -1) {
 	    	$('div#upload-csv td.info').show();
 			$('div#upload-csv td.info').html('<span class="error">Podany plik ma błędne rozszerzenie!</span>');
 	    } else {
