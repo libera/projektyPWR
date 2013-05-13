@@ -258,10 +258,10 @@ function addGroup(dateID, group) {
 			$.ajax({
 				url: serverURL + 'addstudentgroup',
 				type: 'POST',
-				data: {studentid: studentID, groupid: group.id, courseid: studentDate},
+				data: {studentid: studentID, groupid: group.id, groupidzaj: studentDate},
 				dataType: 'json',
 				success: function(data, textStatus, jqXHR ) {
-					console.log("Add student to group: " + data + " " + textStatus);
+					console.log("Add student to group: " + JSON.stringify(data) + " " + textStatus);
 					
 					group.students.push({'id':studentID, 'firstname': studentFirstname, 'surname': studentSurname, 'mail': studentMail, 'index': studentIndex});
 					
