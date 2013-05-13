@@ -74,6 +74,7 @@ function loadDate(id) {
 					$('#notingroup tr#student' + currNoGroup.id).data('studentFirstname', currNoGroup.firstname);
 					$('#notingroup tr#student' + currNoGroup.id).data('studentSurname', currNoGroup.surname);
 					$('#notingroup tr#student' + currNoGroup.id).data('studentIndex', currNoGroup.index);
+					$('#notingroup tr#student' + currNoGroup.id).data('studentDate', currDate.id);
 					
 					$('#notingroup td').first().addClass('top');
 					
@@ -251,12 +252,13 @@ function addGroup(dateID, group) {
 			var studentFirstname = ui.draggable.data('studentFirstname');
 			var studentSurname = ui.draggable.data('studentSurname');
 			var studentIndex = ui.draggable.data('studentIndex');
+			var studentDate = ui.draggable.data('studentDate');
 			
 			//Ajax getting marksandpresence
 			$.ajax({
 				url: serverURL + 'addstudentgroup',
 				type: 'POST',
-				data: {studentid: studentID, groupid: group.id, courseid: dateID},
+				data: {studentid: studentID, groupid: group.id, courseid: studentDate},
 				dataType: 'json',
 				success: function(data, textStatus, jqXHR ) {
 					console.log("Add student to group: " + data + " " + textStatus);
