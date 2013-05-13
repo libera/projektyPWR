@@ -273,8 +273,10 @@ function addGroup(dateID, group) {
 					});
 					
 					$.each(data.marksandpresence, function() {
+						console.log(JSON.stringify(this));
+						
 						currMarkAndPresence = this;
-						$('.group.' + group.id + ' .students tr.student.' + currStudent.id + ' .meeting.' + currMarkAndPresence.meetingid).html('<input type="checkbox" class="presence ' + currMarkAndPresence.presenceid + '" id="presence' + currMarkAndPresence.presenceid + '" /><label for="presence' + currMarkAndPresence.presenceid +'"></label><input type="text" maxlength="3" class="mark ' + currMarkAndPresence.markid + '" value="ocena" />');
+						$('.group.' + group.id + ' .students tr.student.' + studentID + ' .meeting.' + currMarkAndPresence.meetingid).html('<input type="checkbox" class="presence ' + currMarkAndPresence.presenceid + '" id="presence' + currMarkAndPresence.presenceid + '" /><label for="presence' + currMarkAndPresence.presenceid +'"></label><input type="text" maxlength="3" class="mark ' + currMarkAndPresence.markid + '" value="ocena" />');
 					});
 					
 					$('.group.' + group.id + ' .students tr.student.' + studentID + ' input.mark').focus(function() {
@@ -330,6 +332,7 @@ function addGroup(dateID, group) {
 					currMarkAndPresence = this;
 					$.each(group.students, function() {
 						if(this.id == currMarkAndPresence.studentid) {
+							this.marksandpresence = new Array();
 							this.marksandpresence.push({'meetingid': data.meetingid, 'presenceid': currMarkAndPresence.presenceid, 'markid': currMarkAndPresence.markid, 'present': 0, 'mark': 0});
 						}
 					});

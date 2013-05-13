@@ -5,4 +5,8 @@ truncate table ProjektyPWR.kursy;
 truncate table ProjektyPWR.studenci;
 truncate table ProjektyPWR.kursy;
 truncate table ProjektyPWR.studenci_do_grup_zajeciowych;
+truncate table ProjektyPWR.studenci_do_grup_projektowych;
+truncate table ProjektyPWR.Spotkania;
+truncate table ProjektyPWR.oceny_czastkowe;
+truncate table ProjektyPWR.obecnosc;
 SET foreign_key_checks = 1;
