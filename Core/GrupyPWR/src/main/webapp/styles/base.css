@@ -52,7 +52,7 @@ div#login table, div#register table {
 	width: 450px;
 }
 
-div#login table td, div#register table td, div#upload-csv table td, div#change-pass table td, div#add-group table td, div#edit-group table td {
+div#login table td, div#register table td, div#upload-csv table td, div#change-pass table td, div#add-group table td, div#edit-group table td, div#edit-student table td {
 	padding: 6px;
 }
 
@@ -463,11 +463,11 @@ tr.student.ui-draggable-dragging td {
 }
 
 /*Add group*/
-div#add-group td.param, div#edit-group td.param {
+div#add-group td.param, div#edit-group td.param, div#edit-student td.param {
 	width: 40%;
 }
 
-div#add-group td.value, div#edit-group td.value {
+div#add-group td.value, div#edit-group td.value, div#edit-student td.value {
 	width: 60%;
 }
 

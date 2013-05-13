@@ -348,8 +348,23 @@ function addGroup(dateID, group) {
 	$.each(currGroup.students, function() {
 		currStudent = this;
 		
-		$(' #groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + currStudent.id + '" id="student' + currStudent.id + '"><td class="name"><a href="mailto:' + currStudent.mail + '">' + currStudent.firstname + ' ' + currStudent.surname + '</a><br /><span class="index">(' + currStudent.index + ')</span></td></tr>');
-	
+		$('#groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + currStudent.id + '" id="student' + currStudent.id + '"><td class="name"><a href="#" class="edit-student">' + currStudent.firstname + ' ' + currStudent.surname + '</a><br /><span class="index">(' + currStudent.index + ')</span></td></tr>');
+		
+		$('#groups .group.' + currGroup.id + ' .students tr.student.' + currStudent.id + ' a.edit-student').click(function() {
+			$('div#lightbox').show();
+			
+			$('#edit-student').show();
+			$('#edit-student').css('left', $(document).width()/2 - $('#edit-student').width()/2);
+			$('#edit-student').css('top', $(document).height()/2 - $('#edit-student').height()/2-50);
+			
+			$('#edit-student-firstname').html(currStudent.firstname);
+			$('#edit-student-surname').html(currStudent.surname);
+			$('#edit-student-mail').html(currStudent.mail);
+			$('#edit-student-index').html(currStudent.index);
+			//TO DO : sugerowana ocena koncowa
+			$('#edit-student-finalmark').html(currStudent.finalmark);
+		});
+		
 		//adding meeting to each student
 		/*$.each(currGroup.meetings, function() {
 			currMeeting = this;

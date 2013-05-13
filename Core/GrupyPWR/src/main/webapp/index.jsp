@@ -128,6 +128,50 @@
 					</tr>
 				</table>
 			</div>
+			<div id="edit-student" class="dialog">
+				<header class="section-title">Edycja danych studenta</header>
+				<table>
+					<tr>
+						<td class="info" colspan="2"></td>
+					</tr>
+					<tr>
+						<td class="param">Imię:</td>
+						<td class="value" id="edit-student-firstname"></td>
+					</tr>
+					<tr>
+						<td class="param">Nazwisko:</td>
+						<td class="value" id="edit-student-surname"></td>
+					</tr>
+					<tr>
+						<td class="param">Nr indeksu:</td>
+						<td class="value" id="edit-student-index"></td>
+					</tr>
+					<tr>
+						<td class="param">Mail:</td>
+						<td class="value" id="edit-student-mail"></td>
+					</tr>
+					<tr>
+						<td class="param">Sugerowana ocena końcowa:</td>
+						<td class="value" id="edit-student-suggested-finalmark"></td>
+					</tr>
+					<tr>
+						<td class="param">Stanowisko:</td>
+						<td class="value" id="edit-student-position">
+							<select>
+								<option value="szefu">Szefu</option>
+								<option value="robol">Robol</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="param">Ocena końcowa:</td>
+						<td class="value" id="edit-student-finalmark"></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;" colspan="2"><input type="button" id="edit-student-button" value="Edytuj studenta" /></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 		<div id="login">
 			<div class="top-bar">
