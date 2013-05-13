@@ -261,7 +261,7 @@ function addGroup(dateID, group) {
 				data: {studentid: studentID, groupid: group.id, courseid: studentDate},
 				dataType: 'json',
 				success: function(data, textStatus, jqXHR ) {
-					console.log("Add student to group: " + data + " " + textStatus);
+					console.log("Add student to group: " + JSON.stringify(data) + " " + textStatus);
 					
 					group.students.push({'id':studentID, 'firstname': studentFirstname, 'surname': studentSurname, 'mail': studentMail, 'index': studentIndex});
 					
@@ -318,7 +318,7 @@ function addGroup(dateID, group) {
 			data: {groupid: group.id},
 			dataType: 'json',
 			success: function(data, textStatus, jqXHR ) {
-				console.log("Add meeting: " + data + " " + textStatus);
+				console.log("Add meeting: " + JSON.stringify(data) + " " + textStatus);
 				
 				newMeeting = new Object();
 				newMeeting.id = data.meetingid;
@@ -326,7 +326,7 @@ function addGroup(dateID, group) {
 				newMeeting.date = "data";
 				newMeeting.weight = "waga";
 				
-				$.each(data.marksAndPresence, function() {
+				$.each(data.marksandpresence, function() {
 					currMarkAndPresence = this;
 					$.each(group.students, function() {
 						if(this.id == currMarkAndPresence.studentid) {

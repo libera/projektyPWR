@@ -152,18 +152,18 @@ public class OperationStudentsController {
 		
 		
 		// pkt 5
-		int iloscSpotkan = getMeeting.size();
+		int iloscSpotkan = getMeeting.size()-1;
 		
 		
 		INStudentJsonMark inJsonStudentMark = new INStudentJsonMark();
 		
 		List<INStudentJsonMarksAndPresence> tmp1 = new ArrayList<INStudentJsonMarksAndPresence>();
-		for(int i = 0; i<iloscSpotkan; i++){
+		for(int i = 0; i<=iloscSpotkan; i++){
 			
 			INStudentJsonMarksAndPresence instudent = new INStudentJsonMarksAndPresence();
 			
-			List<Obecnosc> obec = addGroupsService.getObecnosc(getStudProj.get(i).getIdStudenta().getIdStudenci(), getMeeting.get(i).getIdSpotkania());
-			List<OcenyCzastkowe> ocenki = addGroupsService.getOcenki(getStudProj.get(i).getIdStudenta().getIdStudenci(), getMeeting.get(i).getIdSpotkania());
+			List<Obecnosc> obec = addGroupsService.getObecnosc(getStudProj.get(0).getIdStudenta().getIdStudenci(), getMeeting.get(i).getIdSpotkania());
+			List<OcenyCzastkowe> ocenki = addGroupsService.getOcenki(getStudProj.get(0).getIdStudenta().getIdStudenci(), getMeeting.get(i).getIdSpotkania());
 			instudent.setMeetingid(getMeeting.get(i).getIdSpotkania());
 			instudent.setPresenceid(obec.get(0).getIdObecnosc());
 			instudent.setMarkid(ocenki.get(0).getIdOcenyCzastkowe());

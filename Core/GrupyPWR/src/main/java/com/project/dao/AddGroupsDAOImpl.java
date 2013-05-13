@@ -121,7 +121,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 		return sessionFactory
 				.getCurrentSession()
 				.createQuery(
-						"from OcenyCzastkowe where idStudenta=:idGrupyProj and idSpotkania =:idSpotkania")
+						"from OcenyCzastkowe where idStudenta=:idStudenta and idSpotkania =:idSpotkania")
 				.setInteger("idStudenta", idStudenta)
 				.setInteger("idSpotkania", idSpotkania).list();
 	}
@@ -139,7 +139,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 		return sessionFactory
 				.getCurrentSession()
 				.createQuery(
-						"from Obecnosc where idStudenta=:idGrupyProj and isSpotkania =:idSpotkania")
+						"from Obecnosc where idStudenta=:idStudenta and isSpotkania =:idSpotkania")
 				.setInteger("idStudenta", idStudenta)
 				.setInteger("idSpotkania", idSpotkania).list();
 	}
