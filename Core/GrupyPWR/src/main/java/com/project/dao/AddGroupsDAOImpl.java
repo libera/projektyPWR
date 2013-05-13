@@ -1,5 +1,6 @@
 package com.project.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -86,6 +87,34 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 			session.close();
 		}
 	}
+	
+	@Transactional
+	public void addSpotkania(Integer idGrupyProj, Date dataSpotkania, String nazwa, Integer waga) {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+			String query = "insert into spotkania ("
+					+ "idGrupyProjektowej, "
+					+ "dataSpotkania, "
+					+ "Nazwa, "
+					+ "WagaOceny)"
+					+ "values(:idGrupyProj, :dataSpotkania, :nazwa, :waga)";
+			
+			sessionFactory.getCurrentSession().createSQLQuery(query)
+					.setInteger("idGrupyProj", idGrupyProj)
+					.setDate("dataSpotkania", dataSpotkania)
+					.setString("nazwa", nazwa)
+					.setInteger("waga", waga).executeUpdate();
+			
+			tx.commit();
+		} catch(Exception e) {
+			
+		} finally {
+			session.close();
+		}
+	}
 
 	@Transactional
 	public List<OcenyCzastkowe> getOcenki(int idStudenta, int idSpotkania) {
@@ -95,6 +124,14 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 						"from OcenyCzastkowe where idStudenta=:idGrupyProj and idSpotkania =:idSpotkania")
 				.setInteger("idStudenta", idStudenta)
 				.setInteger("idSpotkania", idSpotkania).list();
+	}
+	
+	@Transactional
+	public List<Spotkania> getSpotByGroupId(int idGrupyProj) {
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery("from Spotkania where idGrupyProjektowej=:idGrupyProj")
+				.setInteger("idGrupyProj", idGrupyProj).list();
 	}
 
 	@Transactional

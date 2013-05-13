@@ -1,5 +1,6 @@
 package com.project.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.project.data.GrupyProjektowe;
@@ -17,4 +18,6 @@ public interface AddGroupsDAO {
 	public List<OcenyCzastkowe> getOcenki(int idStudenta, int idSpotkania);
 	public List<Obecnosc> getObecnosc(int idStudenta, int idSpotkania);
 	public List<StudenciDoGrupProjektowych> getStudent(int idStudent);
+	public void addSpotkania(Integer idGrupyProj, Date dataSpotkania, String nazwa, Integer waga);
+	public List<Spotkania> getSpotByGroupId(int idGrupyProj);
 }

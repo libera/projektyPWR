@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project.GroupJson.INJsonMarksAndPresence;
 import com.project.GroupJson.INJsonMeetingId;
 import com.project.GroupJson.INStudentJsonMark;
 import com.project.GroupJson.INStudentJsonMarksAndPresence;
@@ -22,12 +23,16 @@ import com.project.data.Prowadzacy;
 import com.project.data.Spotkania;
 import com.project.data.StudenciDoGrupProjektowych;
 import com.project.service.AddGroupsService;
+import com.project.service.PobierzGrupyService;
+import com.project.service.PobranieGrupZajService;
 
 @Controller
 public class OperationStudentsController {
 
 	@Autowired
 	private AddGroupsService addGroupsService;
+	@Autowired
+	private PobranieGrupZajService pobierzGrupyZajService;
 
 	// Usuń grupę
 	// projektową
@@ -60,13 +65,51 @@ public class OperationStudentsController {
 	INJsonMeetingId addMeeting(
 			@RequestParam(value = "groupid", required = true) int idGrupy,
 			Model model) {
-
-		// json tutaj
 		INJsonMeetingId inJsonMeetingId = new INJsonMeetingId();
+		Date date = new Date();
+		//pkt. 1
+		addGroupsService.addSpotkania(idGrupy, date, date.toString(), 0);
+		//pkt. 2
+		List<Spotkania> spotkaniabyid = addGroupsService.getSpotByGroupId(idGrupy);
+		int rozmiarSpotk = 0;
+		
+		rozmiarSpotk = spotkaniabyid.size()-1;
+		
+		 Spotkania lastSpotkania =  spotkaniabyid.get(rozmiarSpotk);
+		 int idSpotkania = lastSpotkania.getIdSpotkania();
+		 
+		 
+		
+		//pkt. 3
+		 List<StudenciDoGrupProjektowych> studencidogrup = pobierzGrupyZajService.pobierzStudentowZgrupy(idGrupy);
+		 inJsonMeetingId.setDate(lastSpotkania.getDataSpotkania());
+		 inJsonMeetingId.setMeetingid(lastSpotkania.getIdSpotkania());
+		 
+		 List<INJsonMarksAndPresence>marksandpresence = new ArrayList<INJsonMarksAndPresence>();
+		 
+		 for(StudenciDoGrupProjektowych sdg : studencidogrup) {
+			 INJsonMarksAndPresence jsonTMP = new INJsonMarksAndPresence();
+			 
+			 List<Obecnosc> obec = pobierzGrupyZajService.pobierzObecnosci(idSpotkania,sdg.getIdStudenta().getIdStudenci());
+			 List<OcenyCzastkowe> ocenki = pobierzGrupyZajService.pobierzOcenyCzastkowe(idSpotkania,sdg.getIdStudenta().getIdStudenci());  
+			
+			 jsonTMP.setStudentid(sdg.getIdStudenta().getIdStudenci());
+			 jsonTMP.setMarkid(ocenki.get(0).getIdOcenyCzastkowe());
+			 jsonTMP.setPresenceid(obec.get(0).getIdObecnosc());
+			 
+			 marksandpresence.add(jsonTMP);
+		 }
+		 
+		 inJsonMeetingId.setMarksandpresence(marksandpresence);
+		 
+		//pkt. 4 
+		// json tutaj
+		
 		// ----------
 
 		// Tutaj mamy zabawe oczywiscie z drzewem Jsona
 		// {'meetingid':'1',
+		//  'date':'data',
 		// 'marksandpresence':
 		// [{'studentid':'1', 'presenceid':'3',markid: '3'}]
 		// }
@@ -81,11 +124,11 @@ public class OperationStudentsController {
 	INStudentJsonMark addStudentGroup(
 			@RequestParam(value = "studentid", required = true) int idStudent,
 			@RequestParam(value = "groupid", required = true) int idGrupy,
-			@RequestParam(value = "groupidzaj", required = true) int idZaj,
+			@RequestParam(value = "courseid", required = true) int idZaj,
 			Model model) {
 		
 		// pkt. 1
-		addGroupsService.addStudents(idStudent, idGrupy, "brak", "2.0", " ");
+		addGroupsService.addStudents(idStudent, idGrupy, "brak", " ", " ");
 		
 		// pkt. 2
 		List<GrupyProjektowe> listgrupzaj = addGroupsService.getIdGrupZaj(idGrupy);

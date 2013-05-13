@@ -1,5 +1,6 @@
 package com.project.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -33,6 +34,11 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	}
 	
 	@Transactional
+	public void addSpotkania(Integer idGrupyProj, Date dataSpotkania, String nazwa, Integer waga){
+		addGroupsDAO.addSpotkania(idGrupyProj, dataSpotkania, nazwa, waga);
+	}
+	
+	@Transactional
 	public List<GrupyProjektowe> getIdGrupZaj(int idGrupyProj) {
 		return addGroupsDAO.getIdGrupZaj(idGrupyProj);
 	}
@@ -55,6 +61,11 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	@Transactional
 	public List<StudenciDoGrupProjektowych> getStudent(int idStudent){
 		return addGroupsDAO.getStudent(idStudent);
+	}
+	
+	@Transactional
+	public List<Spotkania> getSpotByGroupId(int idGrupyProj) {
+		return addGroupsDAO.getSpotByGroupId(idGrupyProj);
 	}
 
 }

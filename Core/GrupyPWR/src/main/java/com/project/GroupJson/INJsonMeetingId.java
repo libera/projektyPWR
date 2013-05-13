@@ -1,5 +1,6 @@
 package com.project.GroupJson;
 
+import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect;
@@ -11,6 +12,8 @@ public class INJsonMeetingId {
 
 	private int meetingid;
 	
+	private Date date;
+	
 	private List<INJsonMarksAndPresence>marksandpresence;
 
 	public int getMeetingid() {
@@ -21,6 +24,14 @@ public class INJsonMeetingId {
 		this.meetingid = meetingid;
 	}
 
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public List<INJsonMarksAndPresence> getMarksandpresence() {
 		return marksandpresence;
 	}
@@ -28,4 +39,5 @@ public class INJsonMeetingId {
 	public void setMarksandpresence(List<INJsonMarksAndPresence> marksandpresence) {
 		this.marksandpresence = marksandpresence;
 	}
+
 }
