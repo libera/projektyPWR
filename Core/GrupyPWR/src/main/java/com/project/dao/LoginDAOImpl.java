@@ -1,5 +1,6 @@
 package com.project.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.maven.artifact.versioning.Restriction;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.project.data.GrupyZajeciowe;
 import com.project.data.Kursy;
 import com.project.data.Prowadzacy;
@@ -136,7 +139,7 @@ public class LoginDAOImpl implements LoginDAO {
 
 	@Transactional
 	public List<Studenci> validateSname(String nr_indeksu) {
-//System.console().writer().println(nr_indeksu);
+		// System.console().writer().println(nr_indeksu);
 		return sessionFactory.getCurrentSession()
 				.createQuery("from Studenci where email=:nr_indeksu")
 				.setString("nr_indeksu", nr_indeksu).list();
@@ -266,26 +269,59 @@ public class LoginDAOImpl implements LoginDAO {
 	@Transactional
 	public Integer addStudenci(String imie, String nazwisko, String nrIndeksu,
 			String email, Integer rok, Integer semestr, String przedmiot,
-			String login, String haslo) {
+			String login, String haslo) throws SQLException {
 
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		String query = "insert ignore into studenci(imiona,nazwisko,nr_indeksu, email, rok, semestr, przedmiot_krztalcenia, login, haslo) values(:imie,:nazwisko,:nrIndeksu,:email,:rok,:semestr,:przedmiot,:login,:haslo)";
+		// Transaction tx = session.beginTransaction();
+		// Connection conn = session.connection();
+		Connection conn = (Connection) session.connection();
+		String query = "INSERT IGNORE INTO STUDENCI(imiona,nazwisko,nr_indeksu, email, rok, semestr, przedmiot_krztalcenia, login, haslo) values(?,?,?,?,?,?,?,?,?)";
+		PreparedStatement preparedStatement = (PreparedStatement) conn
+				.prepareStatement(query);
 
-		Integer addInt=-1;
-		addInt= sessionFactory.getCurrentSession().createSQLQuery(query)
-				.setParameter("imie", imie).setParameter("nazwisko", nazwisko)
-				.setParameter("nrIndeksu", nrIndeksu)
-				.setParameter("email", email).setParameter("rok", rok)
-				.setParameter("semestr", semestr)
-				.setParameter("przedmiot", przedmiot)
-				.setParameter("login", login).setParameter("haslo", haslo)
-				.executeUpdate();
-		
-//		System.err.println(addInt);		
-		tx.commit();
-		session.close();
-		
+		/*
+		 * addInt= sessionFactory.getCurrentSession().createSQLQuery(query)
+		 * .setParameter("imie", imie).setParameter("nazwisko", nazwisko)
+		 * .setParameter("nrIndeksu", nrIndeksu) .setParameter("email",
+		 * email).setParameter("rok", rok) .setParameter("semestr", semestr)
+		 * .setParameter("przedmiot", przedmiot) .setParameter("login",
+		 * login).setParameter("haslo", haslo) .executeUpdate();
+		 */
+
+		// System.err.println(addInt);
+		// tx.commit();
+		Integer addInt = -1;
+		try {
+			conn.setAutoCommit(false);
+			preparedStatement.setString(1, imie);
+			preparedStatement.setString(2, nazwisko);
+			preparedStatement.setString(3, nrIndeksu);
+			preparedStatement.setString(4, email);
+			preparedStatement.setInt(5, rok);
+			preparedStatement.setInt(6, semestr);
+			preparedStatement.setString(7, przedmiot);
+			preparedStatement.setString(8, login);
+			preparedStatement.setString(9, haslo);
+
+			addInt = preparedStatement.executeUpdate();
+			conn.commit();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (conn != null) {
+				conn.close();
+			}
+
+			if (session != null) {
+				session.close();
+			}
+			conn.setAutoCommit(true);
+		}
 		return addInt;
 	}
 }

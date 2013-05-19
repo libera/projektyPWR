@@ -1,5 +1,6 @@
 package com.project.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.project.data.GrupyZajeciowe;
@@ -28,7 +29,7 @@ public interface LoginDAO {
 
 	public Integer addStudenci(String imie, String nazwisko, String nrIndeksu,
 			String email, Integer rok, Integer semestr, String przedmiot,
-			String login, String haslo);
+			String login, String haslo) throws SQLException;
 
 	public void addStudenciDoGrupZajeciowych(Integer idStudenta,
 			Integer idGrupyOryginalnej, Integer idGrupyChodzacej);
