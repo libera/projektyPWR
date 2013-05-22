@@ -276,7 +276,7 @@ function addGroup(dateID, group) {
 						console.log(JSON.stringify(this));
 						
 						currMarkAndPresence = this;
-						$('.group.' + group.id + ' .students tr.student.' + studentID + ' .meeting.' + currMarkAndPresence.meetingid).html('<input type="checkbox" class="presence ' + currMarkAndPresence.presenceid + '" id="presence' + currMarkAndPresence.presenceid + '" /><label for="presence' + currMarkAndPresence.presenceid +'"></label><input type="text" maxlength="3" class="mark ' + currMarkAndPresence.markid + '" value="ocena" />');
+						$('.group.' + group.id + ' .students tr.student.' + studentID + ' .meeting.' + currMarkAndPresence.meetingid).html('<input type="checkbox" class="presence ' + currMarkAndPresence.presenceid + '" id="presence' + currMarkAndPresence.presenceid + '" /><label for="presence' + currMarkAndPresence.presenceid +'"></label><input type="text" maxlength="3" class="mark ' + currMarkAndPresence.markid + '" value="2.0" />');
 					});
 					
 					$('.group.' + group.id + ' .students tr.student.' + studentID + ' input.mark').focus(function() {
@@ -353,12 +353,10 @@ function addGroup(dateID, group) {
 		
 		$('#groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + currStudent.id + '" id="student' + currStudent.id + '"><td class="name"><a href="#" class="edit-student">' + currStudent.firstname + ' ' + currStudent.surname + '</a><br /><span class="index">(' + currStudent.index + ')</span></td></tr>');
 		
-		student = currStudent;
+		var student = currStudent;
 		
 		$('#groups .group.' + currGroup.id + ' .students tr.student.' + student.id + ' a.edit-student').click(function() {
 			$('div#lightbox').show();
-			
-			console.log("edit student: " + student.surname);
 			
 			$('#edit-student').show();
 			$('#edit-student').css('left', $(document).width()/2 - $('#edit-student').width()/2);
@@ -442,6 +440,8 @@ function addGroup(dateID, group) {
 	
 	$('#edit-group input#edit-group-submit-button').click(function(e) {
 		e.preventDefault();
+		
+		editGroup = new Object();
 		
 		editGroup.id = group.id;
 		editGroup.name = $('#edit-group-name').val();
