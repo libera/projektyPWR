@@ -358,6 +358,7 @@ function addGroup(dateID, group) {
 		$('#groups .group.' + currGroup.id + ' .students tr.student.' + student.id + ' a.edit-student').click(function() {
 			$('div#lightbox').show();
 			
+			
 			$('#edit-student').show();
 			$('#edit-student').css('left', $(document).width()/2 - $('#edit-student').width()/2);
 			$('#edit-student').css('top', $(document).height()/2 - $('#edit-student').height()/2-50);
@@ -440,7 +441,6 @@ function addGroup(dateID, group) {
 	
 	$('#edit-group input#edit-group-submit-button').click(function(e) {
 		e.preventDefault();
-		
 		editGroup = new Object();
 		
 		editGroup.id = group.id;

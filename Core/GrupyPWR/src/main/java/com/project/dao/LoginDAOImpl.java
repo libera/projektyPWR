@@ -8,7 +8,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -265,28 +268,82 @@ public class LoginDAOImpl implements LoginDAO {
 		tx.commit();
 		session.close();
 	}
-
 	@Transactional
+	public Integer addStudenci(String imie, String nazwisko, String nrIndeksu,
+	        String email, Integer rok, Integer semestr, String przedmiot,
+	        String login, String haslo) {
+
+	    Session session = sessionFactory.openSession();
+	    Transaction tx = session.beginTransaction();
+	    String query = "insert ignore into studenci(imiona,nazwisko,nr_indeksu, email, rok, semestr, przedmiot_krztalcenia, login, haslo) values(:imie,:nazwisko,:nrIndeksu,:email,:rok,:semestr,:przedmiot,:login,:haslo)";
+
+	    Integer addInt=-1;
+	    addInt= sessionFactory.getCurrentSession().createSQLQuery(query)
+	            .setParameter("imie", imie).setParameter("nazwisko", nazwisko)
+	            .setParameter("nrIndeksu", nrIndeksu)
+	            .setParameter("email", email).setParameter("rok", rok)
+	            .setParameter("semestr", semestr)
+	            .setParameter("przedmiot", przedmiot)
+	            .setParameter("login", login).setParameter("haslo", haslo)
+	            .executeUpdate();
+
+
+	    tx.commit();
+	    session.close();
+
+	    return addInt;
+	}
+/*	@Transactional
 	public Integer addStudenci(String imie, String nazwisko, String nrIndeksu,
 			String email, Integer rok, Integer semestr, String przedmiot,
 			String login, String haslo) throws SQLException {
 
+		
+		
+		 try {
+	            // Create the SessionFactory from standard (hibernate.cfg.xml) config file.
+	            sessionFactory = new Configuration().configure().buildSessionFactory();
+	            session = sessionFactory.openSession();
+	        } catch (Throwable ex) {
+	            // Log the exception.
+	            System.err.println("Initial SessionFactory creation failed." + ex);
+	            throw new ExceptionInInitializerError(ex);
+	        }
+	 
+	SessionFactoryImplementor impl = (SessionFactoryImplementor)sessionFactory;
+	ConnectionProvider cp = impl.getConnectionProvider();
+	Connection conn = cp.getConnection();
+	String sqlString = "query in here";
+	PreparedStatement st = conn.prepareStatement(sqlString);
+	st.setInt(1, domMeters.getObjectid())
+	int results = st.executeUpdate();
+	conn.commit();
+	st.close();
+		try {
+	//	sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
+		} catch (Throwable ex) {
+			System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+		}
+		SessionFactoryImplementor impl = (SessionFactoryImplementor) sessionFactory;
+		ConnectionProvider cp = impl.getConnectionProvider();
+		
 		// Transaction tx = session.beginTransaction();
 		// Connection conn = session.connection();
-		Connection conn = (Connection) session.connection();
+		Connection conn =  (Connection) cp.getConnection();
 		String query = "INSERT IGNORE INTO STUDENCI(imiona,nazwisko,nr_indeksu, email, rok, semestr, przedmiot_krztalcenia, login, haslo) values(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = (PreparedStatement) conn
 				.prepareStatement(query);
 
-		/*
+		
 		 * addInt= sessionFactory.getCurrentSession().createSQLQuery(query)
 		 * .setParameter("imie", imie).setParameter("nazwisko", nazwisko)
 		 * .setParameter("nrIndeksu", nrIndeksu) .setParameter("email",
 		 * email).setParameter("rok", rok) .setParameter("semestr", semestr)
 		 * .setParameter("przedmiot", przedmiot) .setParameter("login",
 		 * login).setParameter("haslo", haslo) .executeUpdate();
-		 */
+		 
 
 		// System.err.println(addInt);
 		// tx.commit();
@@ -323,5 +380,5 @@ public class LoginDAOImpl implements LoginDAO {
 			conn.setAutoCommit(true);
 		}
 		return addInt;
-	}
+	}*/
 }

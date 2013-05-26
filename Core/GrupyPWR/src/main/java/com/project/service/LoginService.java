@@ -5,6 +5,7 @@ import com.project.data.Kursy;
 import com.project.data.Prowadzacy;
 import com.project.data.Studenci;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface LoginService {

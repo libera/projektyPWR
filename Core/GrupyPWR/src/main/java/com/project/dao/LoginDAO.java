@@ -29,7 +29,7 @@ public interface LoginDAO {
 
 	public Integer addStudenci(String imie, String nazwisko, String nrIndeksu,
 			String email, Integer rok, Integer semestr, String przedmiot,
-			String login, String haslo) throws SQLException;
+			String login, String haslo);
 
 	public void addStudenciDoGrupZajeciowych(Integer idStudenta,
 			Integer idGrupyOryginalnej, Integer idGrupyChodzacej);

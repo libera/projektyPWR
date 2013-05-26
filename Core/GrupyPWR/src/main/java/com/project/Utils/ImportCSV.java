@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.StringReader;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,7 +33,7 @@ public class ImportCSV {
 		this.loginService = loginService;
 	}
 
-	public void do_import(String data, int userid) {
+	public void do_import(String data, int userid) throws SQLException {
 
 		try {
 			int iterator = 0;
@@ -52,7 +53,7 @@ public class ImportCSV {
 
 				System.err.println("fields.length:" + fields.length);
 
-				if (fields[0].equals("Politechnika Wroc³awska")) {
+				if (fields[0].equals("Politechnika Wrocï¿½awska")) {
 					infoPwr = fields[0];
 					continue;
 				} else if (fields[0].equals("Rok akademicki")) {
@@ -84,16 +85,16 @@ public class ImportCSV {
 					// Dodanie do tabeli kursy danych.
 
 					loginService.addKursy(kod_kursu, nazwa_kursu);
-					System.out.println("Dodawanie kodow kursów");
+					System.out.println("Dodawanie kodow kursï¿½w");
 					continue;
-				} else if (fields[0].equals("Prowadz¹cy")) {
+				} else if (fields[0].equals("Prowadzï¿½cy")) {
 					prowadzacy_id=fields[1];
 					/*fields[1] = fields[1].trim().replaceAll(" +", " ");
 					fields = fields[1].split(" ");
 					for (int i = 0; i < fields.length - 1; i++) {
 						if (fields[i].equalsIgnoreCase("prof.")
 								|| fields[i].equalsIgnoreCase("dr")
-								|| fields[i].equalsIgnoreCase("in¿.")
+								|| fields[i].equalsIgnoreCase("inï¿½.")
 								|| fields[i].equalsIgnoreCase("hab.")
 								|| fields[i].equalsIgnoreCase("mgr")
 								|| fields[i].equalsIgnoreCase("mgr.")) {
@@ -159,9 +160,9 @@ public class ImportCSV {
 					/*System.console().writer().println(addNumber);
 					if(1 == addNumber)
 					{
-						String temat = "Przes³anie has³a do logowania!";
+						String temat = "Przesï¿½anie hasï¿½a do logowania!";
 						try{
-							//SendMail.Wyslij_maila(email, temat, hasloSend, "System zarz¹dzania projektami na PWR");
+							//SendMail.Wyslij_maila(email, temat, hasloSend, "System zarzï¿½dzania projektami na PWR");
 						}
 						catch(Exception ex)
 						{
@@ -183,7 +184,7 @@ public class ImportCSV {
 					// Tutaj pobieramy id studenta ktory jest w tabeli studenci
 					int sIdStudent = slistList.get(0).getIdStudenci();
 					System.out
-							.println("Id Studencika, którego chcemy przypisac do grup zjeciowych: "
+							.println("Id Studencika, ktï¿½rego chcemy przypisac do grup zjeciowych: "
 									+ sIdStudent);
 					
 					if (glist.size() > 0) {

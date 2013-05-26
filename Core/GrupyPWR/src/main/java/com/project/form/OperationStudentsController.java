@@ -45,6 +45,7 @@ public class OperationStudentsController {
 		// haslo);
 		List<GrupyProjektowe> czysagrupki = addGroupsService
 				.getIdGrupZaj(idGrupy);
+		System.out.println("Czy w bazie jest dana grupa zajeciowa(0 - nie; ~~0 -tak)"+" = ["+czysagrupki.size()+"]");
 		if (czysagrupki.size() > 0) {
 			addGroupsService.deleteGroupProj(idGrupy);
 			return 1;
@@ -64,8 +65,10 @@ public class OperationStudentsController {
 			@RequestParam(value = "repo", required = true) String repo,
 			@RequestParam(value = "comment", required = true) String komentarz,
 			Model model) {
+
 		List<GrupyProjektowe> czyjestid = addGroupsService
 				.getIdGrupZaj(idGrupy);
+		System.out.println("Czy w bazie jest dana grupa zajeciowa(0 - nie; ~~0 -tak)"+" = ["+czyjestid.size()+"]");
 		if (czyjestid.size() > 0) {
 			addGroupsService.updateGrupZaj(idGrupy, nazwa, przedmiot, repo,
 					komentarz);

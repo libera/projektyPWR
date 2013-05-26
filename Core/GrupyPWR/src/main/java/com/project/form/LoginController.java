@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -441,7 +442,7 @@ public class LoginController extends SendMail {
 	String upload(
 			@RequestParam(value = "filecontent", required = false) CommonsMultipartFile file,
 			@RequestParam(value = "userid", required = true) int login,
-			Model model) {
+			Model model) throws SQLException {
 
 		InputStream is = null;
 		StringBuilder sb = new StringBuilder();
