@@ -13,6 +13,13 @@ public class Encryption {
 		} catch (Exception ex) {
 			return null;
 		}
-		return md5;
+
+		int len = md5.length();
+		if (len < 16) {
+			return "0" + md5;
+		} else {
+			return md5;
+		}
+
 	}
 }

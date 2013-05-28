@@ -157,7 +157,9 @@ public class ImportCSV {
 					addNumber = loginService.addStudenci(name_student, nazwisko_student,
 							nrInd_student, email, rokI, semestrI,
 							przedmiot_ksztalcenia, login, haslo);
-					/*System.console().writer().println(addNumber);
+					System.out.println("Rows affected: " +"("+addNumber+")");
+					//System.console().writer().println(addNumber);
+					 
 					if(1 == addNumber)
 					{
 						String temat = "Przes�anie has�a do logowania!";
@@ -173,7 +175,7 @@ public class ImportCSV {
 					else
 					{
 						nrInd_student = fields[1];
-					}*/
+					}
 
 					List<Studenci> slistList = loginService
 							.validateSname(email);
