@@ -83,7 +83,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					.setInteger("waga", waga).executeUpdate();
 			tx.commit();
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
@@ -136,7 +136,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
 
-			String query = "UPDATE Obecnosc " + "SET nazwa=:nazwa, "
+			String query = "UPDATE Obecnosc " + "SET stan=:stan, "
 					+ "dataModyfikacji=:data_mod " + "WHERE idObecnosc=:idObec";
 
 			sessionFactory.getCurrentSession().createQuery(query)
@@ -144,7 +144,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					.setDate("data_mod", data_mod).executeUpdate();
 			tx.commit();
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}

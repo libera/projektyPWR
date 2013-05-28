@@ -1,8 +1,12 @@
 package com.project.form;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,7 +49,9 @@ public class OperationStudentsController {
 		// haslo);
 		List<GrupyProjektowe> czysagrupki = addGroupsService
 				.getIdGrupZaj(idGrupy);
-		System.out.println("Czy w bazie jest dana grupa zajeciowa(0 - nie; ~~0 -tak)"+" = ["+czysagrupki.size()+"]");
+		System.out
+				.println("Czy w bazie jest dana grupa zajeciowa(0 - nie; ~~0 -tak)"
+						+ " = [" + czysagrupki.size() + "]");
 		if (czysagrupki.size() > 0) {
 			addGroupsService.deleteGroupProj(idGrupy);
 			return 1;
@@ -68,7 +74,9 @@ public class OperationStudentsController {
 
 		List<GrupyProjektowe> czyjestid = addGroupsService
 				.getIdGrupZaj(idGrupy);
-		System.out.println("Czy w bazie jest dana grupa zajeciowa(0 - nie; ~~0 -tak)"+" = ["+czyjestid.size()+"]");
+		System.out
+				.println("Czy w bazie jest dana grupa zajeciowa(0 - nie; ~~0 -tak)"
+						+ " = [" + czyjestid.size() + "]");
 		if (czyjestid.size() > 0) {
 			addGroupsService.updateGrupZaj(idGrupy, nazwa, przedmiot, repo,
 					komentarz);
@@ -223,6 +231,7 @@ public class OperationStudentsController {
 		Date data_mod = new Date();
 		List<Obecnosc> obec = addGroupsService.getIdObec(idObecnosc);
 		if (obec.size() > 0) {
+			// System.out.println("Stan obecności : " +"["+stan+"]");
 			addGroupsService.updateObecnosci(idObecnosc, stan, data_mod);
 			return 1;
 		} else {
@@ -260,16 +269,35 @@ public class OperationStudentsController {
 	Integer setMeeting(
 			@RequestParam(value = "meetingid", required = true) int idSpotkanie,
 			@RequestParam(value = "name", required = true) String nazwa,
-			@RequestParam(value = "date", required = true) Date data,
+			@RequestParam(value = "date", required = true) String data,
 			@RequestParam(value = "weight", required = true) int waga) {
 		List<Spotkania> tmpspot = addGroupsService.getIdSpotkania(idSpotkanie);
-		if(tmpspot.size()>0){
-			addGroupsService.updateSpotkania(idSpotkanie, nazwa, data, waga);
+
+		System.out
+				.println("Format daty jest nastepujacy : " + "[" + data + "]");
+
+		if (tmpspot.size() > 0) {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			Date result;
+
+			try {
+				result = df.parse(data);
+				System.out
+						.println("(format Date)Jak wyglada data po sparsowaniu: "
+								+ "[" + result + "]");
+				addGroupsService.updateSpotkania(idSpotkanie, nazwa, result,
+						waga);
+				System.out
+						.println("(format stringu)Jak wyglada data po sparsowaniu: "
+								+ "[" + df.format(result) + "]");
+			} catch (ParseException e) {
+				;
+			}
+
 			return 1;
-		}
-		else {
+		} else {
 			return 0;
 		}
-		
+
 	}
 }
