@@ -328,7 +328,61 @@ function addGroup(dateID, group) {
 						console.log(JSON.stringify(this));
 						
 						currMarkAndPresence = this;
-						$('.group.' + group.id + ' .students tr.student.' + studentID + ' .meeting.' + currMarkAndPresence.meetingid).html('<input type="checkbox" class="presence ' + currMarkAndPresence.presenceid + '" id="presence' + currMarkAndPresence.presenceid + '" /><label for="presence' + currMarkAndPresence.presenceid +'"></label><input type="text" maxlength="3" class="mark ' + currMarkAndPresence.markid + '" value="2.0" />');
+						$('.group.' + group.id + ' .students tr.student.' + studentID + ' .meeting.' + currMarkAndPresence.meetingid).html('<input type="checkbox" class="presence ' + currMarkAndPresence.presenceid + '" id="presence' + currMarkAndPresence.presenceid + '" /><label for="presence' + currMarkAndPresence.presenceid +'"></label><input type="text" maxlength="3" id="mark' + currMarkAndPresence.markid + '" class="mark ' + currMarkAndPresence.markid + '" value="2.0" />');
+					
+						//set mark
+						$('input#mark' + currMarkAndPresence.markid).blur(function() {
+							var id = currMarkAndPresence.markid;
+							var value = $('input#mark' + currMarkAndPresence.markid).val();
+							
+							$.ajax({
+								url: serverURL + 'setmark',
+								type: 'POST',
+								data: {markid: id, value: value},
+								dataType: 'json',
+								success: function(data, textStatus, jqXHR ) {
+									console.log("Set mark: " + data + " " + textStatus);
+									
+									if(data == '1') {
+									} else {
+										console.log(error);
+									}
+								},
+								error: function(jqXHR, textStatus, errorThrown) {
+									console.log(textStatus + ' ' + errorThrown);
+								}
+							});
+						});
+						
+						//set presence
+						$('input#presence' + currMarkAndPresence.presenceid).click(function() {
+							var present;
+							if($(this).is(':checked')) {
+								present = 1;
+								console.log("set presence 1");
+							} else {
+								present = 0;
+								console.log("set presence 0");
+							}
+							
+							$.ajax({
+								url: serverURL + 'setpresence',
+								type: 'POST',
+								data: {presenceid: currMarkAndPresence.presenceid, present: present},
+								dataType: 'json',
+								success: function(data, textStatus, jqXHR ) {
+									console.log("Set presence: " + data + " " + textStatus);
+									
+									if(data == '1') {
+									} else {
+										console.log(error);
+									}
+								},
+								error: function(jqXHR, textStatus, errorThrown) {
+									console.log(textStatus + ' ' + errorThrown);
+								}
+							});
+						});
 					});
 					
 					$('.group.' + group.id + ' .students tr.student.' + studentID + ' input.mark').focus(function() {
