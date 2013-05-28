@@ -74,7 +74,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 			tx = session.beginTransaction();
 
 			String query = "UPDATE Spotkania " + "SET nazwa=:nazwa, "
-					+ "dataSpotkania=:data, " + "wagaOceny=:waga"
+					+ "dataSpotkania=:data, " + "wagaOceny=:waga "
 					+ "WHERE idSpotkania=:idSpotkania";
 
 			sessionFactory.getCurrentSession().createQuery(query)
@@ -82,6 +82,14 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					.setString("nazwa", nazwa).setDate("data", data)
 					.setInteger("waga", waga).executeUpdate();
 			tx.commit();
+			/*String query = "UPDATE OcenyCzastkowe " + "SET ocena=:wart, "
+					+ "dataModyfikacji=:data_mod "
+					+ "WHERE idOcenyCzastkowe=:idOcen";
+
+			sessionFactory.getCurrentSession().createQuery(query)
+					.setInteger("idOcen", idOcen).setString("wart", wart)
+					.setDate("data_mod", data_mod).executeUpdate();*/
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
