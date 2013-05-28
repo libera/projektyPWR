@@ -56,6 +56,10 @@ div#login table td, div#register table td, div#upload-csv table td, div#change-p
 	padding: 6px;
 }
 
+input#edit-student-button {
+	margin-right: 5px;
+}
+
 td.info {
 	text-align: center;
 	display: none;
@@ -279,6 +283,19 @@ header.course-date-header .tools a.add-group-button {
 	white-space: nowrap;
 	background: url('./../images/add.png');
 	margin-right: 5px;
+	float: right;
+}
+
+header.course-date-header .tools a.remove-date-button {
+	display: block;
+	text-indent: 24px;
+	height: 24px;
+	width: 24px;
+	overflow: hidden;
+	white-space: nowrap;
+	background: url('./../images/remove.png');
+	margin-right: 5px;
+	float: right;
 }
 
 /*Input declarations*/

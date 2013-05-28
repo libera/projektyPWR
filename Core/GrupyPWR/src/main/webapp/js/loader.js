@@ -51,6 +51,43 @@ function initLightbox() {
 	});
 }
 
+function initStudent() {
+	$('#edit-student-button').click(function() {
+		/*studentid = $('#edit-student-id').val();
+		console.log('edit student ' + )*/
+	});
+	
+	$('#remove-student-group-button').click(function() {
+		var student = new Object();
+		student.id = $('#edit-student-id').val();
+		student.mail = $('#groups #student' + student.id).data("studentMail");
+		student.firstname = $('#groups #student' + student.id).data("studentFirstname");
+		student.surname = $('#groups #student' + student.id).data("studentSurname");
+		student.index = $('#groups #student' + student.id).data("studentIndex");
+		student.date = $('#groups #student' + student.id).data("studentDate");
+		
+		$.ajax({
+			url: serverURL + "removestudentgroup",
+			type: 'POST',
+			data: {studentid: student.id},
+			dataType: 'json',
+			success: function(data, textStatus, jqXHR ) {
+				if(data > 0) {
+					console.log("removestudentgroup: " + data + " " + textStatus);
+					
+					addNotInGroup(student, student.date);
+					
+					$('#groups #student' + student.id).remove();
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				$('div#change-pass td.info').show();
+				$('div#change-pass td.info').html('<span class="error">Nie można zmienić hasła. Powód:<br />' + errorThrown + '</span>');
+			}
+		});
+	});
+}
+
 function initUser() {
 	$('#user-change-pass').click(function(e) {
 		e.preventDefault();
@@ -257,6 +294,7 @@ $(document).ready(function() {
 	initLightbox();
 	initCourses();
 	initUser();
+	initStudent();
 });
 
 $(window).resize(function() {

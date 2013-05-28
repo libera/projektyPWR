@@ -168,7 +168,7 @@
 						<td class="value" id="edit-student-finalmark"></td>
 					</tr>
 					<tr>
-						<td style="text-align: right;" colspan="2"><input type="button" id="edit-student-button" value="Edytuj studenta" /></td>
+						<td style="text-align: right;" colspan="2"><input type="hidden" id="edit-student-id" value="" /><input type="button" id="edit-student-button" value="Edytuj studenta" /><input type="button" id="remove-student-group-button" value="Usuń z grupy projektowej" /></td>
 					</tr>
 				</table>
 			</div>
