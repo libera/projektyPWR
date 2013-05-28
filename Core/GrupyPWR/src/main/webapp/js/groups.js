@@ -287,7 +287,7 @@ function addGroup(dateID, group) {
 	
 	$('#groups .course-date.' + dateID).append('<div class="group ' + currGroup.id + '">' +
 			'<header><span class="subject">' + currGroup.subject + '</span><div class="tools"><a href="#" class="more">Więcej</a><a href="#" class="remove-group">Usuń grupę projektową</a><a href="#" class="edit-group">Edytuj grupe projektowa</a></div></header>' +
-			'<div class="details"><table class="students"><tr class="header"><td class="empty"></td><td class="add-meeting"><a href=#">dodaj</a></td></tr></table></div>' +
+			'<div class="details"><div class="student-info"><table class="students"><tr class="header"><td class="empty"></td><td class="add-meeting"><a href=#">dodaj spotkanie</a></td></tr></table></div><div class="notes"><a href="#" class="add-note">dodaj notatkę</a></div></div>' +
 		'</div>');
 	
 	var group = currGroup;
@@ -451,6 +451,31 @@ function addGroup(dateID, group) {
 				console.log(textStatus + ' ' + errorThrown);
 			}
 		});
+	});
+	
+	//add note
+	$('#groups .group.' + currGroup.id + ' .notes a.add-note').click(function(e) {
+		e.preventDefault();
+		
+		//new note command
+		$.ajax({
+			url: serverURL + 'addnote',
+			type: 'POST',
+			data: {groupid: group.id},
+			dataType: 'json',
+			success: function(data, textStatus, jqXHR ) {
+				console.log("Add note: " + JSON.stringify(data) + " " + textStatus);
+				
+				if(data >= 0) {
+					//$('#groups .group.' + currGroup.id + ' .notes').append('<div class="note ' + data + '" id="note' + data + '"><textarea rows="4" style="width: 100%;"></textarea></div>');
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(textStatus + ' ' + errorThrown);
+			}
+		});
+		
+		//$('#groups .group.' + currGroup.id + ' .notes').append('<div class="note" id="note"><textarea rows="4" style="width: 100%;"></textarea></div>');
 	});
 	
 	//adding students header

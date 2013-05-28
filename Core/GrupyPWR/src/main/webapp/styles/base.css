@@ -360,12 +360,32 @@ div.group.active header div.tools a.more {
 div.group div.details {
 	background-color: #f2f2f2;
 	border-bottom: 1px solid #e0e0e0;
+}
+
+div.group div.student-info {
+	padding: 7px 20px;
+	overflow: auto;
+}
+
+div.group div.notes {
+	background-color: #f2f2f2;
+	border-top: 1px solid #e0e0e0;
 	padding: 7px 20px;
 	overflow: auto;
 }
 
 div.group div.details .students tr.header {
 	font-weight: bold;
+}
+
+div.group div.details .students tr.header td.add-meeting a {
+	display: block;
+	overflow: hidden;
+	text-indent: 23px;
+	height: 19px;
+	width: 23px;
+	background: url('./../images/add_meeting.png') no-repeat;
+	white-space: nowrap;
 }
 
 div.group div.details .students td.meeting {
