@@ -53,7 +53,7 @@ function addNotInGroup(currNoGroup, currDate) {
 	$('#notingroup tr#student' + currNoGroup.id).data('studentFirstname', currNoGroup.firstname);
 	$('#notingroup tr#student' + currNoGroup.id).data('studentSurname', currNoGroup.surname);
 	$('#notingroup tr#student' + currNoGroup.id).data('studentIndex', currNoGroup.index);
-	$('#notingroup tr#student' + currNoGroup.id).data('studentDate', currDate);
+	$('#notingroup tr#student' + currNoGroup.id).data('studentDate', currDate.id);
 	
 	$('#notingroup td').first().addClass('top');
 	
@@ -164,38 +164,37 @@ function addMeeting(group, meeting) {
 	//adding additional header
 	$('<td class="meeting ' + meeting.id + '" id="meeting' + meeting.id + '"><input type="text" class="name" value="'+ meeting.name + '" /><br /><input type="text" maxlength="10" class="date" value="' + meeting.date + '"/><input type="text" maxlength="3" class="weight" value="' + meeting.weight + '"  /></td>').insertBefore($('#groups .course-date .group.' + currGroup.id +  ' .students tr.header td.add-meeting'));
 
+	$('td#meeting' + meeting.id + ' input.date').datepicker({
+		dateFormat: "yy-mm-dd"
+	});
+	
 	$('#meeting' + meeting.id + ' input.name').focus(function() {
 		if($(this).val() == "nazwa spotkania") {
 			$(this).val('');
 		}
 	});
-	$('#meeting' + meeting.id + ' input.name').blur(function() {
+	/*$('#meeting' + meeting.id + ' input.name').blur(function() {
 		if($(this).val() == "") {
 			$(this).val('nazwa spotkania');
 		}
-	});
+	});*/
 	
 	$('#meeting' + meeting.id + ' input.date').focus(function() {
 		if($(this).val() == "data") {
 			$(this).val('');
 		}
 	});
-	$('#meeting' + meeting.id + ' input.date').blur(function() {
+	/*$('#meeting' + meeting.id + ' input.date').blur(function() {
 		if($(this).val() == "") {
 			$(this).val('data');
 		}
-	});
+	});*/
 	
-	$('#meeting' + meeting.id + ' input.weight').focus(function() {
-		if($(this).val() == "waga") {
-			$(this).val('');
-		}
-	});
-	$('#meeting' + meeting.id + ' input.weight').blur(function() {
+	/*$('#meeting' + meeting.id + ' input.weight').blur(function() {
 		if($(this).val() == "") {
 			$(this).val('waga');
 		}
-	});
+	});*/
 	
 	//console.log(JSON.stringify(currGroup.students));
 	
@@ -484,7 +483,7 @@ function addGroup(dateID, group) {
 				newMeeting.id = data.meetingid;
 				newMeeting.name = "nazwa spotkania";
 				newMeeting.date = "data";
-				newMeeting.weight = "waga";
+				newMeeting.weight = "0";
 				
 				$.each(data.marksandpresence, function() {
 					currMarkAndPresence = this;
