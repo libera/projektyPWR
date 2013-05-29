@@ -56,6 +56,10 @@ div#login table td, div#register table td, div#upload-csv table td, div#change-p
 	padding: 6px;
 }
 
+input#edit-student-button {
+	margin-right: 5px;
+}
+
 td.info {
 	text-align: center;
 	display: none;
@@ -279,6 +283,19 @@ header.course-date-header .tools a.add-group-button {
 	white-space: nowrap;
 	background: url('./../images/add.png');
 	margin-right: 5px;
+	float: right;
+}
+
+header.course-date-header .tools a.remove-date-button {
+	display: block;
+	text-indent: 24px;
+	height: 24px;
+	width: 24px;
+	overflow: hidden;
+	white-space: nowrap;
+	background: url('./../images/remove.png');
+	margin-right: 5px;
+	float: right;
 }
 
 /*Input declarations*/
@@ -422,11 +439,11 @@ div.group div.details .students tr.header input.name {
 }
 
 div.group div.details .students tr.header input.date {
-	width: 47px;
+	width: 70px;
 }
 
 div.group div.details .students tr.header input.weight {
-	width: 47px;
+	width: 24px;
 }
 
 div.group div.details .students td.meeting input.mark {
@@ -491,6 +508,45 @@ div#add-group td.value, div#edit-group td.value, div#edit-student td.value {
 	width: 60%;
 }
 
+
+/*Datepicker*/
+div#ui-datepicker-div {
+	padding: 5px;
+	background-color: #b13429;
+	border: 1px solid #e0e0e0;
+	display: none;
+	color: white;
+}
+
+div#ui-datepicker-div a:link, div#ui-datepicker-div a:visited {
+	color: white;
+	padding: 1px;
+}
+
+div#ui-datepicker-div a:hover, div#ui-datepicker-div a:hover:visited {
+	background-color: white;
+	color: #212121;
+	padding: 1px;
+	text-decoration: none;
+}
+
+div#ui-datepicker-div a.ui-datepicker-prev {
+	display: block;
+	cursor: pointer;
+	float: left;
+	padding: 1px;
+}
+
+div#ui-datepicker-div a.ui-datepicker-next {
+	display: block;
+	cursor: pointer;
+	float: right;
+	padding: 1px;
+}
+
+div#ui-datepicker-div div.ui-datepicker-title {
+	clear: both;
+}
 
 
 
