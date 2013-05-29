@@ -15,6 +15,7 @@ import com.project.data.OcenyCzastkowe;
 import com.project.data.Spotkania;
 import com.project.data.GrupyProjektowe;
 import com.project.data.StudenciDoGrupProjektowych;
+import com.project.data.StudenciDoGrupZajeciowych;
 
 @Repository
 public class AddGroupsDAOImpl implements AddGroupsDAO {
@@ -58,6 +59,15 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 	}
 
 	@Transactional
+	public List<StudenciDoGrupZajeciowych> getStudGroupZaj(int idStudent) {
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"from StudenciDoGrupZajeciowych where idStudenta =:idStudent")
+				.setInteger("idStudent", idStudent).list();
+	}
+
+	@Transactional
 	public List<Spotkania> getIdSpotkania(int idSpot) {
 		return sessionFactory.getCurrentSession()
 				.createQuery("from Spotkania where idSpotkania=:idSpot")
@@ -82,14 +92,15 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					.setString("nazwa", nazwa).setDate("data", data)
 					.setInteger("waga", waga).executeUpdate();
 			tx.commit();
-			/*String query = "UPDATE OcenyCzastkowe " + "SET ocena=:wart, "
-					+ "dataModyfikacji=:data_mod "
-					+ "WHERE idOcenyCzastkowe=:idOcen";
+			/*
+			 * String query = "UPDATE OcenyCzastkowe " + "SET ocena=:wart, " +
+			 * "dataModyfikacji=:data_mod " + "WHERE idOcenyCzastkowe=:idOcen";
+			 * 
+			 * sessionFactory.getCurrentSession().createQuery(query)
+			 * .setInteger("idOcen", idOcen).setString("wart", wart)
+			 * .setDate("data_mod", data_mod).executeUpdate();
+			 */
 
-			sessionFactory.getCurrentSession().createQuery(query)
-					.setInteger("idOcen", idOcen).setString("wart", wart)
-					.setDate("data_mod", data_mod).executeUpdate();*/
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -198,6 +209,27 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 
 			sessionFactory.getCurrentSession().createSQLQuery(query)
 					.setInteger("idGrupyZaj", idGrupyZaj).executeUpdate();
+			tx.commit();
+		} catch (Exception e) {
+
+		} finally {
+			session.close();
+		}
+	}
+
+	@Transactional
+	public void deleteStudents(Integer idStudent) {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+
+			String query = " delete from studenci_do_grup_projektowych "
+					+ "where id_studenta =:idStudent";
+
+			sessionFactory.getCurrentSession().createSQLQuery(query)
+					.setInteger("idStudent", idStudent).executeUpdate();
 			tx.commit();
 		} catch (Exception e) {
 

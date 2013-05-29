@@ -26,6 +26,7 @@ import com.project.data.OcenyCzastkowe;
 import com.project.data.Prowadzacy;
 import com.project.data.Spotkania;
 import com.project.data.StudenciDoGrupProjektowych;
+import com.project.data.StudenciDoGrupZajeciowych;
 import com.project.service.AddGroupsService;
 import com.project.service.PobierzGrupyService;
 import com.project.service.PobranieGrupZajService;
@@ -132,17 +133,6 @@ public class OperationStudentsController {
 
 		inJsonMeetingId.setMarksandpresence(marksandpresence);
 
-		// pkt. 4
-		// json tutaj
-
-		// ----------
-
-		// Tutaj mamy zabawe oczywiscie z drzewem Jsona
-		// {'meetingid':'1',
-		// 'date':'data',
-		// 'marksandpresence':
-		// [{'studentid':'1', 'presenceid':'3',markid: '3'}]
-		// }
 		return inJsonMeetingId;
 	}
 
@@ -157,32 +147,20 @@ public class OperationStudentsController {
 			@RequestParam(value = "courseid", required = true) int idZaj,
 			Model model) {
 
-		// pkt. 1
 		addGroupsService.addStudents(idStudent, idGrupy, "brak", " ", " ");
 
-		// pkt. 2
 		List<GrupyProjektowe> listgrupzaj = addGroupsService
 				.getIdGrupZaj(idGrupy);
 
 		int idGZajeciowe = listgrupzaj.get(0).getIdGrupyZajeciowe()
 				.getIdGrupyZajeciowe();
-		// System.out.println(idGZajeciowe);
-		// pkt. 3
-		// w tym miejscu brak idGrupyZajeciowej danego studenta
-
-		// ---------------------->W tym miejscu recznie wprowadzamy idGrupy
-		// Zajeciowej prosze uważać<----------------------
-		// idZaj = 3;
-		// ----------------------------------------------------------------------------------------------------------------
 		addGroupsService.updateStudZaj(idStudent, idZaj, idGZajeciowe);
 
-		// pkt 4
 		List<Spotkania> getMeeting = addGroupsService
 				.getSpotkaniaByGroup(idGrupy);
 		List<StudenciDoGrupProjektowych> getStudProj = addGroupsService
 				.getStudent(idStudent);
 
-		// pkt 5
 		int iloscSpotkan = getMeeting.size() - 1;
 
 		INStudentJsonMark inJsonStudentMark = new INStudentJsonMark();
@@ -204,7 +182,7 @@ public class OperationStudentsController {
 			tmp1.add(instudent);
 		}
 		inJsonStudentMark.setMarksandpresence(tmp1);
-		System.out.println("Test wydruk" + inJsonStudentMark);
+		//System.out.println("Test wydruk" + inJsonStudentMark);
 		return inJsonStudentMark;
 	}
 
@@ -216,7 +194,24 @@ public class OperationStudentsController {
 	Integer removeStudentGroup(
 			@RequestParam(value = "studentid", required = true) int idStudent,
 			Model model) {
-		return 0;
+
+		List<StudenciDoGrupZajeciowych> listStudZaj = addGroupsService
+				.getStudGroupZaj(idStudent);
+		int idGrupyOryg = listStudZaj.get(0).getIdGrupyOryginalnej()
+				.getIdGrupyZajeciowe();
+		// int idGrupyChodz =
+		// listStudZaj.get(0).getIdGrupyChodzacej().getIdGrupyZajeciowe();
+		addGroupsService.updateStudZaj(idStudent, idGrupyOryg, idGrupyOryg);
+		addGroupsService.deleteStudents(idStudent);
+		int idGrupResult = 0;
+		List<StudenciDoGrupZajeciowych> listStudZaj2 = addGroupsService
+				.getStudGroupZaj(idStudent);
+
+		idGrupResult = listStudZaj2.get(0).getIdGrupyOryginalnej()
+				.getIdGrupyZajeciowe();
+
+		return idGrupResult;
+
 	}
 
 	// Zmiana obecnosci
@@ -273,8 +268,8 @@ public class OperationStudentsController {
 			@RequestParam(value = "weight", required = true) int waga) {
 		List<Spotkania> tmpspot = addGroupsService.getIdSpotkania(idSpotkanie);
 
-		System.out
-				.println("Format daty jest nastepujacy : " + "[" + data + "]");
+//		System.out
+//				.println("Format daty jest nastepujacy : " + "[" + data + "]");
 
 		if (tmpspot.size() > 0) {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -282,14 +277,12 @@ public class OperationStudentsController {
 
 			try {
 				result = df.parse(data);
-				System.out
-						.println("(format Date)Jak wyglada data po sparsowaniu: "
-								+ "[" + result + "]");
+//				System.out
+//						.println("(format Date)Jak wyglada data po sparsowaniu: "
+//								+ "[" + result + "]");
 				addGroupsService.updateSpotkania(idSpotkanie, nazwa, result,
 						waga);
-				System.out
-						.println("(format stringu)Jak wyglada data po sparsowaniu: "
-								+ "[" + df.format(result) + "]");
+				//System.out.println("(format stringu)Jak wyglada data po sparsowaniu: "+ "[" + df.format(result) + "]");
 			} catch (ParseException e) {
 				;
 			}

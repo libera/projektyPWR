@@ -12,6 +12,7 @@ import com.project.data.GrupyProjektowe;
 
 import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
+import com.project.data.StudenciDoGrupZajeciowych;
 
 import com.project.data.Spotkania;
 import com.project.data.StudenciDoGrupProjektowych;
@@ -37,6 +38,11 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	@Transactional
 	public List<Obecnosc> getIdObec(int idObec) {
 		return addGroupsDAO.getIdObec(idObec);
+	}
+	
+	@Transactional
+	public List<StudenciDoGrupZajeciowych> getStudGroupZaj(int idStudent) {
+		return addGroupsDAO.getStudGroupZaj(idStudent);
 	}
 
 	@Transactional
@@ -73,6 +79,10 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	@Transactional
 	public void deleteGroupProj(int idGrupyZaj) {
 		addGroupsDAO.deleteGroupProj(idGrupyZaj);
+	}
+	@Transactional
+	public void deleteStudents(Integer idStudent) {
+		addGroupsDAO.deleteStudents(idStudent);
 	}
 
 	@Transactional

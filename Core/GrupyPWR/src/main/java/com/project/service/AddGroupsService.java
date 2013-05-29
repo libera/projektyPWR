@@ -8,6 +8,7 @@ import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
 import com.project.data.Spotkania;
 import com.project.data.StudenciDoGrupProjektowych;
+import com.project.data.StudenciDoGrupZajeciowych;
 
 public interface AddGroupsService {
 
@@ -48,4 +49,7 @@ public interface AddGroupsService {
 
 	public void updateSpotkania(int idSpotkania, String nazwa, Date data,
 			int waga);
+	
+	public void deleteStudents(Integer idStudent);
+	public List<StudenciDoGrupZajeciowych> getStudGroupZaj(int idStudent);
 }
