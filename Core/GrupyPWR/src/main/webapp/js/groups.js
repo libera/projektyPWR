@@ -53,7 +53,7 @@ function addNotInGroup(currNoGroup, currDate) {
 	$('#notingroup tr#student' + currNoGroup.id).data('studentFirstname', currNoGroup.firstname);
 	$('#notingroup tr#student' + currNoGroup.id).data('studentSurname', currNoGroup.surname);
 	$('#notingroup tr#student' + currNoGroup.id).data('studentIndex', currNoGroup.index);
-	$('#notingroup tr#student' + currNoGroup.id).data('studentDate', currDate.id);
+	$('#notingroup tr#student' + currNoGroup.id).data('studentDate', currDate);
 	
 	$('#notingroup td').first().addClass('top');
 	
@@ -94,7 +94,7 @@ function loadDate(id) {
 				$.each(currDate.notingroup, function(index, value) {
 					currNoGroup = this;
 					
-					addNotInGroup(currNoGroup, currDate);
+					addNotInGroup(currNoGroup, currDate.id);
 				});
 				
 				//adding in groups
@@ -590,9 +590,9 @@ function addGroup(dateID, group) {
 				console.log("Remove group: " + data + " " + textStatus);
 				if(data == '1') {
 					//moving students to notingroup
-					/*$.each(group.students, function() {
-						addNotInGroup(this, )
-					});*/
+					$.each(group.students, function() {
+						addNotInGroup(this, dateID);
+					});
 					
 					
 					//usuwanie grupy ze strony
