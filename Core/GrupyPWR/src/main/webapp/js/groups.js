@@ -168,6 +168,11 @@ function addMeeting(group, meeting) {
 		dateFormat: "yy-mm-dd"
 	});
 	
+	/*$.datepicker.regional["pl"] = new Object();
+	$.datepicker.regional["pl"].prevText = 
+	
+	console.log($.datepicker.regional[""]);*/
+	
 	$('#meeting' + meeting.id + ' input.name').focus(function() {
 		if($(this).val() == "nazwa spotkania") {
 			$(this).val('');
@@ -585,6 +590,9 @@ function addGroup(dateID, group) {
 				console.log("Remove group: " + data + " " + textStatus);
 				if(data == '1') {
 					//moving students to notingroup
+					/*$.each(group.students, function() {
+						addNotInGroup(this, )
+					});*/
 					
 					
 					//usuwanie grupy ze strony
