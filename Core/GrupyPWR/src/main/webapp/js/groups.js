@@ -320,8 +320,29 @@ function editStudent(student) {
 	$('#edit-student-surname').html(student.surname);
 	$('#edit-student-mail').html(student.mail);
 	$('#edit-student-index').html(student.index);
-	//TO DO : sugerowana ocena koncowa
-	$('#edit-student-finalmark').html(student.finalmark);
+	
+	$('#edit-student-finalmark input').val(student.finalmark);
+	$('#edit-student-posittion select').val(student.position);
+	
+	//sugerowana ocena koncowa
+	var suggestedMark = 0;
+	var weightTotal = 0;
+	var markTable = new Array();
+	
+	$.each($('#groups .header .meeting'), function() {
+		weightTotal += parseInt($(this).children('.weight').val());
+		markTable[$(this).attr("class")] = parseInt($(this).children('.weight').val());
+	});
+	
+	$.each($('#groups #student' + student.id + ' .meeting'), function() {
+		suggestedMark += parseFloat(markTable[$(this).attr("class")]*parseFloat($(this).children('.mark').val()));
+	});
+	
+	suggestedMark /= weightTotal;
+	
+	$('#edit-student-suggested-finalmark').html(suggestedMark.toFixed(2));
+
+	//$('#edit-student-finalmark input').val(suggestedMark.toFixed(2));
 	$('#edit-student-id').val(student.id);
 }
 
@@ -369,6 +390,8 @@ function addGroup(dateID, group) {
 					$('#groups .group.' + group.id + ' .students #student' + studentID).data('studentFirstname', studentFirstname);
 					$('#groups .group.' + group.id + ' .students #student' + studentID).data('studentSurname', studentSurname);
 					$('#groups .group.' + group.id + ' .students #student' + studentID).data('studentIndex', studentIndex);
+					$('#groups .group.' + group.id + ' .students #student' + studentID).data('studentPosition', "");
+					$('#groups .group.' + group.id + ' .students #student' + studentID).data('studentFinalmark', "");
 					$('#groups .group.' + group.id + ' .students #student' + studentID).data('studentDate', studentDate);
 					
 					$('#groups .group.' + group.id + ' .students tr.student.' + studentID + ' a.edit-student').click(function() {
@@ -545,6 +568,8 @@ function addGroup(dateID, group) {
 		$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).data('studentFirstname', currStudent.firstname);
 		$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).data('studentSurname', currStudent.surname);
 		$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).data('studentIndex', currStudent.index);
+		$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).data('studentFinalmark', currStudent.finalmark);
+		$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).data('studentPosition', currStudent.position);
 		$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).data('studentDate', currDate.id);
 		
 		

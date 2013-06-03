@@ -52,11 +52,6 @@ function initLightbox() {
 }
 
 function initStudent() {
-	$('#edit-student-button').click(function() {
-		/*studentid = $('#edit-student-id').val();
-		console.log('edit student ' + )*/
-	});
-	
 	$('#remove-student-group-button').click(function() {
 		var student = new Object();
 		student.id = $('#edit-student-id').val();
@@ -78,6 +73,33 @@ function initStudent() {
 					addNotInGroup(student, student.date);
 					
 					$('#groups #student' + student.id).remove();
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				$('div#change-pass td.info').show();
+				$('div#change-pass td.info').html('<span class="error">Nie można zmienić hasła. Powód:<br />' + errorThrown + '</span>');
+			}
+		});
+	});
+	
+	$('#edit-student-button').click(function() {
+		var student = new Object();
+		student.id = $('#edit-student-id').val();
+		student.date = $('#groups #student' + student.id).data("studentDate");
+		student.finalmark = $('#edit-student-finalmark').val();
+		student.position = $('#edit-student-position').val();
+		
+		$.ajax({
+			url: serverURL + "removestudentgroup",
+			type: 'POST',
+			data: student,
+			dataType: 'json',
+			success: function(data, textStatus, jqXHR ) {
+				if(data > 0) {
+					console.log("editstudent: " + data + " " + textStatus);
+
+					$('#groups #student' + student.id).data("studentPosition", student.position);
+					$('#groups #student' + student.id).data("studentFinalmark", student.finalmark);
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
