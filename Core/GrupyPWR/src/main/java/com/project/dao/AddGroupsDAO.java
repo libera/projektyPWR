@@ -52,4 +52,5 @@ public interface AddGroupsDAO {
 	public void deleteStudents(Integer idStudent);
 	
 	public List<StudenciDoGrupZajeciowych> getStudGroupZaj(int idStudent);
+	public List<StudenciDoGrupProjektowych> getStudByGroup(int idGrupy);
 }

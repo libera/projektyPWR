@@ -46,8 +46,18 @@ public class OperationStudentsController {
 	Integer usunGrupeProj(
 			@RequestParam(value = "groupid", required = true) int idGrupy,
 			Model model) {
-		// List<Prowadzacy> loginlist = loginService.validateLogin(login,
-		// haslo);
+		List<StudenciDoGrupProjektowych> lisZaj = addGroupsService.getStudByGroup(idGrupy);
+		int idStudent = 0;
+		for(StudenciDoGrupProjektowych sdg : lisZaj) {
+			//int idStudent = lisZaj.get(0).getIdStudenta().getIdStudenci();
+			idStudent=sdg.getIdStudenta().getIdStudenci();
+			List<StudenciDoGrupZajeciowych> listStudZaj = addGroupsService
+					.getStudGroupZaj(idStudent);
+			int idGrupyOryg = listStudZaj.get(0).getIdGrupyOryginalnej()
+					.getIdGrupyZajeciowe();
+			addGroupsService.updateStudZaj(idStudent, idGrupyOryg, idGrupyOryg);
+			addGroupsService.deleteStudents(idStudent);
+		}
 		List<GrupyProjektowe> czysagrupki = addGroupsService
 				.getIdGrupZaj(idGrupy);
 		System.out

@@ -27,6 +27,10 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	public List<Spotkania> getSpotkaniaByGroup(int idGrupy) {
 		return addGroupsDAO.getSpotkaniaByGroup(idGrupy);
 	}
+	@Transactional
+	public List<StudenciDoGrupProjektowych> getStudByGroup(int idGrupy){
+		return addGroupsDAO.getStudByGroup(idGrupy);
+	}
 
 	@Transactional
 	public void addStudents(Integer idStudent, Integer idGrupZaj,

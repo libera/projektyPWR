@@ -24,6 +24,15 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 	private SessionFactory sessionFactory;
 
 	@Transactional
+	public List<StudenciDoGrupProjektowych> getStudByGroup(int idGrupy) {
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"from StudenciDoGrupProjektowych where idGrupyProjektowej =:idGrupy").setInteger("idGrupy", idGrupy)
+				.list();
+	}
+
+	@Transactional
 	public List<Spotkania> getSpotkaniaByGroup(int idGrupy) {
 
 		return sessionFactory
