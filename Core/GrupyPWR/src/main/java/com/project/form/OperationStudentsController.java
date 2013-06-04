@@ -367,7 +367,7 @@ public class OperationStudentsController {
 				idGrupyProj);
 
 		if (notes.size() > 0) {
-			idNotes = notes.get(0).getIdNotatki();
+				idNotes = notes.get(notes.size()-1).getIdNotatki();
 			return idNotes;
 		} else {
 			return -1;
