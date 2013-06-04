@@ -21,6 +21,8 @@ import com.project.GroupJson.INJsonMeetingId;
 import com.project.GroupJson.INStudentJsonMark;
 import com.project.GroupJson.INStudentJsonMarksAndPresence;
 import com.project.data.GrupyProjektowe;
+import com.project.data.GrupyZajeciowe;
+import com.project.data.Notatki;
 import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
 import com.project.data.Prowadzacy;
@@ -46,11 +48,12 @@ public class OperationStudentsController {
 	Integer usunGrupeProj(
 			@RequestParam(value = "groupid", required = true) int idGrupy,
 			Model model) {
-		List<StudenciDoGrupProjektowych> lisZaj = addGroupsService.getStudByGroup(idGrupy);
+		List<StudenciDoGrupProjektowych> lisZaj = addGroupsService
+				.getStudByGroup(idGrupy);
 		int idStudent = 0;
-		for(StudenciDoGrupProjektowych sdg : lisZaj) {
-			//int idStudent = lisZaj.get(0).getIdStudenta().getIdStudenci();
-			idStudent=sdg.getIdStudenta().getIdStudenci();
+		for (StudenciDoGrupProjektowych sdg : lisZaj) {
+			// int idStudent = lisZaj.get(0).getIdStudenta().getIdStudenci();
+			idStudent = sdg.getIdStudenta().getIdStudenci();
 			List<StudenciDoGrupZajeciowych> listStudZaj = addGroupsService
 					.getStudGroupZaj(idStudent);
 			int idGrupyOryg = listStudZaj.get(0).getIdGrupyOryginalnej()
@@ -192,7 +195,7 @@ public class OperationStudentsController {
 			tmp1.add(instudent);
 		}
 		inJsonStudentMark.setMarksandpresence(tmp1);
-		//System.out.println("Test wydruk" + inJsonStudentMark);
+		// System.out.println("Test wydruk" + inJsonStudentMark);
 		return inJsonStudentMark;
 	}
 
@@ -272,14 +275,15 @@ public class OperationStudentsController {
 	@RequestMapping(value = "setmeeting", method = RequestMethod.POST)
 	public @ResponseBody
 	Integer setMeeting(
-			@RequestParam(value = "meetingid", required = true) int idSpotkanie,
+
+	@RequestParam(value = "meetingid", required = true) int idSpotkanie,
 			@RequestParam(value = "name", required = true) String nazwa,
 			@RequestParam(value = "date", required = true) String data,
 			@RequestParam(value = "weight", required = true) int waga) {
 		List<Spotkania> tmpspot = addGroupsService.getIdSpotkania(idSpotkanie);
 
-//		System.out
-//				.println("Format daty jest nastepujacy : " + "[" + data + "]");
+		// System.out
+		// .println("Format daty jest nastepujacy : " + "[" + data + "]");
 
 		if (tmpspot.size() > 0) {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -287,12 +291,13 @@ public class OperationStudentsController {
 
 			try {
 				result = df.parse(data);
-//				System.out
-//						.println("(format Date)Jak wyglada data po sparsowaniu: "
-//								+ "[" + result + "]");
+				// System.out
+				// .println("(format Date)Jak wyglada data po sparsowaniu: "
+				// + "[" + result + "]");
 				addGroupsService.updateSpotkania(idSpotkanie, nazwa, result,
 						waga);
-				//System.out.println("(format stringu)Jak wyglada data po sparsowaniu: "+ "[" + df.format(result) + "]");
+				// System.out.println("(format stringu)Jak wyglada data po sparsowaniu: "+
+				// "[" + df.format(result) + "]");
 			} catch (ParseException e) {
 				;
 			}
@@ -303,4 +308,75 @@ public class OperationStudentsController {
 		}
 
 	}
+
+	// Usuń grupę zajęciową
+	@RequestMapping(value = "removedate", method = RequestMethod.POST)
+	public @ResponseBody
+	Integer removeGroupDate(
+			@RequestParam(value = "dateid", required = true) int idGrupyZaj) {
+
+		List<GrupyZajeciowe> groupZaj = addGroupsService
+				.getGroupZaj(idGrupyZaj);
+		if (groupZaj.size() > 0) {
+			addGroupsService.deleteGroupZaj(idGrupyZaj);
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	// Edytuj studenta
+	@RequestMapping(value = "editstudent", method = RequestMethod.POST)
+	public @ResponseBody
+	Integer editStudents(
+			@RequestParam(value = "studentid", required = true) int idStudent,
+			@RequestParam(value = "groupid", required = true) int idGrupy,
+			@RequestParam(value = "finalmark", required = true) String ocena,
+			@RequestParam(value = "position", required = true) String pozycja) {
+
+		List<StudenciDoGrupProjektowych> studSize = addGroupsService
+				.getStudentsProj(idStudent, idGrupy);
+		if (studSize.size() > 0) {
+			addGroupsService.updateStudenci(idGrupy, idStudent, pozycja, ocena);
+			return 1;
+		} else {
+			return 0;
+		}
+
+		// return 0;
+	}
+
+	// Dodaj notatkę
+	@RequestMapping(value = "addnote", method = RequestMethod.POST)
+	public @ResponseBody
+	Integer addNotes(
+			@RequestParam(value = "groupid", required = true) int idGrupyProj,
+			@RequestParam(value = "userid", required = true) int idProwadzacego) {
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		System.out.println(dateFormat.format(date));
+		Date data;
+		int plik = 0;
+		int idNotes = 0;
+		String tresc = "_";
+		try {
+			data = (Date) dateFormat.parse(date.toString());
+			addGroupsService.addNote(idProwadzacego, idGrupyProj, plik, tresc,
+					data, data);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		List<Notatki> notes = addGroupsService.getNote(idProwadzacego,
+				idGrupyProj);
+
+		if (notes.size() > 0) {
+			idNotes = notes.get(0).getIdNotatki();
+			return idNotes;
+		} else {
+			return -1;
+		}
+	}
+
 }

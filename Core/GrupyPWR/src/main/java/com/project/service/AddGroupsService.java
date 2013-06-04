@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.project.data.GrupyProjektowe;
+import com.project.data.GrupyZajeciowe;
+import com.project.data.Notatki;
 import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
 import com.project.data.Spotkania;
@@ -49,8 +51,25 @@ public interface AddGroupsService {
 
 	public void updateSpotkania(int idSpotkania, String nazwa, Date data,
 			int waga);
-	
+
 	public void deleteStudents(Integer idStudent);
+
 	public List<StudenciDoGrupZajeciowych> getStudGroupZaj(int idStudent);
-	public List<StudenciDoGrupProjektowych> getStudByGroup(int idGrupy) ;
+
+	public List<StudenciDoGrupProjektowych> getStudByGroup(int idGrupy);
+
+	public void addNote(Integer idProwadzacy, Integer idGrupy, Integer plik,
+			String tresc, Date dataDodania, Date dataModyfikacji);
+
+	public void deleteGroupZaj(int idGrupZaj);
+
+	public void updateStudenci(int idGrupy, int idStudent, String pozycja,
+			String ocena);
+
+	public List<GrupyZajeciowe> getGroupZaj(int idGrupy);
+
+	public List<StudenciDoGrupProjektowych> getStudentsProj(int idStudent,
+			int idGroup);
+
+	public List<Notatki> getNote(int idProwadzacy, int idGrupy);
 }

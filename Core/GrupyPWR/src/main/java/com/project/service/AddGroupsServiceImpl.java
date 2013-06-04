@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.dao.AddGroupsDAO;
 import com.project.data.GrupyProjektowe;
 
+import com.project.data.GrupyZajeciowe;
+import com.project.data.Notatki;
 import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
 import com.project.data.StudenciDoGrupZajeciowych;
@@ -27,9 +29,15 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	public List<Spotkania> getSpotkaniaByGroup(int idGrupy) {
 		return addGroupsDAO.getSpotkaniaByGroup(idGrupy);
 	}
+
 	@Transactional
-	public List<StudenciDoGrupProjektowych> getStudByGroup(int idGrupy){
+	public List<StudenciDoGrupProjektowych> getStudByGroup(int idGrupy) {
 		return addGroupsDAO.getStudByGroup(idGrupy);
+	}
+
+	@Transactional
+	public List<GrupyZajeciowe> getGroupZaj(int idGrupy) {
+		return addGroupsDAO.getGroupZaj(idGrupy);
 	}
 
 	@Transactional
@@ -40,10 +48,21 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	}
 
 	@Transactional
+	public List<StudenciDoGrupProjektowych> getStudentsProj(int idStudent,
+			int idGroup) {
+		return addGroupsDAO.getStudentsProj(idStudent, idGroup);
+	}
+
+	@Transactional
+	public List<Notatki> getNote(int idProwadzacy, int idGrupy) {
+		return addGroupsDAO.getNote(idProwadzacy, idGrupy);
+	}
+
+	@Transactional
 	public List<Obecnosc> getIdObec(int idObec) {
 		return addGroupsDAO.getIdObec(idObec);
 	}
-	
+
 	@Transactional
 	public List<StudenciDoGrupZajeciowych> getStudGroupZaj(int idStudent) {
 		return addGroupsDAO.getStudGroupZaj(idStudent);
@@ -53,21 +72,21 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	public void updateObecnosci(int idObec, boolean stan, Date data_mod) {
 		addGroupsDAO.updateObecnosci(idObec, stan, data_mod);
 	}
-	
+
 	public List<Spotkania> getIdSpotkania(int idSpot) {
 		return addGroupsDAO.getIdSpotkania(idSpot);
 	}
+
 	public void updateSpotkania(int idSpotkania, String nazwa, Date data,
 			int waga) {
 		addGroupsDAO.updateSpotkania(idSpotkania, nazwa, data, waga);
-		
+
 	}
 
 	@Transactional
-	public List<OcenyCzastkowe> getidOcen(int idOcen){
+	public List<OcenyCzastkowe> getidOcen(int idOcen) {
 		return addGroupsDAO.getidOcen(idOcen);
 	}
-
 
 	@Transactional
 	public void updateOcenki(int idOcen, String wart, Date data_mod) {
@@ -84,6 +103,7 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	public void deleteGroupProj(int idGrupyZaj) {
 		addGroupsDAO.deleteGroupProj(idGrupyZaj);
 	}
+
 	@Transactional
 	public void deleteStudents(Integer idStudent) {
 		addGroupsDAO.deleteStudents(idStudent);
@@ -123,6 +143,24 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	@Transactional
 	public List<Spotkania> getSpotByGroupId(int idGrupyProj) {
 		return addGroupsDAO.getSpotByGroupId(idGrupyProj);
+	}
+
+	@Transactional
+	public void addNote(Integer idProwadzacy, Integer idGrupy, Integer plik,
+			String tresc, Date dataDodania, Date dataModyfikacji) {
+		addGroupsDAO.addNote(idProwadzacy, idGrupy, plik, tresc, dataDodania,
+				dataModyfikacji);
+	}
+
+	@Transactional
+	public void deleteGroupZaj(int idGrupZaj) {
+		addGroupsDAO.deleteGroupZaj(idGrupZaj);
+	}
+
+	@Transactional
+	public void updateStudenci(int idGrupy, int idStudent, String pozycja,
+			String ocena) {
+		addGroupsDAO.updateStudenci(idGrupy, idStudent, pozycja, ocena);
 	}
 
 }

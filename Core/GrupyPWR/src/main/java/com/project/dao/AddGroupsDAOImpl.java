@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.data.GrupyZajeciowe;
+import com.project.data.Notatki;
 import com.project.data.Obecnosc;
 import com.project.data.OcenyCzastkowe;
 import com.project.data.Spotkania;
@@ -28,8 +30,8 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 		return sessionFactory
 				.getCurrentSession()
 				.createQuery(
-						"from StudenciDoGrupProjektowych where idGrupyProjektowej =:idGrupy").setInteger("idGrupy", idGrupy)
-				.list();
+						"from StudenciDoGrupProjektowych where idGrupyProjektowej =:idGrupy")
+				.setInteger("idGrupy", idGrupy).list();
 	}
 
 	@Transactional
@@ -38,6 +40,16 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 		return sessionFactory
 				.getCurrentSession()
 				.createQuery("from Spotkania where idGrupyProjektowej=:idGrupy")
+				.setInteger("idGrupy", idGrupy).list();
+	}
+
+	@Transactional
+	public List<Notatki> getNote(int idProwadzacy, int idGrupy) {
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"from Notatki where idProwadzacego=:idProwadzacy and idGrupyProjektowej=:idGrupy")
+				.setInteger("idProwadzacy", idProwadzacy)
 				.setInteger("idGrupy", idGrupy).list();
 	}
 
@@ -143,7 +155,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					.setDate("data_mod", data_mod).executeUpdate();
 			tx.commit();
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
@@ -199,7 +211,32 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					.setString("comment", comment).executeUpdate();
 			tx.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
 
+	@Transactional
+	public void updateStudenci(int idGrupy, int idStudent, String pozycja,
+			String ocena) {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+			String query = "UPDATE StudenciDoGrupProjektowych "
+					+ "SET stanowiskoW_Grupie=:pozycja, "
+					+ "ocena=:ocena "
+					+ "WHERE idStudenta=:idStudent and idGrupyProjektowej=:idGrupy";
+			sessionFactory.getCurrentSession().createQuery(query)
+					.setInteger("idGrupy", idGrupy)
+					.setInteger("idStudent", idStudent)
+					.setString("pozycja", pozycja).setString("ocena", ocena)
+					.executeUpdate();
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
@@ -220,7 +257,28 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					.setInteger("idGrupyZaj", idGrupyZaj).executeUpdate();
 			tx.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
 
+	@Transactional
+	public void deleteGroupZaj(int idGrupZaj) {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+
+			String query = "delete from grupy_zajeciowe "
+					+ "where idGrupy_zajeciowe =:idGrupZaj";
+
+			sessionFactory.getCurrentSession().createSQLQuery(query)
+					.setInteger("idGrupZaj", idGrupZaj).executeUpdate();
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
@@ -241,7 +299,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					.setInteger("idStudent", idStudent).executeUpdate();
 			tx.commit();
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
@@ -272,7 +330,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					.setString("komentarz", komentarz).executeUpdate();
 			tx.commit();
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
@@ -298,7 +356,39 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 
 			tx.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
 
+	@Transactional
+	public void addNote(Integer idProwadzacy, Integer idGrupy, Integer plik,
+			String tresc, Date dataDodania, Date dataModyfikacji) {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+			String query = "insert into notatki ("
+					+ "id_grupy_projektowej, "
+					+ "Tresc, "
+					+ "plik, "
+					+ "data_dodania, "
+					+ "data_modyfikacji, "
+					+ "id_Prowadzacego) "
+					+ "values(:idGrupy, :tresc, :plik, :dataDodania, :dataModyfikacji, :idProwadzacy)";
+
+			sessionFactory.getCurrentSession().createSQLQuery(query)
+					.setInteger("idProwadzacy", idProwadzacy)
+					.setInteger("idGrupy", idGrupy).setInteger("plik", plik)
+					.setDate("dataDodania", dataDodania)
+					.setDate("dataModyfikacji", dataModyfikacji)
+					.setString("tresc", tresc).executeUpdate();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
@@ -312,6 +402,26 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 						"from OcenyCzastkowe where idStudenta=:idStudenta and idSpotkania =:idSpotkania")
 				.setInteger("idStudenta", idStudenta)
 				.setInteger("idSpotkania", idSpotkania).list();
+	}
+
+	@Transactional
+	public List<GrupyZajeciowe> getGroupZaj(int idGrupy) {
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"from GrupyZajeciowe where idGrupyZajeciowe=:idGrupy")
+				.setInteger("idGrupy", idGrupy).list();
+	}
+
+	@Transactional
+	public List<StudenciDoGrupProjektowych> getStudentsProj(int idStudent,
+			int idGroup) {
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"from StudenciDoGrupProjektowych where idStudenta=:idStudent and idGrupyProjektowej =:idGroup")
+				.setInteger("idStudent", idStudent)
+				.setInteger("idGroup", idGroup).list();
 	}
 
 	@Transactional
