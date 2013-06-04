@@ -78,7 +78,7 @@
 						<td class="value"><textarea rows="10" cols="30" id="edit-group-comment"></textarea></td>
 					</tr>
 					<tr>
-						<td style="text-align: right;" colspan="2"><input type="button" id="edit-group-submit-button" value="Edytuj" /></td>
+						<td style="text-align: right;" colspan="2"><input type="hidden" id="edit-group-id" value="" /><input type="button" id="edit-group-submit-button" value="Edytuj" /></td>
 					</tr>
 				</table>
 			</div>
@@ -168,7 +168,7 @@
 						<td class="value" id="edit-student-finalmark"><input type="text" value="" /></td>
 					</tr>
 					<tr>
-						<td style="text-align: right;" colspan="2"><input type="hidden" id="edit-student-id" value="" /><input type="button" id="edit-student-button" value="Edytuj studenta" /><input type="button" id="remove-student-group-button" value="Usuń z grupy projektowej" /></td>
+						<td style="text-align: right;" colspan="2"><input type="hidden" id="edit-student-groupid" value="" /><input type="hidden" id="edit-student-id" value="" /><input type="button" id="edit-student-button" value="Edytuj studenta" /><input type="button" id="remove-student-group-button" value="Usuń z grupy projektowej" /></td>
 					</tr>
 				</table>
 			</div>

@@ -44,6 +44,8 @@ var datesSample = {'dates':
 	]
 };
 
+var tempGroupReference;
+
 function addNotInGroup(currNoGroup, currDate) {
 	
 	$('#notingroup').append('<tr id="student' + currNoGroup.id + '" class="student course-date ' + currDate + '"><td class="name"><a href="mailto:' + currNoGroup.mail + '">' + currNoGroup.firstname + ' ' + currNoGroup.surname + '</a><br /><span class="index">(' + currNoGroup.index + ')</span></td></tr>');
@@ -165,7 +167,29 @@ function addMeeting(group, meeting) {
 	$('<td class="meeting ' + meeting.id + '" id="meeting' + meeting.id + '"><input type="text" class="name" value="'+ meeting.name + '" /><br /><input type="text" maxlength="10" class="date" value="' + meeting.date + '"/><input type="text" maxlength="3" class="weight" value="' + meeting.weight + '"  /></td>').insertBefore($('#groups .course-date .group.' + currGroup.id +  ' .students tr.header td.add-meeting'));
 
 	$('td#meeting' + meeting.id + ' input.date').datepicker({
-		dateFormat: "yy-mm-dd"
+		dateFormat: "yy-mm-dd",
+		onSelect: function(dateText) {
+			name = $('.meeting.' + meeting.id + ' input.name').val();
+			weight = $('.meeting.' + meeting.id + ' input.weight').val();
+			
+			$.ajax({
+				url: serverURL + 'setmeeting',
+				type: 'POST',
+				data: {meetingid: meeting.id, name: name, date: dateText, weight: weight},
+				dataType: 'json',
+				success: function(data, textStatus, jqXHR ) {
+					console.log("Set meeting: " + data + " " + textStatus);
+					
+					if(data == '1') {
+					} else {
+						console.log(error);
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.log(textStatus + ' ' + errorThrown);
+				}
+			});
+		}
 	});
 	
 	/*$.datepicker.regional["pl"] = new Object();
@@ -178,30 +202,12 @@ function addMeeting(group, meeting) {
 			$(this).val('');
 		}
 	});
-	/*$('#meeting' + meeting.id + ' input.name').blur(function() {
-		if($(this).val() == "") {
-			$(this).val('nazwa spotkania');
-		}
-	});*/
 	
 	$('#meeting' + meeting.id + ' input.date').focus(function() {
 		if($(this).val() == "data") {
 			$(this).val('');
 		}
 	});
-	/*$('#meeting' + meeting.id + ' input.date').blur(function() {
-		if($(this).val() == "") {
-			$(this).val('data');
-		}
-	});*/
-	
-	/*$('#meeting' + meeting.id + ' input.weight').blur(function() {
-		if($(this).val() == "") {
-			$(this).val('waga');
-		}
-	});*/
-	
-	//console.log(JSON.stringify(currGroup.students));
 	
 	//adding new meeting to each student
 	$.each(currGroup.students, function() {
@@ -307,7 +313,7 @@ function addMeeting(group, meeting) {
 	});
 }
 
-function editStudent(student) {
+function editStudent(student, groupid) {
 	console.log("Edit student: " + student.id);
 	
 	$('div#lightbox').show();
@@ -337,13 +343,15 @@ function editStudent(student) {
 	$.each($('#groups #student' + student.id + ' .meeting'), function() {
 		suggestedMark += parseFloat(markTable[$(this).attr("class")]*parseFloat($(this).children('.mark').val()));
 	});
+	if(weightTotal != 0) {
+		suggestedMark /= weightTotal;
+		$('#edit-student-suggested-finalmark').html(suggestedMark.toFixed(2));
+	} else {
+		$('#edit-student-suggested-finalmark').html("0");
+	}
 	
-	suggestedMark /= weightTotal;
-	
-	$('#edit-student-suggested-finalmark').html(suggestedMark.toFixed(2));
-
-	//$('#edit-student-finalmark input').val(suggestedMark.toFixed(2));
 	$('#edit-student-id').val(student.id);
+	$('#edit-student-groupid').val(groupid);
 }
 
 function addGroup(dateID, group) {
@@ -395,7 +403,7 @@ function addGroup(dateID, group) {
 					$('#groups .group.' + group.id + ' .students #student' + studentID).data('studentDate', studentDate);
 					
 					$('#groups .group.' + group.id + ' .students tr.student.' + studentID + ' a.edit-student').click(function() {
-						editStudent(group.students[group.students.length-1]);
+						editStudent(group.students[group.students.length-1], group.id);
 					});
 					
 					$.each(group.meetings, function() {
@@ -523,7 +531,7 @@ function addGroup(dateID, group) {
 					});
 				});
 				
-				currGroup.meetings.push(newMeeting);
+				group.meetings.push(newMeeting);
 				addMeeting(group, newMeeting);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -540,13 +548,13 @@ function addGroup(dateID, group) {
 		$.ajax({
 			url: serverURL + 'addnote',
 			type: 'POST',
-			data: {groupid: group.id},
+			data: {groupid: group.id, userid: userID},
 			dataType: 'json',
 			success: function(data, textStatus, jqXHR ) {
 				console.log("Add note: " + JSON.stringify(data) + " " + textStatus);
 				
 				if(data >= 0) {
-					//$('#groups .group.' + currGroup.id + ' .notes').append('<div class="note ' + data + '" id="note' + data + '"><textarea rows="4" style="width: 100%;"></textarea></div>');
+					$('#groups .group.' + currGroup.id + ' .notes').append('<div class="note ' + data + '" id="note' + data + '"><textarea rows="4" style="width: 100%;"></textarea></div>');
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -557,8 +565,10 @@ function addGroup(dateID, group) {
 		//$('#groups .group.' + currGroup.id + ' .notes').append('<div class="note" id="note"><textarea rows="4" style="width: 100%;"></textarea></div>');
 	});
 	
+	var group = currGroup;
+	
 	//adding students header
-	$.each(currGroup.students, function() {
+	$.each(group.students, function() {
 		currStudent = this;
 		
 		$('#groups .group.' + currGroup.id + ' .students').append('<tr class="student ' + currStudent.id + '" id="student' + currStudent.id + '"><td class="name"><a href="#" class="edit-student">' + currStudent.firstname + ' ' + currStudent.surname + '</a><br /><span class="index">(' + currStudent.index + ')</span></td></tr>');
@@ -576,7 +586,7 @@ function addGroup(dateID, group) {
 		var student = currStudent;
 		
 		$('#groups .group.' + currGroup.id + ' .students tr.student.' + student.id + ' a.edit-student').click(function() {
-			editStudent(student);
+			editStudent(student, group.id);
 		});
 	});
 	
@@ -641,52 +651,15 @@ function addGroup(dateID, group) {
 		$('#edit-group').css('left', $(document).width()/2 - $('#edit-group').width()/2);
 		$('#edit-group').css('top', $(document).height()/2 - $('#edit-group').height()/2-50);
 		
+		tempGroupReference = group;
+		
 		$('#edit-group-name').val(group.name);
 		$('#edit-group-subject').val(group.subject);
 		$('#edit-group-repo').val(group.repo);
 		$('#edit-group-comment').val(group.comment);
-	});
-	
-	$('#edit-group input#edit-group-submit-button').click(function(e) {
-		e.preventDefault();
-		editGroup = new Object();
+		$('#edit-group-id').val(group.id);
 		
-		editGroup.id = group.id;
-		editGroup.name = $('#edit-group-name').val();
-		editGroup.subject = $('#edit-group-subject').val();
-		editGroup.repo = $('#edit-group-repo').val();
-		editGroup.comment = $('#edit-group-comment').val();
-		
-		currGroup = editGroup;
-		
-		group.name = editGroup.name;
-		group.subject = editGroup.subject;
-		group.repo = editGroup.repo;
-		group.comment = editGroup.comment;
-		
-		$.ajax({
-			url: serverURL + 'editgroup',
-			type: 'POST',
-			data: {groupid: currGroup.id, name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
-			dataType: 'json',
-			success: function(data, textStatus, jqXHR ) {
-				console.log("Edit group: " + data + " " + textStatus);
-				if(data == '1') {
-					$('div#edit-group td.info').show();
-					$('div#edit-group td.info').html('<span class="success">Grupa została zmieniona!</span>');
-					
-					//zmiana danych grupy na stronie
-					$('#groups .group.' + currGroup.id + ' .subject').html(currGroup.subject);
-					
-				} else {
-					$('div#edit-group td.info').show();
-					$('div#edit-group td.info').html('<span class="error">Błąd podczas zmiany grupy!</span>');
-				}
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				console.log(textStatus + ' ' + errorThrown);
-			}
-		});
+		//console.log("group parent: " + JSON.stringify($(group).parent()));
 	});
 }
 
@@ -724,6 +697,54 @@ function initGroups() {
 				} else {
 					$('div#add-group td.info').show();
 					$('div#add-group td.info').html('<span class="error">Błąd podczas dodawania grupy!</span>');
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(textStatus + ' ' + errorThrown);
+			}
+		});
+	});
+	
+	$('#edit-group input#edit-group-submit-button').click(function(e) {
+		e.preventDefault();
+		editGroup = new Object();
+		
+		editGroup.id = $('#edit-group-id').val();
+		editGroup.name = $('#edit-group-name').val();
+		editGroup.subject = $('#edit-group-subject').val();
+		editGroup.repo = $('#edit-group-repo').val();
+		editGroup.comment = $('#edit-group-comment').val();
+		
+		currGroup = editGroup;
+		
+		/*group.name = editGroup.name;
+		group.subject = editGroup.subject;
+		group.repo = editGroup.repo;
+		group.comment = editGroup.comment;*/
+		
+		$.ajax({
+			url: serverURL + 'editgroup',
+			type: 'POST',
+			data: {groupid: currGroup.id, name: currGroup.name, subject: currGroup.subject, repo: currGroup.repo, comment: currGroup.comment},
+			dataType: 'json',
+			success: function(data, textStatus, jqXHR ) {
+				console.log("Edit group: " + data + " " + textStatus);
+				if(data == '1') {
+					tempGroupReference.name = currGroup.name;
+					tempGroupReference.subject = currGroup.subject;
+					tempGroupReference.repo = currGroup.repo;
+					tempGroupReference.comment = currGroup.comment;
+					
+					
+					$('div#edit-group td.info').show();
+					$('div#edit-group td.info').html('<span class="success">Grupa została zmieniona!</span>');
+					
+					//zmiana danych grupy na stronie
+					$('#groups .group.' + currGroup.id + ' .subject').html(currGroup.subject);
+					
+				} else {
+					$('div#edit-group td.info').show();
+					$('div#edit-group td.info').html('<span class="error">Błąd podczas zmiany grupy!</span>');
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {

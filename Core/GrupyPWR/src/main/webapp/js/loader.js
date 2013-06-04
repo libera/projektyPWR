@@ -70,7 +70,11 @@ function initStudent() {
 				if(data > 0) {
 					console.log("removestudentgroup: " + data + " " + textStatus);
 					
-					addNotInGroup(student, student.date);
+					$.each($('input[name="checkedDates"]'), function() {
+						if($(this).val() == data) {
+							addNotInGroup(student, data);
+						}
+					});
 					
 					$('#groups #student' + student.id).remove();
 				}
@@ -85,14 +89,14 @@ function initStudent() {
 	$('#edit-student-button').click(function() {
 		var student = new Object();
 		student.id = $('#edit-student-id').val();
-		student.date = $('#groups #student' + student.id).data("studentDate");
+		student.groupid = $('#edit-student-groupid').val();
 		student.finalmark = $('#edit-student-finalmark').val();
 		student.position = $('#edit-student-position').val();
 		
 		$.ajax({
-			url: serverURL + "removestudentgroup",
+			url: serverURL + "editstudent",
 			type: 'POST',
-			data: student,
+			data: {studentid : student.id, groupid: student.groupid, finalmark: student.finalmark, position: student.position},
 			dataType: 'json',
 			success: function(data, textStatus, jqXHR ) {
 				if(data > 0) {
