@@ -288,7 +288,7 @@ function addMeeting(group, meeting) {
 	});
 	
 	//setmeeting
-	$('td#meeting' + meeting.id + ' input').blur(function() {
+	$('td#meeting' + meeting.id + ' input.name, td#meeting' + meeting.id + ' input.weight').blur(function() {
 		name = $('.meeting.' + meeting.id + ' input.name').val();
 		date = $('.meeting.' + meeting.id+ ' input.date').val();
 		weight = $('.meeting.' + meeting.id + ' input.weight').val();
