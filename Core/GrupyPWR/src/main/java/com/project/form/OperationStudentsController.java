@@ -360,13 +360,9 @@ public class OperationStudentsController {
 		int plik = 0;
 		int idNotes = 0;
 		String tresc = "_";
-		try {
-			data = (Date) dateFormat.parse(date.toString());
-			addGroupsService.addNote(idProwadzacego, idGrupyProj, plik, tresc,
-					data, data);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+
+		addGroupsService.addNote(idProwadzacego, idGrupyProj, plik, tresc,
+				date, date);
 
 		List<Notatki> notes = addGroupsService.getNote(idProwadzacego,
 				idGrupyProj);
