@@ -158,14 +158,25 @@
 						<td class="param">Stanowisko:</td>
 						<td class="value" id="edit-student-position">
 							<select>
-								<option value="szefu">Szefu</option>
-								<option value="robol">Robol</option>
+								<option value="brak">brak</option>
+								<option value="manager">Manager</option>
+								<option value="developer">Developer</option>
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<td class="param">Ocena końcowa:</td>
-						<td class="value" id="edit-student-finalmark"><input type="text" value="" /></td>
+						<td class="value" id="edit-student-finalmark">
+							<select>
+								<option value="2.0">2.0</option>
+								<option value="3.0">3.0</option>
+								<option value="3.5">3.5</option>
+								<option value="4.0">4.0</option>
+								<option value="4.5">4.5</option>
+								<option value="5.0">5.0</option>
+								<option value="5.5P">5.5</option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td style="text-align: right;" colspan="2"><input type="hidden" id="edit-student-groupid" value="" /><input type="hidden" id="edit-student-id" value="" /><input type="button" id="edit-student-button" value="Edytuj studenta" /><input type="button" id="remove-student-group-button" value="Usuń z grupy projektowej" /></td>

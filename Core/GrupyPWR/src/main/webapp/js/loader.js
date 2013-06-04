@@ -44,10 +44,14 @@ function hideLogin() {
 	$('#login').hide();
 }
 
+function hideLightbox() {
+	$('.dialog').hide();
+	$('#lightbox').hide();
+}
+
 function initLightbox() {
 	$('#lightbox .bg').click(function() {
-		$('.dialog').hide();
-		$('#lightbox').hide();
+		hideLightbox();
 	});
 }
 
@@ -74,6 +78,7 @@ function initStudent() {
 						if($(this).val() == data) {
 							addNotInGroup(student, data);
 						}
+						hideLightbox();
 					});
 					
 					$('#groups #student' + student.id).remove();
@@ -101,7 +106,9 @@ function initStudent() {
 			success: function(data, textStatus, jqXHR ) {
 				if(data > 0) {
 					console.log("editstudent: " + data + " " + textStatus);
-
+					
+					//TO DO: if(student.position=='manager') ustawienie klasy na tr.student.manager
+					
 					$('#groups #student' + student.id).data("studentPosition", student.position);
 					$('#groups #student' + student.id).data("studentFinalmark", student.finalmark);
 				}
@@ -326,7 +333,3 @@ $(document).ready(function() {
 $(window).resize(function() {
 	resizeWindow();
 });
-
-function hideLightbox() {
-	$('div#lightbox').hide();
-}

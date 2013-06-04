@@ -405,6 +405,10 @@ div.group div.details .students tr.header td.add-meeting a {
 	white-space: nowrap;
 }
 
+div.group div.details .students tr.student.manager .name a.edit-student {
+	font-weight: bold;
+}
+
 div.group div.details .students td.meeting {
 	width: 100px;
 }

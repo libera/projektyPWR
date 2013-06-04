@@ -328,7 +328,7 @@ function editStudent(student, groupid) {
 	$('#edit-student-index').html(student.index);
 	
 	$('#edit-student-finalmark input').val(student.finalmark);
-	$('#edit-student-posittion select').val(student.position);
+	$('#edit-student-position select').val(student.position);
 	
 	//sugerowana ocena koncowa
 	var suggestedMark = 0;
@@ -341,7 +341,7 @@ function editStudent(student, groupid) {
 	});
 	
 	$.each($('#groups #student' + student.id + ' .meeting'), function() {
-		suggestedMark += parseFloat(markTable[$(this).attr("class")]*parseFloat($(this).children('.mark').val()));
+		suggestedMark += parseFloat(markTable[$(this).attr("class")]*parseFloat($(this).children('.mark').val().replace(',', '.')));
 	});
 	if(weightTotal != 0) {
 		suggestedMark /= weightTotal;
@@ -581,6 +581,10 @@ function addGroup(dateID, group) {
 		$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).data('studentFinalmark', currStudent.finalmark);
 		$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).data('studentPosition', currStudent.position);
 		$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).data('studentDate', currDate.id);
+		
+		if(currStudent.position == 'manager') {
+			$('#groups .group.' + currGroup.id + ' .students #student' + currStudent.id).addClass('manager');
+		}
 		
 		
 		var student = currStudent;
