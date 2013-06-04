@@ -356,7 +356,6 @@ public class OperationStudentsController {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		System.out.println(dateFormat.format(date));
-		Date data;
 		int plik = 0;
 		int idNotes = 0;
 		String tresc = "_";

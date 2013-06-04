@@ -374,7 +374,7 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 					+ "id_grupy_projektowej, "
 					+ "Tresc, "
 					+ "plik, "
-					+ "data_dodania, "
+					+ "data_dodatania, "
 					+ "data_modyfikacji, "
 					+ "id_Prowadzacego) "
 					+ "values(:idGrupy, :tresc, :plik, :dataDodania, :dataModyfikacji, :idProwadzacy)";
