@@ -72,11 +72,11 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	public void updateObecnosci(int idObec, boolean stan, Date data_mod) {
 		addGroupsDAO.updateObecnosci(idObec, stan, data_mod);
 	}
-
+	@Transactional
 	public List<Spotkania> getIdSpotkania(int idSpot) {
 		return addGroupsDAO.getIdSpotkania(idSpot);
 	}
-
+	@Transactional
 	public void updateSpotkania(int idSpotkania, String nazwa, Date data,
 			int waga) {
 		addGroupsDAO.updateSpotkania(idSpotkania, nazwa, data, waga);
