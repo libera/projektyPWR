@@ -490,7 +490,11 @@ public class LoginController extends SendMail {
 	public @ResponseBody
 	String eksportcsv(
 			@RequestParam(value = "groupid", required = true) int groupId) {
-
+		try {
+			eksportcsv.do_eksportcsv(groupId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return "null";
 	}
 

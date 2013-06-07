@@ -31,7 +31,7 @@ public class EksportCSV {
 		this.eksportService = eksportService;
 	}
 
-	public void do_eksportcsv(int idGrupy) throws SQLException {
+	public /*List<String[]> */ void do_eksportcsv(int idGrupy) throws SQLException {
 		String csv = "C:\\Users\\Przemo\\Desktop\\ZapisCSV";
 		String infoPwr, rokAka, typKal, sem, kodGrup, kodKursu, nazwaKurs, termin, prowadzacy;
 		List<GrupyZajeciowe> listGroup = eksportService.getGroupsZaj(idGrupy);
@@ -129,11 +129,13 @@ public class EksportCSV {
 			// Collections.sort();
 			data.add(new String[] {});
 			writer.writeAll(data);
+			
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		//return data;
+	
 	}
 
 }

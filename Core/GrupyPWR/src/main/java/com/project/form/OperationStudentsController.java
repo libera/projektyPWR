@@ -272,7 +272,7 @@ public class OperationStudentsController {
 	// zawsze po lost
 	// focus nazwy, daty
 	// lub wagi oceny)
-	@RequestMapping(value = "setmeeting", method = RequestMethod.POST)
+	@RequestMapping(value = "/setmeeting", method = RequestMethod.POST)
 	public @ResponseBody
 	Integer setMeeting(
 
@@ -310,7 +310,7 @@ public class OperationStudentsController {
 	}
 
 	// Usuń grupę zajęciową
-	@RequestMapping(value = "removedate", method = RequestMethod.POST)
+	@RequestMapping(value = "/removedate", method = RequestMethod.POST)
 	public @ResponseBody
 	Integer removeGroupDate(
 			@RequestParam(value = "dateid", required = true) int idGrupyZaj) {
@@ -326,7 +326,7 @@ public class OperationStudentsController {
 	}
 
 	// Edytuj studenta
-	@RequestMapping(value = "editstudent", method = RequestMethod.POST)
+	@RequestMapping(value = "/editstudent", method = RequestMethod.POST)
 	public @ResponseBody
 	Integer editStudents(
 			@RequestParam(value = "studentid", required = true) int idStudent,
@@ -347,7 +347,7 @@ public class OperationStudentsController {
 	}
 
 	// Dodaj notatkę
-	@RequestMapping(value = "addnote", method = RequestMethod.POST)
+	@RequestMapping(value = "/addnote", method = RequestMethod.POST)
 	public @ResponseBody
 	Integer addNotes(
 			@RequestParam(value = "groupid", required = true) int idGrupyProj,
