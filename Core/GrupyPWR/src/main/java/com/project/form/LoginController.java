@@ -41,6 +41,7 @@ import com.project.data.StudenciDoGrupZajeciowych;
 import com.project.service.LoginService;
 import com.project.service.PobierzGrupyService;
 import com.project.service.PobranieGrupZajService;
+import com.project.Utils.EksportCSV;
 import com.project.Utils.Encryption;
 import com.project.Utils.ImportCSV;
 import com.project.Utils.RandomPassword;
@@ -65,6 +66,9 @@ public class LoginController extends SendMail {
 
 	@Autowired
 	private ImportCSV importcsv;
+
+	@Autowired
+	private EksportCSV eksportcsv;
 
 	@RequestMapping("/")
 	public String przelacz() {
@@ -480,6 +484,14 @@ public class LoginController extends SendMail {
 			importcsv.do_import(sb.toString(), login);
 			return "1";
 		}
+	}
+
+	@RequestMapping(value = "/eksportcsv", method = RequestMethod.POST)
+	public @ResponseBody
+	String eksportcsv(
+			@RequestParam(value = "groupid", required = true) int groupId) {
+
+		return "null";
 	}
 
 }
