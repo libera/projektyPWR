@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.nio.charset.StandardCharsets;
+//import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,7 +41,7 @@ public class EksportCSV {
 		try {
 			CSVWriter writer = new CSVWriter(new FileWriter(csv));
 			// String rok_akademicki = null;
-			writer.equals(StandardCharsets.US_ASCII);
+			//writer.equals(StandardCharsets.US_ASCII);
 			List<String[]> data = new ArrayList<String[]>();
 			data.add(new String[] { "\n" });
 			data.add(new String[] {infoEdu});

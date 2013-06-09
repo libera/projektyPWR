@@ -95,8 +95,10 @@ function initStudent() {
 		var student = new Object();
 		student.id = $('#edit-student-id').val();
 		student.groupid = $('#edit-student-groupid').val();
-		student.finalmark = $('#edit-student-finalmark').val();
-		student.position = $('#edit-student-position').val();
+		student.finalmark = $('#edit-student-finalmark option:selected').val();
+		student.position = $('#edit-student-position option:selected').val();
+		
+		console.log("Zapisywane dane studenta: " + student.finalmark + " " + student.position);
 		
 		$.ajax({
 			url: serverURL + "editstudent",
@@ -111,6 +113,9 @@ function initStudent() {
 					
 					$('#groups #student' + student.id).data("studentPosition", student.position);
 					$('#groups #student' + student.id).data("studentFinalmark", student.finalmark);
+					
+					tempStudentReference.position = student.position;
+					tempStudentReference.finalmark = student.finalmark;
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {

@@ -286,6 +286,19 @@ header.course-date-header .tools a.add-group-button {
 	float: right;
 }
 
+/*Eksport CSV*/
+header.course-date-header .tools a.export-csv-button {
+	display: block();
+	text-indent: 74px;
+	height: 24px;
+	width: 74px;
+	overflow: hidden;
+	white-space: nowrap;
+	background: url('./../images/export_csv.png');
+	margin-right: 5px;
+	float: right;
+}
+
 header.course-date-header .tools a.remove-date-button {
 	display: block;
 	text-indent: 24px;

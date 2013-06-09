@@ -45,6 +45,7 @@ var datesSample = {'dates':
 };
 
 var tempGroupReference;
+var tempStudentReference;
 
 function addNotInGroup(currNoGroup, currDate) {
 	
@@ -100,13 +101,33 @@ function loadDate(id) {
 				});
 				
 				//adding in groups
-				$('#groups').append('<div class="course-date ' + currDate.id + '"><header class="course-date-header">' + currDate.name +' (' + currDate.code + ')<div class="tools"><a href="" class="remove-date-button">usuń grupę zajęciową</a><a href="#" class="add-group-button">dodaj grupe projektowa w tym terminie</a></div></header></div>');
+				$('#groups').append('<div class="course-date ' + currDate.id + '"><header class="course-date-header">' + currDate.name +' (' + currDate.code + ')<div class="tools"><a href="" class="export-csv-button">eksportuj csv</a><a href="" class="remove-date-button">usuń grupę zajęciową</a><a href="#" class="add-group-button">dodaj grupe projektowa w tym terminie</a></div></header></div>');
 				
 				$.each(currDate.groups, function() {
 					addGroup(currDate.id, this);
 				});
 				
 				var date = currDate;
+				
+				//export csv button
+				$('#groups .course-date.' + date.id + ' .course-date-header .export-csv-button').click(function(e) {
+					e.preventDefault();
+					
+					$.ajax({
+						url: serverURL + 'exportcsv',
+						type: 'POST',
+						data: {dateid: date.id},
+						dataType: 'json',
+						success: function(data, textStatus, jqXHR ) {
+							if(data > 0) {
+								/*download file*/
+							}
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log(textStatus + ' ' + errorThrown);
+						}
+					});
+				});
 				
 				//add group button
 				$('#groups .course-date.' + date.id + ' .course-date-header .add-group-button').click(function(e) {
@@ -316,6 +337,8 @@ function addMeeting(group, meeting) {
 function editStudent(student, groupid) {
 	console.log("Edit student: " + student.id);
 	
+	tempStudentReference = student;
+	
 	$('div#lightbox').show();
 	
 	$('#edit-student').show();
@@ -327,7 +350,9 @@ function editStudent(student, groupid) {
 	$('#edit-student-mail').html(student.mail);
 	$('#edit-student-index').html(student.index);
 	
-	$('#edit-student-finalmark input').val(student.finalmark);
+	console.log("Dane studenta: " + student.finalmark + " " + student.position);
+	
+	$('#edit-student-finalmark select').val(student.finalmark);
 	$('#edit-student-position select').val(student.position);
 	
 	//sugerowana ocena koncowa
@@ -363,6 +388,35 @@ function addGroup(dateID, group) {
 			'<header><span class="subject">' + currGroup.subject + '</span><div class="tools"><a href="#" class="more">Więcej</a><a href="#" class="remove-group">Usuń grupę projektową</a><a href="#" class="edit-group">Edytuj grupe projektowa</a></div></header>' +
 			'<div class="details"><div class="student-info"><table class="students"><tr class="header"><td class="empty"></td><td class="add-meeting"><a href=#">dodaj spotkanie</a></td></tr></table></div><div class="notes"><a href="#" class="add-note">dodaj notatkę</a></div></div>' +
 		'</div>');
+	
+	$.each(group.notes, function() {
+		currNote = this;
+		
+		console.log("Zaw notatki: " + currNote.content);
+		
+		$('#groups .group.' + group.id + ' .notes').append('<div class="note ' + currNote.id + '" id="note' + currNote.id + '"><textarea rows="4" style="width: 100%;">' + currNote.content + '</textarea></div>');
+	
+		var note = currNote;
+		$('#groups .group.' + group.id + ' .notes #note' + currNote.id + ' textarea').blur(function() {
+			console.log("edit note: " + note.id + " " + $(this).val());
+			
+			$.ajax({
+				url: serverURL + 'editnote',
+				type: 'POST',
+				data: {noteid: note.id, value: $(this).val()},
+				dataType: 'json',
+				success: function(data, textStatus, jqXHR ) {
+					console.log("Remove group: " + data + " " + textStatus);
+					if(data == '1') {
+						console.log("note edited");
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.log(textStatus + ' ' + errorThrown);
+				}
+			});
+		});
+	});
 	
 	var group = currGroup;
 		
@@ -554,7 +608,25 @@ function addGroup(dateID, group) {
 				console.log("Add note: " + JSON.stringify(data) + " " + textStatus);
 				
 				if(data >= 0) {
-					$('#groups .group.' + currGroup.id + ' .notes').append('<div class="note ' + data + '" id="note' + data + '"><textarea rows="4" style="width: 100%;"></textarea></div>');
+					$('#groups .group.' + group.id + ' .notes').append('<div class="note ' + data + '" id="note' + data + '"><textarea rows="4" style="width: 100%;"></textarea></div>');
+					$('#groups .group.' + group.id + ' .notes #note' + data + ' textarea').blur(function() {
+						console.log("edit note: " + data + " " + $(this).val());
+						$.ajax({
+							url: serverURL + 'editnote',
+							type: 'POST',
+							data: {noteid: data, value: $(this).val()},
+							dataType: 'json',
+							success: function(data, textStatus, jqXHR ) {
+								console.log("Remove group: " + data + " " + textStatus);
+								if(data == '1') {
+									console.log("note edited");
+								}
+							},
+							error: function(jqXHR, textStatus, errorThrown) {
+								console.log(textStatus + ' ' + errorThrown);
+							}
+						});
+					});
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
