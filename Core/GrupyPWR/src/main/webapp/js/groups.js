@@ -101,7 +101,7 @@ function loadDate(id) {
 				});
 				
 				//adding in groups
-				$('#groups').append('<div class="course-date ' + currDate.id + '"><header class="course-date-header">' + currDate.name +' (' + currDate.code + ')<div class="tools"><a href="" class="export-csv-button">eksportuj csv</a><a href="" class="remove-date-button">usuń grupę zajęciową</a><a href="#" class="add-group-button">dodaj grupe projektowa w tym terminie</a></div></header></div>');
+				$('#groups').append('<div class="course-date ' + currDate.id + '"><header class="course-date-header">' + currDate.name +' (' + currDate.code + ')<div class="tools"><a href="' + url + 'exportcsv?dateid=' + currDate.id + '" class="export-csv-button">eksportuj csv</a><a href="" class="remove-date-button">usuń grupę zajęciową</a><a href="#" class="add-group-button">dodaj grupe projektowa w tym terminie</a></div></header></div>');
 				
 				$.each(currDate.groups, function() {
 					addGroup(currDate.id, this);
@@ -110,7 +110,7 @@ function loadDate(id) {
 				var date = currDate;
 				
 				//export csv button
-				$('#groups .course-date.' + date.id + ' .course-date-header .export-csv-button').click(function(e) {
+				/*$('#groups .course-date.' + date.id + ' .course-date-header .export-csv-button').click(function(e) {
 					e.preventDefault();
 					
 					$.ajax({
@@ -120,14 +120,14 @@ function loadDate(id) {
 						dataType: 'json',
 						success: function(data, textStatus, jqXHR ) {
 							if(data > 0) {
-								/*download file*/
+								download file
 							}
 						},
 						error: function(jqXHR, textStatus, errorThrown) {
 							console.log(textStatus + ' ' + errorThrown);
 						}
 					});
-				});
+				});*/
 				
 				//add group button
 				$('#groups .course-date.' + date.id + ' .course-date-header .add-group-button').click(function(e) {
