@@ -101,7 +101,7 @@ function loadDate(id) {
 				});
 				
 				//adding in groups
-				$('#groups').append('<div class="course-date ' + currDate.id + '"><header class="course-date-header">' + currDate.name +' (' + currDate.code + ')<div class="tools"><a href="' + url + 'exportcsv?dateid=' + currDate.id + '" class="export-csv-button">eksportuj csv</a><a href="" class="remove-date-button">usuń grupę zajęciową</a><a href="#" class="add-group-button">dodaj grupe projektowa w tym terminie</a></div></header></div>');
+				$('#groups').append('<div class="course-date ' + currDate.id + '"><header class="course-date-header">' + currDate.name +' (' + currDate.code + ')<div class="tools"><a href="' + serverURL + 'exportcsv?dateid=' + currDate.id + '" class="export-csv-button">eksportuj csv</a><a href="" class="remove-date-button">usuń grupę zajęciową</a><a href="#" class="add-group-button">dodaj grupe projektowa w tym terminie</a></div></header></div>');
 				
 				$.each(currDate.groups, function() {
 					addGroup(currDate.id, this);
