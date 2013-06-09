@@ -46,6 +46,7 @@ import com.project.Utils.Encryption;
 import com.project.Utils.ImportCSV;
 import com.project.Utils.RandomPassword;
 import com.project.Utils.SendMail;
+import com.project.Utils.SendMailToStudents;
 
 import com.project.Json.*;
 
@@ -73,6 +74,24 @@ public class LoginController extends SendMail {
 	@RequestMapping("/")
 	public String przelacz() {
 		return "*/index";
+	}
+
+	@RequestMapping(value = "/studentsmail", method = RequestMethod.POST)
+	public Integer sendStudents(
+			@RequestParam(value = "tabStudents", required = true) String[] tabStud,
+			@RequestParam(value = "message", required = true) String wiadomosc,
+			Model model) {
+	//	SendMailToStudents sndmail;
+		String from = "grupy.pwr.wroc@gmail.com";
+		String temat = "Powiadomienia dla Studentów";
+
+		for (int i = 0; i < tabStud.length - 1; i++) {
+			//for (typ nazwa : po_czym) {
+
+				SendMailToStudents.Wyslij_maila(from, temat, wiadomosc, from);
+		//	}
+		}
+		return 1;
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)

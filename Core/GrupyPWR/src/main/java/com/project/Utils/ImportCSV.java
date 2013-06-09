@@ -162,9 +162,9 @@ public class ImportCSV {
 					 
 					if(1 == addNumber)
 					{
-						String temat = "Przesłanie hasła do logowania!";
+						String temat = "Przes�anie has�a do logowania!";
 						try{
-							//SendMail.Wyslij_maila(email, temat, hasloSend, "System zarządzania projektami na PWR");
+							//SendMail.Wyslij_maila(email, temat, hasloSend, "System zarz�dzania projektami na PWR");
 						}
 						catch(Exception ex)
 						{
