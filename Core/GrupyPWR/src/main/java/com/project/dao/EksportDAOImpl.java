@@ -59,6 +59,6 @@ public class EksportDAOImpl implements EksportDAO {
 	
 	@Transactional
 	public List<Studenci> getStudents(int idStudent) {
-		return sessionFactory.getCurrentSession().createQuery("from Studenci where idStudenci=:idStudent").setInteger("idStudent", idStudent ).list();
+		return sessionFactory.getCurrentSession().createQuery("from Studenci where idStudenci=:idStudent order by nazwisko, imie ASC").setInteger("idStudent", idStudent ).list();
 	}
 }
