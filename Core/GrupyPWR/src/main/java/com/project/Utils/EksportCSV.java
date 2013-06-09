@@ -33,7 +33,7 @@ public class EksportCSV {
 
 	public /*List<String[]> */ void do_eksportcsv(int idGrupy) throws SQLException {
 		String csv = "C:\\Users\\Przemo\\Desktop\\ZapisCSV";
-		String infoPwr, rokAka, typKal, sem, kodGrup, kodKursu, nazwaKurs, termin, prowadzacy;
+		//String infoPwr, rokAka, typKal, sem, kodGrup, kodKursu, nazwaKurs, termin, prowadzacy;
 		List<GrupyZajeciowe> listGroup = eksportService.getGroupsZaj(idGrupy);
 		String infoEdu = listGroup.get(0).getInfoEdu();
 		// String[] field = infoEdu.split(";",-1);
@@ -44,9 +44,9 @@ public class EksportCSV {
 			writer.equals(StandardCharsets.US_ASCII);
 			List<String[]> data = new ArrayList<String[]>();
 			data.add(new String[] { "\n" });
-			StringTokenizer stringTokenizer = new StringTokenizer(infoEdu,
-					";  ");
-			while (stringTokenizer.hasMoreTokens()) {
+			data.add(new String[] {infoEdu});
+		//	StringTokenizer stringTokenizer = new StringTokenizer(infoEdu,	";  ");
+			/*while (stringTokenizer.hasMoreTokens()) {
 
 				infoPwr = stringTokenizer.nextToken(" ");
 
@@ -69,7 +69,7 @@ public class EksportCSV {
 				data.add(new String[] { nazwaKurs });
 				data.add(new String[] { termin });
 				data.add(new String[] { prowadzacy });
-			}
+			}*/
 			data.add(new String[] { "Lp.;", "Nr albumu;", "Nazwisko;",
 					"Imiona;", "Nazwisko;", "Rok;", "Semestr;",
 					"Przedmiot kształcenia", "Ocena (np. 3.0);",
