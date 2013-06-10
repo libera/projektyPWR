@@ -31,6 +31,11 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	}
 
 	@Transactional
+	public List<Notatki> getNotes(int idNotatki) {
+		return addGroupsDAO.getNotes(idNotatki);
+	}
+
+	@Transactional
 	public List<StudenciDoGrupProjektowych> getStudByGroup(int idGrupy) {
 		return addGroupsDAO.getStudByGroup(idGrupy);
 	}
@@ -45,6 +50,11 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 			String stanowisko, String ocena, String komentarz) {
 		addGroupsDAO.addStudents(idStudent, idGrupZaj, stanowisko, ocena,
 				komentarz);
+	}
+
+	@Transactional
+	public void updateNotakti(int idNotatki, String wart) {
+		addGroupsDAO.updateNotakti(idNotatki, wart);
 	}
 
 	@Transactional
@@ -72,10 +82,12 @@ public class AddGroupsServiceImpl implements AddGroupsService {
 	public void updateObecnosci(int idObec, boolean stan, Date data_mod) {
 		addGroupsDAO.updateObecnosci(idObec, stan, data_mod);
 	}
+
 	@Transactional
 	public List<Spotkania> getIdSpotkania(int idSpot) {
 		return addGroupsDAO.getIdSpotkania(idSpot);
 	}
+
 	@Transactional
 	public void updateSpotkania(int idSpotkania, String nazwa, Date data,
 			int waga) {

@@ -248,6 +248,23 @@ public class OperationStudentsController {
 
 	}
 
+	@RequestMapping(value = "/setpresence", method = RequestMethod.POST)
+	public @ResponseBody
+	Integer setNote(
+			@RequestParam(value = "noteid", required = true) int idNotatki,
+			@RequestParam(value = "value", required = true) String wartosc) {
+
+		List<Notatki> note = addGroupsService.getNotes(idNotatki);
+		if (note.size() > 0) {
+
+			addGroupsService.updateNotakti(idNotatki, wartosc);
+			return 1;
+		} else {
+			return 0;
+		}
+
+	}
+
 	// Zmiana oceny na
 	// dane spotkanie
 	@RequestMapping(value = "/setmark", method = RequestMethod.POST)
@@ -367,7 +384,7 @@ public class OperationStudentsController {
 				idGrupyProj);
 
 		if (notes.size() > 0) {
-				idNotes = notes.get(notes.size()-1).getIdNotatki();
+			idNotes = notes.get(notes.size() - 1).getIdNotatki();
 			return idNotes;
 		} else {
 			return -1;

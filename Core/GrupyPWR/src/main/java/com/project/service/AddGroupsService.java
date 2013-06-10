@@ -72,4 +72,8 @@ public interface AddGroupsService {
 			int idGroup);
 
 	public List<Notatki> getNote(int idProwadzacy, int idGrupy);
+
+	public void updateNotakti(int idNotatki, String wart);
+
+	public List<Notatki> getNotes(int idNotatki);
 }

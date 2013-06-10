@@ -52,6 +52,16 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 				.setInteger("idProwadzacy", idProwadzacy)
 				.setInteger("idGrupy", idGrupy).list();
 	}
+	
+	@Transactional
+	public List<Notatki> getNotes(int idNotatki) {
+		return sessionFactory
+				.getCurrentSession()
+				.createQuery(
+						"from Notatki where idNotatki=:idNotatki")
+				.setInteger("idNotatki", idNotatki)
+				.list();
+	}
 
 	@Transactional
 	public List<GrupyProjektowe> getIdGrupZaj(int idGrupyProj) {
@@ -153,6 +163,28 @@ public class AddGroupsDAOImpl implements AddGroupsDAO {
 			sessionFactory.getCurrentSession().createQuery(query)
 					.setInteger("idOcen", idOcen).setString("wart", wart)
 					.setDate("data_mod", data_mod).executeUpdate();
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
+	
+	@Transactional
+	public void updateNotakti(int idNotatki, String wart) {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+
+			String query = "UPDATE Notatki " + "SET tresc=:wart "
+					+ "WHERE idNotatki=:idNotatki";
+
+			sessionFactory.getCurrentSession().createQuery(query)
+					.setInteger("idNotatki", idNotatki).setString("wart", wart)
+					.executeUpdate();
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
