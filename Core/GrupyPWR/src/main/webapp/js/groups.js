@@ -345,9 +345,12 @@ function editStudent(student, groupid) {
 	$('#edit-student').css('left', $(document).width()/2 - $('#edit-student').width()/2);
 	$('#edit-student').css('top', $(document).height()/2 - $('#edit-student').height()/2-50);
 	
+	$('div#edit-student td.info').hide();
+	$('div#edit-student td.info').html('');
+	
 	$('#edit-student-firstname').html(student.firstname);
 	$('#edit-student-surname').html(student.surname);
-	$('#edit-student-mail').html(student.mail);
+	$('#edit-student-mail').html('<a href="mailto:' + student.mail + '">' + student.mail + '</a>');
 	$('#edit-student-index').html(student.index);
 	
 	console.log("Dane studenta: " + student.finalmark + " " + student.position);
@@ -418,7 +421,7 @@ function addGroup(dateID, group) {
 		});
 	});
 	
-	var group = currGroup;
+	//var group = currGroup;
 		
 	//enable user dropping
 	$('#groups .group.' + group.id).droppable({
@@ -442,7 +445,7 @@ function addGroup(dateID, group) {
 				data: {studentid: studentID, groupid: group.id, courseid: studentDate},
 				dataType: 'json',
 				success: function(data, textStatus, jqXHR ) {
-					console.log("Add student to group: " + JSON.stringify(data) + " " + textStatus);
+					//console.log("Add student to group: " + JSON.stringify(data) + " " + textStatus);
 					
 					group.students.push({'id':studentID, 'firstname': studentFirstname, 'surname': studentSurname, 'mail': studentMail, 'index': studentIndex});
 					
@@ -457,7 +460,14 @@ function addGroup(dateID, group) {
 					$('#groups .group.' + group.id + ' .students #student' + studentID).data('studentDate', studentDate);
 					
 					$('#groups .group.' + group.id + ' .students tr.student.' + studentID + ' a.edit-student').click(function() {
-						editStudent(group.students[group.students.length-1], group.id);
+						//console.log("group students data: " + studentID);
+						
+						//editStudent(group.students[group.students.length-1], group.id);
+						$.each(group.students, function() {
+							if(this.id == studentID) {
+								editStudent(this, group.id);
+							}
+						});
 					});
 					
 					$.each(group.meetings, function() {

@@ -116,6 +116,9 @@ function initStudent() {
 					
 					tempStudentReference.position = student.position;
 					tempStudentReference.finalmark = student.finalmark;
+					
+					$('div#edit-student td.info').show();
+					$('div#edit-student td.info').html('<span class="success">Dane studenta zostały zaktualizowane!</span>');
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {

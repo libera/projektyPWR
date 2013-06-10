@@ -404,6 +404,20 @@ div.group div.notes {
 	overflow: auto;
 }
 
+div.group div.notes div.note {
+	padding: 5px 0;
+}
+
+div.notes a.add-note {
+	display: block;
+	overflow: hidden;
+	text-indent: 21px;
+	height: 19px;
+	width: 21px;
+	background: url('./../images/add_note.png') no-repeat;
+	white-space: nowrap;
+}
+
 div.group div.details .students tr.header {
 	font-weight: bold;
 }
