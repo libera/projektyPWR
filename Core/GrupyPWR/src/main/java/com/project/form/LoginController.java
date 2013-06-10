@@ -505,16 +505,18 @@ public class LoginController extends SendMail {
 		}
 	}
 
-	@RequestMapping(value = "/eksportcsv", method = RequestMethod.POST)
+	@RequestMapping(value = "/exportcsv", method = RequestMethod.GET, produces = "text/csv")
 	public @ResponseBody
 	String eksportcsv(
-			@RequestParam(value = "groupid", required = true) int groupId) {
+			@RequestParam(value = "dateid", required = true) int dateId) {
+		String csvString = new String();
 		try {
-			eksportcsv.do_eksportcsv(groupId);
+			//System.out.println(dateId);
+			csvString = eksportcsv.do_eksportcsv(dateId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return "null";
+		return csvString;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.project.Utils;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,15 +32,17 @@ public class EksportCSV {
 		this.eksportService = eksportService;
 	}
 
-	public /*List<String[]> */ void do_eksportcsv(int idGrupy) throws SQLException {
-		String csv = "C:\\Users\\Przemo\\Desktop\\ZapisCSV";
+	public String do_eksportcsv(int idGrupy) throws SQLException {
+		//String csv = "C:\\Users\\Przemo\\Desktop\\ZapisCSV";
 		//String infoPwr, rokAka, typKal, sem, kodGrup, kodKursu, nazwaKurs, termin, prowadzacy;
+		StringWriter csvString = new StringWriter();
+		
 		List<GrupyZajeciowe> listGroup = eksportService.getGroupsZaj(idGrupy);
 		String infoEdu = listGroup.get(0).getInfoEdu();
 		// String[] field = infoEdu.split(";",-1);
 		Date daty = new Date();
 		try {
-			CSVWriter writer = new CSVWriter(new FileWriter(csv));
+			CSVWriter writer = new CSVWriter(csvString);
 			// String rok_akademicki = null;
 			//writer.equals(StandardCharsets.US_ASCII);
 			List<String[]> data = new ArrayList<String[]>();
@@ -120,12 +123,12 @@ public class EksportCSV {
 					}
 				}
 			}
-			System.out
+			/*System.out
 					.println("I oto naszym oczom i uszą ukazuję się, bądź też nie wygląd prawdopodobnie całej csvki wyeksportowanej");
 			System.out
 					.println("Gdy pojawią się jakieś wielkie, wręcz duże problemy proszę zgłoś błąd pod adres mail grupy.pwr.wroc@gmail.com");
 			System.out.println("Pozdrawia cierpiący na bezsenność admin ;P");
-			System.out.println(data);
+			System.out.println(data);*/
 			// Collections.sort();
 			data.add(new String[] {});
 			writer.writeAll(data);
@@ -134,8 +137,7 @@ public class EksportCSV {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//return data;
-	
+		return csvString.toString();
 	}
 
 }
