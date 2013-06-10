@@ -505,7 +505,7 @@ public class LoginController extends SendMail {
 		}
 	}
 
-	@RequestMapping(value = "/exportcsv", method = RequestMethod.GET, produces = "text/csv")
+	@RequestMapping(value = "/exportcsv", method = RequestMethod.GET, produces = "text/csv;charset=UTF-8")
 	public @ResponseBody
 	String eksportcsv(
 			@RequestParam(value = "dateid", required = true) int dateId) {

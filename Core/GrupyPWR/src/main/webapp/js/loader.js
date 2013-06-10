@@ -74,7 +74,8 @@ function initStudent() {
 				if(data > 0) {
 					console.log("removestudentgroup: " + data + " " + textStatus);
 					
-					$.each($('input[name="checkedDates"]'), function() {
+					$.each($('input[name="checkedDates"]:checked'), function() {
+						console.log("Selected groups: " + $(this).val());
 						if($(this).val() == data) {
 							addNotInGroup(student, data);
 						}
