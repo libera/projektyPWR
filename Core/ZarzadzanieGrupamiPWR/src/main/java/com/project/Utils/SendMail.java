@@ -16,8 +16,8 @@ import javax.mail.internet.MimeMessage;
 public class SendMail {
 
 	
-	static String from_konto = "grupy.pwr.wroc@gmail.com";
-	static String haselko = "projekt123";
+	static String from_konto = "***";
+	static String haselko = "***";
 	 
 	public static int Wyslij_maila(String mail_do_kogo, String temat, String wiadomosc, String od_kogo)
 	 {
